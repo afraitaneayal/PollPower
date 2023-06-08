@@ -8,7 +8,7 @@ class Root extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      initialRoute: '/splash',
+      initialRoute: '/login',
       routes: AppRouter.getRoutes(),
     );
   }

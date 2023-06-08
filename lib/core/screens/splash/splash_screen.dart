@@ -8,22 +8,35 @@ class SplashScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Future.delayed(const Duration(seconds: 3),
-        () => {Navigator.pushNamed(context, "/login")});
+    // Future.delayed(const Duration(seconds: 3),
+    //     () => {Navigator.pushNamed(context, "/login")});
 
     return Container(
       color: AppColors.white,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Image.asset(AppAssets.logo),
-          const SizedBox(
-            height: 15,
-          ),
-          "PollPower".getWidget(fontSize: 40, fontWeight: FontWeight.w700)
-        ],
-      ),
+      child: _buildColumn(),
+    );
+  }
+
+  Widget _buildColumn() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        const SizedBox(),
+        Column(
+          children: [
+            "PollPower".getWidget(fontSize: 40, fontWeight: FontWeight.w700),
+            const SizedBox(
+              height: 80,
+            ),
+            Image.asset(AppAssets.logo),
+          ],
+        ),
+        Container(
+          margin: const EdgeInsets.only(bottom: 25),
+          child: "Powered by Ayal & YayaHc".getWidget(fontSize: 12),
+        ),
+      ],
     );
   }
 }

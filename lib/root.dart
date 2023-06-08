@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:poll_power/screens/splash/splash_screen.dart';
+import 'package:poll_power/core/screens/splash/splash_screen.dart';
 
 class Root extends StatelessWidget {
   const Root({super.key});

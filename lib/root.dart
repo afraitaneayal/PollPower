@@ -1,14 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:poll_power/routes.dart';
+import 'package:poll_power/services/user/isar_services.dart';
 
 class Root extends StatelessWidget {
-  const Root({super.key});
+  Root({super.key});
+
+  final isarService = IsarServices();
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      initialRoute: '/login',
+      initialRoute: '/register',
       routes: AppRouter.getRoutes(),
     );
   }

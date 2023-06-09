@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:poll_power/core/extensions/extension_on_strings.dart';
-
 import '../../../features/auth/user_entity.dart';
 import '../../../services/user/isar_services.dart';
 
@@ -77,16 +76,19 @@ class _CustomFormState extends State<CustomForm> {
 
   Widget _buildElevateButton() {
     return ElevatedButton(
-        onPressed: () {
+        onPressed: () async {
           final isarService = IsarServices();
-          isarService.createUser(User()
+          await isarService.createUser(User()
             ..fistName = firstNameValue
             ..lastName = lastNameValue
             ..grade = gradeValue
             ..arreaOfStudy = areaOfStudyValue
-            ..password = passwordValue);
+            ..password = passwordValue
+            ..status = true);
 
-          Navigator.pushNamed(context, "/login");
+          Future.delayed(const Duration(seconds: 2), () {
+            Navigator.pushNamed(context, "/login");
+          });
         },
         child: "Register".getWidget());
   }

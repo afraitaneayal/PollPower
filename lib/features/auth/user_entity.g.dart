@@ -42,8 +42,13 @@ const UserSchema = CollectionSchema(
       name: r'password',
       type: IsarType.string,
     ),
-    r'voted': PropertySchema(
+    r'status': PropertySchema(
       id: 5,
+      name: r'status',
+      type: IsarType.bool,
+    ),
+    r'voted': PropertySchema(
+      id: 6,
       name: r'voted',
       type: IsarType.bool,
     )
@@ -112,7 +117,8 @@ void _userSerialize(
   writer.writeString(offsets[2], object.grade);
   writer.writeString(offsets[3], object.lastName);
   writer.writeString(offsets[4], object.password);
-  writer.writeBool(offsets[5], object.voted);
+  writer.writeBool(offsets[5], object.status);
+  writer.writeBool(offsets[6], object.voted);
 }
 
 User _userDeserialize(
@@ -127,8 +133,9 @@ User _userDeserialize(
   object.grade = reader.readStringOrNull(offsets[2]);
   object.lastName = reader.readStringOrNull(offsets[3]);
   object.password = reader.readStringOrNull(offsets[4]);
+  object.status = reader.readBoolOrNull(offsets[5]);
   object.userId = id;
-  object.voted = reader.readBoolOrNull(offsets[5]);
+  object.voted = reader.readBoolOrNull(offsets[6]);
   return object;
 }
 
@@ -150,6 +157,8 @@ P _userDeserializeProp<P>(
     case 4:
       return (reader.readStringOrNull(offset)) as P;
     case 5:
+      return (reader.readBoolOrNull(offset)) as P;
+    case 6:
       return (reader.readBoolOrNull(offset)) as P;
     default:
       throw IsarError('Unknown property with id $propertyId');
@@ -969,6 +978,31 @@ extension UserQueryFilter on QueryBuilder<User, User, QFilterCondition> {
     });
   }
 
+  QueryBuilder<User, User, QAfterFilterCondition> statusIsNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNull(
+        property: r'status',
+      ));
+    });
+  }
+
+  QueryBuilder<User, User, QAfterFilterCondition> statusIsNotNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNotNull(
+        property: r'status',
+      ));
+    });
+  }
+
+  QueryBuilder<User, User, QAfterFilterCondition> statusEqualTo(bool? value) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'status',
+        value: value,
+      ));
+    });
+  }
+
   QueryBuilder<User, User, QAfterFilterCondition> userIdEqualTo(Id value) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
@@ -1112,6 +1146,18 @@ extension UserQuerySortBy on QueryBuilder<User, User, QSortBy> {
     });
   }
 
+  QueryBuilder<User, User, QAfterSortBy> sortByStatus() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'status', Sort.asc);
+    });
+  }
+
+  QueryBuilder<User, User, QAfterSortBy> sortByStatusDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'status', Sort.desc);
+    });
+  }
+
   QueryBuilder<User, User, QAfterSortBy> sortByVoted() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'voted', Sort.asc);
@@ -1186,6 +1232,18 @@ extension UserQuerySortThenBy on QueryBuilder<User, User, QSortThenBy> {
     });
   }
 
+  QueryBuilder<User, User, QAfterSortBy> thenByStatus() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'status', Sort.asc);
+    });
+  }
+
+  QueryBuilder<User, User, QAfterSortBy> thenByStatusDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'status', Sort.desc);
+    });
+  }
+
   QueryBuilder<User, User, QAfterSortBy> thenByUserId() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'userId', Sort.asc);
@@ -1247,6 +1305,12 @@ extension UserQueryWhereDistinct on QueryBuilder<User, User, QDistinct> {
     });
   }
 
+  QueryBuilder<User, User, QDistinct> distinctByStatus() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'status');
+    });
+  }
+
   QueryBuilder<User, User, QDistinct> distinctByVoted() {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'voted');
@@ -1288,6 +1352,12 @@ extension UserQueryProperty on QueryBuilder<User, User, QQueryProperty> {
   QueryBuilder<User, String?, QQueryOperations> passwordProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'password');
+    });
+  }
+
+  QueryBuilder<User, bool?, QQueryOperations> statusProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'status');
     });
   }
 

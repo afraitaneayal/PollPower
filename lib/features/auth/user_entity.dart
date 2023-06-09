@@ -10,4 +10,5 @@ class User {
   String? arreaOfStudy;
   bool? voted;
   String? password;
+  bool? status;
 }

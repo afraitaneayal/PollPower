@@ -21,4 +21,9 @@ class IsarServices {
     final isar = await db;
     return await isar.writeTxn(() => isar.users.put(user));
   }
+
+  Future<User?> getUserStatus() async {
+    final isar = await db;
+    return isar.users.where().findFirst();
+  }
 }

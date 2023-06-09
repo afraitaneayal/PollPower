@@ -62,6 +62,15 @@ class _CustomFormState extends State<CustomForm> {
           });
         },
       ),
+      TextFormField(
+        decoration: const InputDecoration(labelText: "Password"),
+        obscureText: true,
+        onChanged: (String value) {
+          setState(() {
+            passwordValue = value;
+          });
+        },
+      ),
       _buildElevateButton()
     ];
   }
@@ -74,8 +83,11 @@ class _CustomFormState extends State<CustomForm> {
             ..fistName = firstNameValue
             ..lastName = lastNameValue
             ..grade = gradeValue
-            ..arreaOfStudy = areaOfStudyValue);
+            ..arreaOfStudy = areaOfStudyValue
+            ..password = passwordValue);
+
+          Navigator.pushNamed(context, "/login");
         },
-        child: "login".getWidget());
+        child: "Register".getWidget());
   }
 }

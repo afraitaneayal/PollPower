@@ -8,8 +8,8 @@ class SplashScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Future.delayed(const Duration(seconds: 3),
-    //     () => {Navigator.pushNamed(context, "/login")});
+    Future.delayed(const Duration(seconds: 3),
+        () => {Navigator.pushNamed(context, "/login")});
 
     return Container(
       color: AppColors.white,

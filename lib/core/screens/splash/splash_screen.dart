@@ -42,14 +42,12 @@ class SplashScreen extends StatelessWidget {
     );
   }
 
-  void switchUser(context) {
-    Navigator.pushNamed(context, "/status");
-  }
-
   verofyUser(context) async {
     final isar = await IsarServices().getUser();
     if (isar == null) {
-      switchUser(context);
+      Navigator.pushNamed(context, "/status");
+    } else {
+      Navigator.pushNamed(context, "/home");
     }
   }
 }

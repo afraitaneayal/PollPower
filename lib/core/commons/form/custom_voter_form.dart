@@ -86,8 +86,8 @@ class _CustomFormState extends State<CustomForm> {
             ..password = passwordValue
             ..status = true);
 
-          Future.delayed(const Duration(seconds: 2), () {
-            Navigator.pushNamed(context, "/login");
+          Future.delayed(const Duration(seconds: 0), () {
+            Navigator.pushNamed(context, "/home");
           });
         },
         child: "Register".getWidget());

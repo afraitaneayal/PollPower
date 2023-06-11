@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:poll_power/core/extensions/extension_on_strings.dart';
+import 'package:poll_power/services/firebase/firebase_service.dart';
 import '../../../features/auth/user_entity.dart';
 import '../../../services/user/isar_services.dart';
 
@@ -70,11 +71,11 @@ class _CustomFormState extends State<CustomForm> {
           });
         },
       ),
-      _buildElevateButton()
+      _buildElevateButton(context)
     ];
   }
 
-  Widget _buildElevateButton() {
+  Widget _buildElevateButton(context) {
     return ElevatedButton(
         onPressed: () async {
           final isarService = IsarServices();
@@ -86,10 +87,18 @@ class _CustomFormState extends State<CustomForm> {
             ..password = passwordValue
             ..status = true);
 
-          Future.delayed(const Duration(seconds: 0), () {
-            Navigator.pushNamed(context, "/home");
+          Future.delayed(const Duration(seconds: 0), () async {
+            final newCount = await FirebaseService().getUserCount();
+            final data = {"users": newCount + 1};
+
+            FirebaseService().addUser(data);
+            switchToHome(context);
           });
         },
         child: "Register".getWidget());
+  }
+
+  void switchToHome(context) {
+    Navigator.pushNamed(context, "/home");
   }
 }

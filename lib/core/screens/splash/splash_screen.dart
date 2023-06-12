@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:poll_power/core/app_assets/app_assets.dart';
 import 'package:poll_power/core/app_colors/app_colors.dart';
-import 'package:poll_power/core/extensions/extension_on_strings.dart';
+import 'package:poll_power/core/commons/widget/splash_widget.dart';
 import 'package:poll_power/services/user/isar_services.dart';
 
 class SplashScreen extends StatelessWidget {
@@ -13,33 +12,16 @@ class SplashScreen extends StatelessWidget {
       verofyUser(context);
     });
 
-    return Container(
-      color: AppColors.white,
-      child: _buildColumn(),
-    );
-  }
-
-  Widget _buildColumn() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.center,
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        const SizedBox(),
-        Column(
-          children: [
-            "PollPower".getWidget(fontSize: 40, fontWeight: FontWeight.w700),
-            const SizedBox(
-              height: 80,
-            ),
-            Image.asset(AppAssets.logo),
-          ],
+    return WillPopScope(
+        child: Scaffold(
+          body: Container(
+            color: AppColors.white,
+            child: const SplashWidget(),
+          ),
         ),
-        Container(
-          margin: const EdgeInsets.only(bottom: 25),
-          child: "Powered by Ayal & YayaHc".getWidget(fontSize: 12),
-        ),
-      ],
-    );
+        onWillPop: () async {
+          return false;
+        });
   }
 
   verofyUser(context) async {

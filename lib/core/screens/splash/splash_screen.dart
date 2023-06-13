@@ -21,9 +21,11 @@ class SplashScreen extends StatelessWidget {
   }
 
   verofyUser(context) async {
-    final isar = await IsarServices().getUser();
+    final isarUser = await IsarServices().getUser();
+    final isarCandidate = await IsarServices().getCandidate();
     final startStatus = await FirebaseService().getStartStatus();
-    if (isar == null) {
+
+    if (isarUser == null && isarCandidate == null) {
       Navigator.push(
           context,
           MaterialPageRoute(

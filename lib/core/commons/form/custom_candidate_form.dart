@@ -119,7 +119,7 @@ class _CustomFormState extends State<CustomCandidateForm> {
             FirebaseService().addUserCount(newCount);
             FirebaseService().createCandidate(candidateID, candidate);
 
-            // switchToHome(context);
+            switchToHome(context);
           });
         },
         child: "Register".getWidget());

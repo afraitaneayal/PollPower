@@ -13,7 +13,7 @@ class IsarServices {
   Future<Isar> openDB() async {
     final dir = (await getApplicationDocumentsDirectory()).path;
     if (Isar.instanceNames.isEmpty) {
-      return await Isar.open([UserSchema], directory: dir);
+      return await Isar.open([UserSchema, CandidateSchema], directory: dir);
     }
     return await Future.value(Isar.getInstance());
   }
@@ -31,5 +31,10 @@ class IsarServices {
   Future<User?> getUser() async {
     final isar = await db;
     return isar.users.where().findFirst();
+  }
+
+  Future<Candidate?> getCandidate() async {
+    final isar = await db;
+    return isar.candidates.where().findFirst();
   }
 }

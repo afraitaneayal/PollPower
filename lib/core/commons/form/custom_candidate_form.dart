@@ -14,6 +14,7 @@ class CustomCandidateForm extends StatefulWidget {
 
 class _CustomFormState extends State<CustomCandidateForm> {
   final _formKey = GlobalKey<FormState>();
+  final candidateID = const Uuid().v1();
 
   String? firstNameValue;
   String? lastNameValue;
@@ -22,7 +23,6 @@ class _CustomFormState extends State<CustomCandidateForm> {
   String? speetchValue;
   String? phoneNumberValue;
   int? voteCountValue;
-  final candidateID = const Uuid().v1();
 
   @override
   Widget build(BuildContext context) {
@@ -73,12 +73,12 @@ class _CustomFormState extends State<CustomCandidateForm> {
         obscureText: true,
         onChanged: (String value) {
           setState(() {
-            speetchValue = value;
+            phoneNumberValue = value;
           });
         },
       ),
       TextFormField(
-        decoration: const InputDecoration(labelText: "Password"),
+        decoration: const InputDecoration(labelText: "Speetch"),
         obscureText: true,
         onChanged: (String value) {
           setState(() {
@@ -93,8 +93,6 @@ class _CustomFormState extends State<CustomCandidateForm> {
   Widget _buildElevateButton(context) {
     return ElevatedButton(
         onPressed: () async {
-          //TODO send candidate data to firebase & local isarDB
-
           final isarService = IsarServices();
           await isarService.createCandidate(Candidate()
             ..fistName = firstNameValue
@@ -107,11 +105,21 @@ class _CustomFormState extends State<CustomCandidateForm> {
             ..status = true);
 
           Future.delayed(const Duration(seconds: 0), () async {
-            final newCount = await FirebaseService().getUserCount();
-            final data = {"users": newCount + 1};
-            FirebaseService().addUserCount(data);
- 
-            switchToHome(context);
+            final oldCount = await FirebaseService().getUserCount();
+            final newCount = {"users": oldCount + 1};
+            final candidate = {
+              "firstName": firstNameValue,
+              "lastName": lastNameValue,
+              "grade": gradeValue,
+              "areaOfStudy": areaOfStudyValue,
+              "speetch": speetchValue,
+              "phoneNumber": phoneNumberValue,
+              "voteCount": voteCountValue
+            };
+            FirebaseService().addUserCount(newCount);
+            FirebaseService().createCandidate(candidateID, candidate);
+
+            // switchToHome(context);
           });
         },
         child: "Register".getWidget());

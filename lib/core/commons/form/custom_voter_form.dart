@@ -77,9 +77,9 @@ class _CustomFormState extends State<CustomVoterForm> {
             ..status = true);
 
           Future.delayed(const Duration(seconds: 0), () async {
-            final newCount = await FirebaseService().getUserCount();
-            final data = {"users": newCount + 1};
-            FirebaseService().addUserCount(data);
+            final oldCount = await FirebaseService().getUserCount();
+            final newCount = {"users": oldCount + 1};
+            FirebaseService().addUserCount(newCount);
             switchToHome(context);
           });
         },

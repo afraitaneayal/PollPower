@@ -10,7 +10,21 @@ class FirebaseService {
         .then((value) => value.docs.first.data()['users']);
   }
 
+  Future<bool> getStartStatus() async {
+    return await db
+        .collection("start")
+        .get()
+        .then((value) => value.docs.first.data()['status']);
+  }
+
   void addUserCount(count) {
     db.collection("users").doc('count').set(count, SetOptions(merge: true));
+  }
+
+  void createCandidate(candidateID, candidate) {
+    db
+        .collection("candidates")
+        .doc(candidateID)
+        .set(candidate, SetOptions(merge: true));
   }
 }

@@ -10,7 +10,7 @@ class FirebaseService {
         .then((value) => value.docs.first.data()['users']);
   }
 
-  void addUser(count) {
+  void addUserCount(count) {
     db.collection("users").doc('count').set(count, SetOptions(merge: true));
   }
 }

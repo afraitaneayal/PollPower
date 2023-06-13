@@ -8,20 +8,14 @@ class SplashScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Future.delayed(const Duration(seconds: 3), () {
+    Future.delayed(const Duration(seconds: 2), () {
       verofyUser(context);
     });
 
-    return WillPopScope(
-        child: Scaffold(
-          body: Container(
-            color: AppColors.white,
-            child: const SplashWidget(),
-          ),
-        ),
-        onWillPop: () async {
-          return false;
-        });
+    return Container(
+      color: AppColors.white,
+      child: const SplashWidget(),
+    );
   }
 
   verofyUser(context) async {

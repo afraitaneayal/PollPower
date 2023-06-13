@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:poll_power/core/extensions/extension_on_strings.dart';
+import 'package:poll_power/features/auth/candidate_entity.dart';
 import 'package:poll_power/services/firebase/firebase_service.dart';
+import '../../../services/user/isar_services.dart';
+import 'package:uuid/uuid.dart';
 
 class CustomCandidateForm extends StatefulWidget {
   const CustomCandidateForm({super.key});
@@ -16,14 +19,18 @@ class _CustomFormState extends State<CustomCandidateForm> {
   String? lastNameValue;
   String? gradeValue;
   String? areaOfStudyValue;
-  String? speetch;
-  int? voteCount;
+  String? speetchValue;
+  String? phoneNumberValue;
+  int? voteCountValue;
+  final candidateID = const Uuid().v1();
 
   @override
   Widget build(BuildContext context) {
-    return Form(
-      key: _formKey,
-      child: Column(children: _buidFormField()),
+    return Material(
+      child: Form(
+        key: _formKey,
+        child: Column(children: _buidFormField()),
+      ),
     );
   }
 
@@ -62,11 +69,20 @@ class _CustomFormState extends State<CustomCandidateForm> {
         },
       ),
       TextFormField(
+        decoration: const InputDecoration(labelText: "Phone number"),
+        obscureText: true,
+        onChanged: (String value) {
+          setState(() {
+            speetchValue = value;
+          });
+        },
+      ),
+      TextFormField(
         decoration: const InputDecoration(labelText: "Password"),
         obscureText: true,
         onChanged: (String value) {
           setState(() {
-            speetch = value;
+            speetchValue = value;
           });
         },
       ),
@@ -77,13 +93,24 @@ class _CustomFormState extends State<CustomCandidateForm> {
   Widget _buildElevateButton(context) {
     return ElevatedButton(
         onPressed: () async {
-          //TODO send candidate data to firebase
+          //TODO send candidate data to firebase & local isarDB
+
+          final isarService = IsarServices();
+          await isarService.createCandidate(Candidate()
+            ..fistName = firstNameValue
+            ..lastName = lastNameValue
+            ..grade = gradeValue
+            ..arreaOfStudy = areaOfStudyValue
+            ..speetch = speetchValue
+            ..phoneNumber = phoneNumberValue
+            ..voteCount = voteCountValue
+            ..status = true);
 
           Future.delayed(const Duration(seconds: 0), () async {
             final newCount = await FirebaseService().getUserCount();
             final data = {"users": newCount + 1};
-
-            FirebaseService().addUser(data);
+            FirebaseService().addUserCount(data);
+ 
             switchToHome(context);
           });
         },

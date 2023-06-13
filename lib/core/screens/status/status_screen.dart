@@ -6,21 +6,26 @@ class StatusScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Column(
-        children: [
-          ElevatedButton(
-              onPressed: () {
-                Navigator.pushNamed(context, '/registerCandidate');
-              },
-              child: "Candidate".getWidget()),
-          ElevatedButton(
-              onPressed: () {
-                Navigator.pushNamed(context, '/registerVoter');
-              },
-              child: "Voter".getWidget())
-        ],
-      ),
-    );
+    return WillPopScope(
+        child: Scaffold(
+          body: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              ElevatedButton(
+                  onPressed: () {
+                    Navigator.pushNamed(context, '/registerCandidate');
+                  },
+                  child: "Candidate".getWidget()),
+              ElevatedButton(
+                  onPressed: () {
+                    Navigator.pushNamed(context, '/registerVoter');
+                  },
+                  child: "Voter".getWidget())
+            ],
+          ),
+        ),
+        onWillPop: () async {
+          return false;
+        });
   }
 }

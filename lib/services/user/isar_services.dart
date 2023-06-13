@@ -1,5 +1,6 @@
 import 'package:isar/isar.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:poll_power/features/auth/candidate_entity.dart';
 import 'package:poll_power/features/auth/user_entity.dart';
 
 class IsarServices {
@@ -20,6 +21,11 @@ class IsarServices {
   Future<void> createUser(User user) async {
     final isar = await db;
     return await isar.writeTxn(() => isar.users.put(user));
+  }
+
+  Future<void> createCandidate(Candidate candidate) async {
+    final isar = await db;
+    return await isar.writeTxn(() => isar.candidates.put(candidate));
   }
 
   Future<User?> getUser() async {

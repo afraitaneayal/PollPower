@@ -3,7 +3,6 @@ import 'package:poll_power/core/screens/register/register_candidate_screen.dart'
 import 'package:poll_power/core/screens/register/register_voter_screen.dart';
 import 'package:poll_power/core/screens/splash/splash_screen.dart';
 import 'core/app_routes/app_routes.dart';
-import 'core/screens/status/status_screen.dart';
 
 class AppRouter {
   static getRoutes() {
@@ -12,7 +11,6 @@ class AppRouter {
       AppRoutes.home: (context) => const HomeScreen(),
       AppRoutes.candidate: (context) => const RegisterCandidate(),
       AppRoutes.voter: (context) => const RegisterVoterScreen(),
-      AppRoutes.status: (context) => const StatusScreen()
     };
   }
 }

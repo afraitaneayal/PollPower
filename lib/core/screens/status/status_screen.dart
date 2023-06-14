@@ -14,25 +14,11 @@ class StatusScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return WillPopScope(
         child: Scaffold(
-            bottomNavigationBar: const CustomBottomAppBar(),
-            body: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 25),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const SizedBox(height: 50),
-                  const CustomAppBar(),
-                  const SizedBox(height: 100),
-                  _buildtext(),
-                  const SizedBox(height: 80),
-                  Container(
-                    alignment: Alignment.center,
-                    child: _buildButtonText(context),
-                  ),
-                ],
-              ),
-            )),
+            bottomNavigationBar:
+                CustomBottomAppBar(isUserOrCandidate: getUserOrCandidate()),
+            body: Container(
+                color: AppColors.background,
+                child: _buildStatusPadding(context))),
         onWillPop: () async {
           return false;
         });
@@ -68,5 +54,34 @@ class StatusScreen extends StatelessWidget {
             isActive: currentState),
       ],
     );
+  }
+
+  Widget _buildStatusPadding(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 25),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const SizedBox(height: 50),
+          const CustomAppBar(),
+          const SizedBox(height: 100),
+          _buildtext(),
+          const SizedBox(height: 80),
+          Container(
+            alignment: Alignment.center,
+            child: _buildButtonText(context),
+          ),
+        ],
+      ),
+    );
+  }
+
+  String getUserOrCandidate() {
+    if (status) {
+      return "Voter";
+    } else {
+      return "Candidats";
+    }
   }
 }

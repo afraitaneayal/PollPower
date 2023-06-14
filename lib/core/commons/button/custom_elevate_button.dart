@@ -32,7 +32,7 @@ class CustomElevateButton {
                       borderRadius: BorderRadius.circular(25.0)))),
           onPressed: () {},
           child: "$text".getWidget(
-              fontColor: Colors.white10,
+              fontColor: Colors.black12,
               fontSize: 34,
               fontWeight: FontWeight.w600));
     }

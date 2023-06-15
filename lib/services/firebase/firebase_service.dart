@@ -17,6 +17,10 @@ class FirebaseService {
         .then((value) => value.docs.first.data()['status']);
   }
 
+  Future<QuerySnapshot<Map<String, dynamic>>> getCandidateList() async {
+    return await db.collection("candidates").get();
+  }
+
   void addUserCount(count) {
     db.collection("users").doc('count').set(count, SetOptions(merge: true));
   }

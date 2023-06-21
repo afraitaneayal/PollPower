@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:poll_power/core/app_colors/app_colors.dart';
 import 'package:poll_power/core/commons/app_bar/custom_buttom_app_bar.dart';
-import 'package:poll_power/core/commons/button/custom_elevate_button.dart';
 import 'package:poll_power/core/commons/widget/custom_app_bar.dart';
 import 'package:poll_power/core/extensions/extension_on_strings.dart';
+import 'package:poll_power/services/firebase/firebase_service.dart';
+import '../../commons/button/custom_button.dart';
 
 class StatusScreen extends StatelessWidget {
   const StatusScreen({super.key, required this.status});
@@ -26,9 +27,9 @@ class StatusScreen extends StatelessWidget {
 
   Widget _buildButtonText(context) {
     if (status) {
-      return _buildColumn(context: context, currentState: true);
+      return _buildColumn(context: context);
     } else {
-      return _buildColumn(context: context, currentState: false);
+      return _buildColumn(context: context);
     }
   }
 
@@ -37,23 +38,29 @@ class StatusScreen extends StatelessWidget {
         fontColor: AppColors.black, fontSize: 42, fontWeight: FontWeight.w600);
   }
 
-  Widget _buildColumn({BuildContext? context, bool? currentState}) {
-    final currentCandidateState = !currentState!;
-    return Column(
-      children: [
-        CustomElevateButton().getElevateButton(
-            context: context,
-            route: "registerCandidate",
-            text: "Candidate",
-            isActive: currentCandidateState),
-        const SizedBox(height: 43),
-        CustomElevateButton().getElevateButton(
-            context: context,
-            route: "registerVoter",
-            text: "Voter",
-            isActive: currentState),
-      ],
-    );
+  Widget _buildColumn({BuildContext? context}) {
+    final service = FirebaseService();
+    return StreamBuilder<bool>(
+        stream: service.getStartStatusWithStream(),
+        initialData: false,
+        builder: (context, statusSnapshot) {
+          final data = statusSnapshot.data!;
+          return Column(
+            children: [
+              CustomButton().getCustomButton(
+                  context: context,
+                  route: "registerCandidate",
+                  text: "Candidate",
+                  isActive: !data),
+              const SizedBox(height: 43),
+              CustomButton().getCustomButton(
+                  context: context,
+                  route: "registerVoter",
+                  text: "Voter",
+                  isActive: data),
+            ],
+          );
+        });
   }
 
   Widget _buildStatusPadding(BuildContext context) {

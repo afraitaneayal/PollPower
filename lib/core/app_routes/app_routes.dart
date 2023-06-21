@@ -3,5 +3,6 @@ class AppRoutes {
   static String home = "/home";
   static String voter = "/registerVoter";
   static String candidate = "/registerCandidate";
+  static String admin = "/admin";
   static String status = "/status";
 }

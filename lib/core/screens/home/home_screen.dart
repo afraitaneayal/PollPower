@@ -1,19 +1,26 @@
 import 'package:flutter/material.dart';
-import 'package:poll_power/core/commons/widget/profile_pic_widget.dart';
 
 class HomeScreen extends StatelessWidget {
-  const HomeScreen({super.key});
+  const HomeScreen({super.key, required this.candidateData});
+
+  final List candidateData;
 
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
-        child: const Scaffold(
-          body: ProfilPic(
-            firstLetter: 'AC',
-          ),
-        ),
+        child: Scaffold(body: _buildHomeContainer()),
         onWillPop: () async {
           return false;
+        });
+  }
+
+  Widget _buildHomeContainer() {
+    return ListView.builder(
+        itemCount: candidateData.length,
+        itemBuilder: (context, index) {
+          return ListTile(
+            title: Text(candidateData[index]['firstName']),
+          );
         });
   }
 }

@@ -26,10 +26,15 @@ class _CustomFormState extends State<CustomCandidateForm> {
 
   @override
   Widget build(BuildContext context) {
-    return Material(
-      child: Form(
-        key: _formKey,
-        child: Column(children: _buidFormField()),
+    return Scaffold(
+      body: Container(
+        alignment: Alignment.center,
+        child: Form(
+            key: _formKey,
+            child: Container(
+              alignment: Alignment.center,
+              child: Column(children: _buidFormField()),
+            )),
       ),
     );
   }
@@ -70,7 +75,7 @@ class _CustomFormState extends State<CustomCandidateForm> {
       ),
       TextFormField(
         decoration: const InputDecoration(labelText: "Phone number"),
-        obscureText: true,
+        obscureText: false,
         onChanged: (String value) {
           setState(() {
             phoneNumberValue = value;
@@ -79,7 +84,7 @@ class _CustomFormState extends State<CustomCandidateForm> {
       ),
       TextFormField(
         decoration: const InputDecoration(labelText: "Speetch"),
-        obscureText: true,
+        obscureText: false,
         onChanged: (String value) {
           setState(() {
             speetchValue = value;

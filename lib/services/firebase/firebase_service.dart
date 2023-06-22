@@ -13,11 +13,6 @@ class FirebaseService {
     return statusData.docs.first.data()['status'];
   }
 
-  changeStartStatus(bool status) async {
-    final finalStatus = !status;
-    await db.collection("start").doc("start").update({"status": finalStatus});
-  }
-
   Stream<bool> getStartStatusWithStream() async* {
     final snapData = db.collection("start").snapshots();
     await for (final eachStatus in snapData) {
@@ -28,15 +23,21 @@ class FirebaseService {
     }
   }
 
-  Future<QuerySnapshot<Map<String, dynamic>>> getCandidateList() async {
-    return await db.collection("candidates").get();
+  Future<List> getCandidates() async {
+    final snapData = await db.collection("candidates").get();
+    return snapData.docs;
   }
 
-  void addUserCount(count) {
+  void changeStartStatus(bool status) async {
+    final finalStatus = !status;
+    await db.collection("start").doc("start").update({"status": finalStatus});
+  }
+
+  void addUserCount(Map<String, int> count) {
     db.collection("users").doc('count').set(count, SetOptions(merge: true));
   }
 
-  void createCandidate(candidateID, candidate) {
+  void createCandidate(String candidateID, Map<String, Object?> candidate) {
     db
         .collection("candidates")
         .doc(candidateID)

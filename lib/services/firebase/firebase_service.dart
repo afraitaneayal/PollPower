@@ -13,6 +13,11 @@ class FirebaseService {
     return statusData.docs.first.data()['status'];
   }
 
+  changeStartStatus(bool status) async {
+    final finalStatus = !status;
+    await db.collection("start").doc("start").update({"status": finalStatus});
+  }
+
   Stream<bool> getStartStatusWithStream() async* {
     final snapData = db.collection("start").snapshots();
     await for (final eachStatus in snapData) {

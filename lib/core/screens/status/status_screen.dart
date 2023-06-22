@@ -25,20 +25,12 @@ class StatusScreen extends StatelessWidget {
         });
   }
 
-  Widget _buildButtonText(context) {
-    if (status) {
-      return _buildColumn(context: context);
-    } else {
-      return _buildColumn(context: context);
-    }
-  }
-
   Widget _buildtext() {
     return "What are you ?".getWidget(
         fontColor: AppColors.black, fontSize: 42, fontWeight: FontWeight.w600);
   }
 
-  Widget _buildColumn({BuildContext? context}) {
+  Widget _buildColumn() {
     final service = FirebaseService();
     return StreamBuilder<bool>(
         stream: service.getStartStatusWithStream(),
@@ -71,13 +63,13 @@ class StatusScreen extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const SizedBox(height: 50),
-          const CustomAppBar(),
+          CustomAppBar(status: status),
           const SizedBox(height: 100),
           _buildtext(),
           const SizedBox(height: 80),
           Container(
             alignment: Alignment.center,
-            child: _buildButtonText(context),
+            child: _buildColumn(),
           ),
         ],
       ),

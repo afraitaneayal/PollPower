@@ -74,19 +74,12 @@ class _CustomFormState extends State<CustomVoterForm> {
             ..lastName = lastNameValue
             ..grade = gradeValue
             ..arreaOfStudy = areaOfStudyValue
+            ..voted = false
             ..status = true);
 
-          Future.delayed(const Duration(seconds: 0), () async {
-            final oldCount = await FirebaseService().getUserCount();
-            final newCount = {"users": oldCount + 1};
-            FirebaseService().addUserCount(newCount);
-            switchToHome(context);
-          });
+          FirebaseService().addUserCount();
+          Navigator.pushNamed(context, "/home");
         },
         child: "Register".getWidget());
-  }
-
-  void switchToHome(context) {
-    Navigator.pushNamed(context, "/home");
   }
 }

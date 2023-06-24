@@ -48,7 +48,7 @@ class CandidateScreen extends StatelessWidget {
               SizedBox(height: context.getScreenHeight() * 5 / 100),
               fullName.getWidget(fontSize: 42, fontWeight: FontWeight.w700),
               SizedBox(height: context.getScreenHeight() * 10 / 100),
-              speetch!.getWidget(fontSize: 15),
+              speetch!.getWidget(fontSize: 20),
               SizedBox(height: context.getScreenHeight() * 10 / 100),
               ElevatedButton(
                   style: ButtonStyle(

@@ -110,8 +110,6 @@ class _CustomFormState extends State<CustomCandidateForm> {
             ..status = true);
 
           Future.delayed(const Duration(seconds: 0), () async {
-            final oldCount = await FirebaseService().getUserCount();
-            final newCount = {"users": oldCount + 1};
             final candidate = {
               "firstName": firstNameValue,
               "lastName": lastNameValue,
@@ -121,7 +119,7 @@ class _CustomFormState extends State<CustomCandidateForm> {
               "phoneNumber": phoneNumberValue,
               "voteCount": voteCountValue
             };
-            FirebaseService().addUserCount(newCount);
+            FirebaseService().addUserCount();
             FirebaseService().createCandidate(candidateID, candidate);
 
             switchToHome(context);

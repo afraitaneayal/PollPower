@@ -42,7 +42,7 @@ class CandidateCard extends StatelessWidget {
           padding: EdgeInsets.symmetric(
             horizontal: context.getScreenWidth() / 14,
           ),
-          height: context.getScreenHeight() / 2,
+          height: context.getScreenHeight() * 30 / 100,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.center,

@@ -37,9 +37,10 @@ class HomeScreen extends StatelessWidget {
 
   Widget _buildHomeContainer(BuildContext context) {
     return SingleChildScrollView(
-        padding: EdgeInsets.symmetric(
-            horizontal: context.getScreenWidth() * 3 / 100,
-            vertical: context.getScreenHeight() * 1 / 100),
+        padding: EdgeInsets.only(
+          left: context.getScreenWidth() * 3 / 100,
+          right: context.getScreenWidth() * 3 / 100,
+        ),
         child: _buildColumn(context));
   }
 
@@ -51,7 +52,7 @@ class HomeScreen extends StatelessWidget {
       const CustomAppBar(),
       _buildCurentUserCard(context, user!),
       SizedBox(
-        height: context.getScreenHeight() * 80 / 100,
+        height: context.getScreenHeight() * 70 / 100,
         child: ListView.builder(
             itemCount: candidateData.length,
             itemBuilder: (context, index) {
@@ -68,21 +69,35 @@ class HomeScreen extends StatelessWidget {
   }
 
   Widget _buildCurentUserCard(BuildContext context, User user) {
-    final profilLetters = user.fistName![0];
-    final fullName = user.fistName!;
+    final profilLetters = user.fistName![0] + user.lastName![0];
+    final isVoted = user.voted!;
     return Container(
+      width: context.getScreenWidth() * 90 / 100,
       decoration: BoxDecoration(
           color: AppColors.purple, borderRadius: BorderRadius.circular(10)),
       margin: const EdgeInsets.symmetric(vertical: 25, horizontal: 7),
+      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
       height: context.getScreenHeight() * 15 / 100,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
+      child: Wrap(
+        spacing: 20,
         children: [
           ProfilPic(firstLetter: profilLetters),
-          fullName.getWidget(
-              fontSize: 40,
-              fontWeight: FontWeight.w600,
-              fontColor: AppColors.white)
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              "Welcome back"
+                  .getWidget(fontSize: 20, fontColor: AppColors.white),
+              (user.fistName! + user.lastName!).getWidget(
+                  fontSize: 40,
+                  fontWeight: FontWeight.w600,
+                  fontColor: AppColors.white),
+              isVoted
+                  ? "vous avez deja vote"
+                      .getWidget(fontSize: 20, fontColor: AppColors.white)
+                  : "vous avez pas encore vote"
+                      .getWidget(fontSize: 20, fontColor: AppColors.white)
+            ],
+          )
         ],
       ),
     );

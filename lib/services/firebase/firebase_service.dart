@@ -33,8 +33,10 @@ class FirebaseService {
     await db.collection("start").doc("start").update({"status": finalStatus});
   }
 
-  void addUserCount(Map<String, int> count) {
-    db.collection("users").doc('count').set(count, SetOptions(merge: true));
+  void addUserCount() async {
+    final oldCount = await FirebaseService().getUserCount();
+    final newCount = {"users": oldCount + 1};
+    db.collection("users").doc('count').set(newCount, SetOptions(merge: true));
   }
 
   void createCandidate(String candidateID, Map<String, Object?> candidate) {

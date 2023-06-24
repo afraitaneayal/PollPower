@@ -11,7 +11,7 @@ class SplashScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    verofyUser(context);
+    verifyUser(context);
 
     return Container(
       color: AppColors.white,
@@ -19,7 +19,7 @@ class SplashScreen extends StatelessWidget {
     );
   }
 
-  void verofyUser(context) async {
+  void verifyUser(context) async {
     final isarUser = await IsarServices().getUser();
     final isarCandidate = await IsarServices().getCandidate();
     final startStatus = await FirebaseService().getStartStatus();

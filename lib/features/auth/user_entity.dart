@@ -9,6 +9,5 @@ class User {
   String? grade;
   String? arreaOfStudy;
   bool? voted;
-  String? password;
   bool? status;
 }

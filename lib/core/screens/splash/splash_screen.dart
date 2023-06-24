@@ -1,53 +1,44 @@
 import 'package:flutter/material.dart';
-import 'package:poll_power/core/app_assets/app_assets.dart';
 import 'package:poll_power/core/app_colors/app_colors.dart';
-import 'package:poll_power/core/extensions/extension_on_strings.dart';
+import 'package:poll_power/core/commons/widget/splash_widget.dart';
+import 'package:poll_power/core/screens/home/home_screen.dart';
+import 'package:poll_power/core/screens/status/status_screen.dart';
 import 'package:poll_power/services/user/isar_services.dart';
+import '../../../services/firebase/firebase_service.dart';
 
 class SplashScreen extends StatelessWidget {
   const SplashScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    Future.delayed(const Duration(seconds: 3), () {
-      verofyUser(context);
-    });
+    verofyUser(context);
 
     return Container(
       color: AppColors.white,
-      child: _buildColumn(),
+      child: const SplashWidget(),
     );
   }
 
-  Widget _buildColumn() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.center,
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        const SizedBox(),
-        Column(
-          children: [
-            "PollPower".getWidget(fontSize: 40, fontWeight: FontWeight.w700),
-            const SizedBox(
-              height: 80,
-            ),
-            Image.asset(AppAssets.logo),
-          ],
-        ),
-        Container(
-          margin: const EdgeInsets.only(bottom: 25),
-          child: "Powered by Ayal & YayaHc".getWidget(fontSize: 12),
-        ),
-      ],
-    );
-  }
+  void verofyUser(context) async {
+    final isarUser = await IsarServices().getUser();
+    final isarCandidate = await IsarServices().getCandidate();
+    final startStatus = await FirebaseService().getStartStatus();
+    final candidateData = await FirebaseService().getCandidates();
+    final userCount = await FirebaseService().getUserCount();
 
-  verofyUser(context) async {
-    final isar = await IsarServices().getUser();
-    if (isar == null) {
-      Navigator.pushNamed(context, "/status");
+    if (isarUser == null && isarCandidate == null) {
+      Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) => StatusScreen(status: startStatus)));
     } else {
-      Navigator.pushNamed(context, "/home");
+      Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) => HomeScreen(
+                    candidateData: candidateData,
+                    userCount: userCount,
+                  )));
     }
   }
 }

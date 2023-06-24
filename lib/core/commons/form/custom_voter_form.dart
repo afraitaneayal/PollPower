@@ -4,21 +4,20 @@ import 'package:poll_power/services/firebase/firebase_service.dart';
 import '../../../features/auth/user_entity.dart';
 import '../../../services/user/isar_services.dart';
 
-class CustomForm extends StatefulWidget {
-  const CustomForm({super.key});
+class CustomVoterForm extends StatefulWidget {
+  const CustomVoterForm({super.key});
 
   @override
-  State<CustomForm> createState() => _CustomFormState();
+  State<CustomVoterForm> createState() => _CustomFormState();
 }
 
-class _CustomFormState extends State<CustomForm> {
+class _CustomFormState extends State<CustomVoterForm> {
   final _formKey = GlobalKey<FormState>();
 
   String? firstNameValue;
   String? lastNameValue;
   String? gradeValue;
   String? areaOfStudyValue;
-  String? passwordValue;
 
   @override
   Widget build(BuildContext context) {
@@ -62,15 +61,6 @@ class _CustomFormState extends State<CustomForm> {
           });
         },
       ),
-      TextFormField(
-        decoration: const InputDecoration(labelText: "Password"),
-        obscureText: true,
-        onChanged: (String value) {
-          setState(() {
-            passwordValue = value;
-          });
-        },
-      ),
       _buildElevateButton(context)
     ];
   }
@@ -84,14 +74,12 @@ class _CustomFormState extends State<CustomForm> {
             ..lastName = lastNameValue
             ..grade = gradeValue
             ..arreaOfStudy = areaOfStudyValue
-            ..password = passwordValue
             ..status = true);
 
           Future.delayed(const Duration(seconds: 0), () async {
-            final newCount = await FirebaseService().getUserCount();
-            final data = {"users": newCount + 1};
-
-            FirebaseService().addUser(data);
+            final oldCount = await FirebaseService().getUserCount();
+            final newCount = {"users": oldCount + 1};
+            FirebaseService().addUserCount(newCount);
             switchToHome(context);
           });
         },

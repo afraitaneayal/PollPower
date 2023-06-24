@@ -36,6 +36,7 @@ class SplashScreen extends StatelessWidget {
           context,
           MaterialPageRoute(
               builder: (context) => HomeScreen(
+                    user: isarUser,
                     candidateData: candidateData,
                     userCount: userCount,
                   )));

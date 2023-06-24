@@ -1,28 +1,35 @@
 import 'package:flutter/material.dart';
-import 'package:poll_power/core/app_assets/app_constants.dart';
 import 'package:poll_power/core/app_colors/app_colors.dart';
-import 'package:poll_power/core/commons/app_bar/custom_buttom_app_bar.dart';
-import 'package:poll_power/core/commons/widget/candidate_card.dart';
 import 'package:poll_power/core/commons/app_bar/custom_app_bar.dart';
+import 'package:poll_power/core/commons/widget/candidate_card.dart';
+import 'package:poll_power/core/commons/widget/profile_pic_widget.dart';
 import 'package:poll_power/core/extensions/extension_on_screen_size.dart';
+import 'package:poll_power/core/extensions/extension_on_strings.dart';
+
+import '../../../features/auth/user_entity.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen(
-      {super.key, required this.candidateData, required this.userCount});
+      {super.key,
+      required this.candidateData,
+      required this.userCount,
+      required this.user});
 
   final List candidateData;
   final int userCount;
+  final User? user;
 
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
         child: Scaffold(
-            backgroundColor: AppColors.background,
-            body: _buildHomeContainer(context),
-            bottomNavigationBar: CustomBottomAppBar(
-              title: "Vote Started",
-              content: AppConstants.lorem,
-            )),
+          backgroundColor: AppColors.background,
+          body: _buildHomeContainer(context),
+          // bottomNavigationBar: CustomBottomAppBar(
+          //   title: "Vote Started",
+          //   content: AppConstants.lorem,
+          // )
+        ),
         onWillPop: () async {
           return false;
         });
@@ -31,7 +38,7 @@ class HomeScreen extends StatelessWidget {
   Widget _buildHomeContainer(BuildContext context) {
     return SingleChildScrollView(
         padding: EdgeInsets.symmetric(
-            horizontal: context.getScreenWidth() * 5 / 100,
+            horizontal: context.getScreenWidth() * 3 / 100,
             vertical: context.getScreenHeight() * 1 / 100),
         child: _buildColumn(context));
   }
@@ -39,9 +46,10 @@ class HomeScreen extends StatelessWidget {
   Widget _buildColumn(BuildContext context) {
     return Column(children: [
       SizedBox(
-        height: context.getScreenHeight() * 7.5 / 100,
+        height: context.getScreenHeight() * 4 / 100,
       ),
       const CustomAppBar(),
+      _buildCurentUserCard(context, user!),
       SizedBox(
         height: context.getScreenHeight() * 80 / 100,
         child: ListView.builder(
@@ -57,5 +65,26 @@ class HomeScreen extends StatelessWidget {
             }),
       )
     ]);
+  }
+
+  Widget _buildCurentUserCard(BuildContext context, User user) {
+    final profilLetters = user.fistName![0];
+    final fullName = user.fistName!;
+    return Container(
+      decoration: BoxDecoration(
+          color: AppColors.purple, borderRadius: BorderRadius.circular(10)),
+      margin: const EdgeInsets.symmetric(vertical: 25, horizontal: 7),
+      height: context.getScreenHeight() * 15 / 100,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        children: [
+          ProfilPic(firstLetter: profilLetters),
+          fullName.getWidget(
+              fontSize: 40,
+              fontWeight: FontWeight.w600,
+              fontColor: AppColors.white)
+        ],
+      ),
+    );
   }
 }

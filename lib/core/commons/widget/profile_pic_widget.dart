@@ -13,7 +13,7 @@ class ProfilPic extends StatelessWidget {
   Widget build(BuildContext context) {
     return CircleAvatar(
       radius: context.getScreenWidth() / 10,
-      backgroundColor: randomColors(),
+      backgroundColor: const Color.fromARGB(200, 255, 23, 7),
       child: firstLetter.getWidget(
           fontSize: 28,
           fontWeight: FontWeight.w600,

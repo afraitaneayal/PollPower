@@ -51,7 +51,7 @@ class CandidateCard extends StatelessWidget {
               const SizedBox(
                 height: 20,
               ),
-              _buildSpeetch(),
+              // _buildSpeetch(),
               const SizedBox(
                 height: 20,
               ),
@@ -73,14 +73,14 @@ class CandidateCard extends StatelessWidget {
     );
   }
 
-  Widget _buildSpeetch() {
-    return Container(
-      child: speetch!.getWidget(
-        fontColor: AppColors.white,
-        fontSize: 24,
-      ),
-    );
-  }
+  // Widget _buildSpeetch() {
+  //   return Container(
+  //     child: speetch!.getWidget(
+  //       fontColor: AppColors.white,
+  //       fontSize: 24,
+  //     ),
+  //   );
+  // }
 
   Widget _buildVoteCount({BuildContext? context, int? voteCount}) {
     final votePercent = voteCount! * 100 / userCount;

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:poll_power/core/app_colors/app_colors.dart';
+import 'package:poll_power/core/extensions/extension_on_screen_size.dart';
 import 'package:poll_power/core/extensions/extension_on_strings.dart';
 import 'dart:math' as math;
 
@@ -11,9 +12,10 @@ class ProfilPic extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CircleAvatar(
+      radius: context.getScreenWidth() / 10,
       backgroundColor: randomColors(),
       child: firstLetter.getWidget(
-          fontSize: 12,
+          fontSize: 28,
           fontWeight: FontWeight.w600,
           fontColor: AppColors.white),
     );

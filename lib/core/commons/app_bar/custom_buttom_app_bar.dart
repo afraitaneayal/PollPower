@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:poll_power/core/app_assets/app_assets.dart';
+import 'package:poll_power/core/app_assets/app_constants.dart';
 import 'package:poll_power/core/app_colors/app_colors.dart';
 import 'package:poll_power/core/extensions/extension_on_strings.dart';
 
 class CustomBottomAppBar extends StatelessWidget {
-  const CustomBottomAppBar({super.key, required this.isUserOrCandidate});
+  const CustomBottomAppBar(
+      {super.key, required this.title, required this.content});
 
-  final String isUserOrCandidate;
+  final String? title;
+  final String? content;
 
   @override
   Widget build(BuildContext context) {
@@ -21,13 +24,12 @@ class CustomBottomAppBar extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        "$isUserOrCandidate registration is open."
+        "$title registration is open."
             .getWidget(fontSize: 24, fontWeight: FontWeight.w600),
         const SizedBox(
           height: 20,
         ),
-        "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s"
-            .getWidget(fontSize: 18)
+        AppConstants.lorem.getWidget(fontSize: 18)
       ],
     );
   }

@@ -5,9 +5,7 @@ import 'package:poll_power/core/extensions/extension_on_strings.dart';
 import 'package:poll_power/core/screens/admin/admin_screen.dart';
 
 class CustomAppBar extends StatelessWidget {
-  const CustomAppBar({super.key, required this.status});
-
-  final bool status;
+  const CustomAppBar({super.key});
 
   @override
   Widget build(BuildContext context) {

@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:poll_power/core/app_assets/app_constants.dart';
 import 'package:poll_power/core/app_colors/app_colors.dart';
 import 'package:poll_power/core/commons/app_bar/custom_buttom_app_bar.dart';
-import 'package:poll_power/core/commons/widget/custom_app_bar.dart';
+import 'package:poll_power/core/commons/app_bar/custom_app_bar.dart';
 import 'package:poll_power/core/extensions/extension_on_strings.dart';
 import 'package:poll_power/services/firebase/firebase_service.dart';
 import '../../commons/button/custom_button.dart';
@@ -15,8 +16,10 @@ class StatusScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return WillPopScope(
         child: Scaffold(
-            bottomNavigationBar:
-                CustomBottomAppBar(isUserOrCandidate: getUserOrCandidate()),
+            bottomNavigationBar: CustomBottomAppBar(
+              title: getUserOrCandidate(),
+              content: AppConstants.lorem,
+            ),
             body: Container(
                 color: AppColors.background,
                 child: _buildStatusPadding(context))),
@@ -63,7 +66,7 @@ class StatusScreen extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const SizedBox(height: 50),
-          CustomAppBar(status: status),
+          const CustomAppBar(),
           const SizedBox(height: 100),
           _buildtext(),
           const SizedBox(height: 80),

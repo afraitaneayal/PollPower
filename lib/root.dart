@@ -11,7 +11,7 @@ class Root extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      initialRoute: '/home',
+      initialRoute: '/splash',
       routes: AppRouter.getRoutes(),
     );
   }

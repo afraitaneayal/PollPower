@@ -15,10 +15,10 @@ class CandidateCard extends StatelessWidget {
       required this.voteCount});
 
   final int userCount;
-  final String? firstName;
-  final String? lastName;
-  final String? speetch;
-  final int? voteCount;
+  final String firstName;
+  final String lastName;
+  final String speetch;
+  final int voteCount;
 
   @override
   Widget build(BuildContext context) {
@@ -47,7 +47,7 @@ class CandidateCard extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              _buildRow(context, firstName!, lastName!),
+              _buildRow(context, firstName, lastName),
               const SizedBox(
                 height: 20,
               ),

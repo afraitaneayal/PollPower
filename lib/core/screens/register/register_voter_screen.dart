@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import '../../commons/form/custom_voter_form.dart';
 
 class RegisterVoterScreen extends StatelessWidget {
   const RegisterVoterScreen({super.key});
@@ -7,7 +6,7 @@ class RegisterVoterScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const Scaffold(
-      body: CustomVoterForm(),
+      body: Placeholder(),
     );
   }
 }

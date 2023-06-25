@@ -17,7 +17,7 @@ class HomeScreen extends StatelessWidget {
 
   final List candidateData;
   final int userCount;
-  final User? user;
+  final User user;
 
   @override
   Widget build(BuildContext context) {
@@ -50,7 +50,7 @@ class HomeScreen extends StatelessWidget {
         height: context.getScreenHeight() * 4 / 100,
       ),
       const CustomAppBar(),
-      _buildCurentUserCard(context, user!),
+      _buildCurentUserCard(context, user),
       SizedBox(
         height: context.getScreenHeight() * 70 / 100,
         child: ListView.builder(

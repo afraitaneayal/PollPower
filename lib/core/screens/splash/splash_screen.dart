@@ -30,7 +30,11 @@ class SplashScreen extends StatelessWidget {
       Navigator.push(
           context,
           MaterialPageRoute(
-              builder: (context) => StatusScreen(status: startStatus)));
+              builder: (context) => StatusScreen(
+                    status: startStatus,
+                    candidateData: candidateData,
+                    userCount: userCount,
+                  )));
     } else {
       Navigator.push(
           context,

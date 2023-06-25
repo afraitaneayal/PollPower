@@ -1,12 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:poll_power/core/extensions/extension_on_strings.dart';
+import 'package:poll_power/core/screens/home/home_screen.dart';
 import 'package:poll_power/features/auth/candidate_entity.dart';
 import 'package:poll_power/services/firebase/firebase_service.dart';
 import '../../../services/user/isar_services.dart';
 import 'package:uuid/uuid.dart';
 
 class CustomCandidateForm extends StatefulWidget {
-  const CustomCandidateForm({super.key});
+  const CustomCandidateForm(
+      {super.key, required this.candidateData, required this.userCount});
+
+  final List<dynamic> candidateData;
+  final int userCount;
 
   @override
   State<CustomCandidateForm> createState() => _CustomFormState();
@@ -95,11 +100,11 @@ class _CustomFormState extends State<CustomCandidateForm> {
     ];
   }
 
-  Widget _buildElevateButton(context) {
+  Widget _buildElevateButton(BuildContext context) {
     return ElevatedButton(
         onPressed: () async {
           final isarService = IsarServices();
-          await isarService.createCandidate(Candidate()
+          final user = await isarService.createCandidate(Candidate()
             ..fistName = firstNameValue
             ..lastName = lastNameValue
             ..grade = gradeValue
@@ -122,13 +127,14 @@ class _CustomFormState extends State<CustomCandidateForm> {
             FirebaseService().addUserCount();
             FirebaseService().createCandidate(candidateID, candidate);
 
-            switchToHome(context);
+            Navigator.push(context, MaterialPageRoute(builder: (context) {
+              return HomeScreen(
+                  candidateData: widget.candidateData,
+                  userCount: widget.userCount,
+                  user: user);
+            }));
           });
         },
-        child: "Register".getWidget());
-  }
-
-  void switchToHome(context) {
-    Navigator.pushNamed(context, "/home");
+        child: "Login".getWidget());
   }
 }

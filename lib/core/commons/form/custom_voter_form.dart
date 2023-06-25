@@ -3,9 +3,14 @@ import 'package:poll_power/core/extensions/extension_on_strings.dart';
 import 'package:poll_power/services/firebase/firebase_service.dart';
 import '../../../features/auth/user_entity.dart';
 import '../../../services/user/isar_services.dart';
+import '../../screens/home/home_screen.dart';
 
 class CustomVoterForm extends StatefulWidget {
-  const CustomVoterForm({super.key});
+  const CustomVoterForm(
+      {super.key, required this.candidateData, required this.userCount});
+
+  final List<dynamic> candidateData;
+  final int userCount;
 
   @override
   State<CustomVoterForm> createState() => _CustomFormState();
@@ -14,16 +19,18 @@ class CustomVoterForm extends StatefulWidget {
 class _CustomFormState extends State<CustomVoterForm> {
   final _formKey = GlobalKey<FormState>();
 
-  String? firstNameValue;
-  String? lastNameValue;
-  String? gradeValue;
-  String? areaOfStudyValue;
+  late String firstNameValue;
+  late String lastNameValue;
+  late String gradeValue;
+  late String areaOfStudyValue;
 
   @override
   Widget build(BuildContext context) {
-    return Form(
-      key: _formKey,
-      child: Column(children: _buidFormField()),
+    return Scaffold(
+      body: Form(
+        key: _formKey,
+        child: Column(children: _buidFormField()),
+      ),
     );
   }
 
@@ -77,8 +84,15 @@ class _CustomFormState extends State<CustomVoterForm> {
             ..voted = false
             ..status = true);
 
+          final user = await isarService.getUser();
+
           FirebaseService().addUserCount();
-          Navigator.pushNamed(context, "/home");
+          Navigator.push(context, MaterialPageRoute(builder: (context) {
+            return HomeScreen(
+                candidateData: widget.candidateData,
+                userCount: widget.userCount,
+                user: user);
+          }));
         },
         child: "Register".getWidget());
   }

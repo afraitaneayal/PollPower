@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:poll_power/routes.dart';
+import 'package:poll_power/core/screens/splash/splash_screen.dart';
 import 'package:poll_power/services/user/isar_services.dart';
 
 class Root extends StatelessWidget {
@@ -9,10 +9,9 @@ class Root extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return const MaterialApp(
       debugShowCheckedModeBanner: false,
-      initialRoute: '/splash',
-      routes: AppRouter.getRoutes(),
+      home: SplashScreen(),
     );
   }
 }

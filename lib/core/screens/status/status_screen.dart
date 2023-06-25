@@ -8,7 +8,15 @@ import 'package:poll_power/services/firebase/firebase_service.dart';
 import '../../commons/button/custom_button.dart';
 
 class StatusScreen extends StatelessWidget {
-  const StatusScreen({super.key, required this.status});
+  const StatusScreen({
+    super.key,
+    required this.status,
+    required this.userCount,
+    required this.candidateData,
+  });
+
+  final int userCount;
+  final List<dynamic> candidateData;
 
   final bool status;
 
@@ -42,16 +50,18 @@ class StatusScreen extends StatelessWidget {
           final data = statusSnapshot.data!;
           return Column(
             children: [
-              CustomButton().getCustomButton(
-                  context: context,
+              CustomButton(
                   route: "registerCandidate",
                   text: "Candidate",
+                  candidateData: candidateData,
+                  userCount: userCount,
                   isActive: !data),
               const SizedBox(height: 43),
-              CustomButton().getCustomButton(
-                  context: context,
+              CustomButton(
                   route: "registerVoter",
                   text: "Voter",
+                  candidateData: candidateData,
+                  userCount: userCount,
                   isActive: data),
             ],
           );

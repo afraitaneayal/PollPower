@@ -18,17 +18,17 @@ class IsarServices {
     return await Future.value(Isar.getInstance());
   }
 
-  Future<void> createUser(User user) async {
+  Future createUser(User user) async {
     final isar = await db;
     return await isar.writeTxn(() => isar.users.put(user));
   }
 
-  Future<void> createCandidate(Candidate candidate) async {
+  Future createCandidate(Candidate candidate) async {
     final isar = await db;
     return await isar.writeTxn(() => isar.candidates.put(candidate));
   }
 
-  Future<User?> getUser() async {
+  getUser() async {
     final isar = await db;
     return isar.users.where().findFirst();
   }

@@ -129,10 +129,11 @@ class _CustomFormState extends State<CustomCandidateForm> {
           FirebaseService().createCandidate(candidateID, candidateData);
 
           final candidate = await isarService.getCandidate();
+          final newCandidate = await FirebaseService().getCandidates();
 
           Navigator.push(context, MaterialPageRoute(builder: (context) {
             return HomeScreen(
-                candidateData: widget.candidateData,
+                candidateData: newCandidate,
                 userCount: widget.userCount,
                 user: candidate);
           }));

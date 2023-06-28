@@ -26,24 +26,37 @@ class SplashScreen extends StatelessWidget {
     final candidateData = await FirebaseService().getCandidates();
     final userCount = await FirebaseService().getUserCount();
 
-    if (isarUser == null && isarCandidate == null) {
-      Navigator.push(
-          context,
-          MaterialPageRoute(
-              builder: (context) => StatusScreen(
-                    status: startStatus,
-                    candidateData: candidateData,
-                    userCount: userCount,
-                  )));
-    } else {
-      Navigator.push(
-          context,
-          MaterialPageRoute(
-              builder: (context) => HomeScreen(
-                    user: isarUser,
-                    candidateData: candidateData,
-                    userCount: userCount,
-                  )));
+    switch (isarUser) {
+      case null:
+        if (isarCandidate == null) {
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => StatusScreen(
+                        status: startStatus,
+                        candidateData: candidateData,
+                        userCount: userCount,
+                      )));
+        } else {
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => HomeScreen(
+                        user: isarCandidate,
+                        candidateData: candidateData,
+                        userCount: userCount,
+                      )));
+        }
+        break;
+      default:
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => HomeScreen(
+                      user: isarUser,
+                      candidateData: candidateData,
+                      userCount: userCount,
+                    )));
     }
   }
 }

@@ -28,12 +28,12 @@ class IsarServices {
     return await isar.writeTxn(() => isar.candidates.put(candidate));
   }
 
-  getUser() async {
+  dynamic getUser() async {
     final isar = await db;
     return isar.users.where().findFirst();
   }
 
-  Future<Candidate?> getCandidate() async {
+  dynamic getCandidate() async {
     final isar = await db;
     return isar.candidates.where().findFirst();
   }

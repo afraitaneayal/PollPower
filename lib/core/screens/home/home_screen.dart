@@ -6,8 +6,6 @@ import 'package:poll_power/core/commons/widget/profile_pic_widget.dart';
 import 'package:poll_power/core/extensions/extension_on_screen_size.dart';
 import 'package:poll_power/core/extensions/extension_on_strings.dart';
 
-import '../../../features/auth/user_entity.dart';
-
 class HomeScreen extends StatelessWidget {
   const HomeScreen(
       {super.key,
@@ -17,7 +15,7 @@ class HomeScreen extends StatelessWidget {
 
   final List candidateData;
   final int userCount;
-  final User user;
+  final dynamic user;
 
   @override
   Widget build(BuildContext context) {
@@ -68,7 +66,7 @@ class HomeScreen extends StatelessWidget {
     ]);
   }
 
-  Widget _buildCurentUserCard(BuildContext context, User user) {
+  Widget _buildCurentUserCard(BuildContext context, user) {
     final profilLetters = user.fistName![0] + user.lastName![0];
     final isVoted = user.voted!;
     return Container(
@@ -87,7 +85,7 @@ class HomeScreen extends StatelessWidget {
             children: [
               "Welcome back"
                   .getWidget(fontSize: 20, fontColor: AppColors.white),
-              (user.fistName! + user.lastName!).getWidget(
+              ("${user.fistName!} ${user.lastName!}").getWidget(
                   fontSize: 40,
                   fontWeight: FontWeight.w600,
                   fontColor: AppColors.white),

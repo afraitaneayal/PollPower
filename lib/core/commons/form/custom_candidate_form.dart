@@ -100,40 +100,42 @@ class _CustomFormState extends State<CustomCandidateForm> {
     ];
   }
 
-  Widget _buildElevateButton(BuildContext context) {
+  Widget _buildElevateButton(context) {
     return ElevatedButton(
         onPressed: () async {
           final isarService = IsarServices();
-          final user = await isarService.createCandidate(Candidate()
+          await isarService.createCandidate(Candidate()
             ..fistName = firstNameValue
             ..lastName = lastNameValue
             ..grade = gradeValue
             ..arreaOfStudy = areaOfStudyValue
             ..speetch = speetchValue
             ..phoneNumber = phoneNumberValue
-            ..voteCount = voteCountValue
+            ..voteCount = 0
+            ..voted = false
             ..status = true);
 
-          Future.delayed(const Duration(seconds: 0), () async {
-            final candidate = {
-              "firstName": firstNameValue,
-              "lastName": lastNameValue,
-              "grade": gradeValue,
-              "areaOfStudy": areaOfStudyValue,
-              "speetch": speetchValue,
-              "phoneNumber": phoneNumberValue,
-              "voteCount": voteCountValue
-            };
-            FirebaseService().addUserCount();
-            FirebaseService().createCandidate(candidateID, candidate);
+          final candidateData = {
+            "firstName": firstNameValue,
+            "lastName": lastNameValue,
+            "grade": gradeValue,
+            "areaOfStudy": areaOfStudyValue,
+            "speetch": speetchValue,
+            "phoneNumber": phoneNumberValue,
+            "voteCount": 0
+          };
 
-            Navigator.push(context, MaterialPageRoute(builder: (context) {
-              return HomeScreen(
-                  candidateData: widget.candidateData,
-                  userCount: widget.userCount,
-                  user: user);
-            }));
-          });
+          FirebaseService().addUserCount();
+          FirebaseService().createCandidate(candidateID, candidateData);
+
+          final candidate = await isarService.getCandidate();
+
+          Navigator.push(context, MaterialPageRoute(builder: (context) {
+            return HomeScreen(
+                candidateData: widget.candidateData,
+                userCount: widget.userCount,
+                user: candidate);
+          }));
         },
         child: "Login".getWidget());
   }

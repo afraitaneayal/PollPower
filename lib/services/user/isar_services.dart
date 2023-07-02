@@ -37,4 +37,12 @@ class IsarServices {
     final isar = await db;
     return isar.candidates.where().findFirst();
   }
+
+  Future<bool?> getUserVotedState() async {
+    final isar = await db;
+    final data = await isar.users.where().findFirst();
+    return data?.voted;
+  }
+
+  void updateUserVotedState() {}
 }

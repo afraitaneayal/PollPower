@@ -12,9 +12,11 @@ class CandidateCard extends StatelessWidget {
       required this.firstName,
       required this.lastName,
       required this.speetch,
+      required this.isVoted,
       required this.voteCount});
 
   final int userCount;
+  final bool isVoted;
   final String firstName;
   final String lastName;
   final String speetch;
@@ -31,6 +33,7 @@ class CandidateCard extends StatelessWidget {
                       firstName: firstName,
                       lastName: lastName,
                       speetch: speetch,
+                      isVoted: isVoted,
                       voteCount: voteCount)));
         },
         child: Container(

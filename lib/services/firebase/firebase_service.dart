@@ -45,4 +45,6 @@ class FirebaseService {
         .doc(candidateID)
         .set(candidate, SetOptions(merge: true));
   }
+
+  void updateCandidateVoteCount() {}
 }

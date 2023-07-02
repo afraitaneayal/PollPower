@@ -5,6 +5,7 @@ import 'package:poll_power/core/commons/widget/candidate_card.dart';
 import 'package:poll_power/core/commons/widget/profile_pic_widget.dart';
 import 'package:poll_power/core/extensions/extension_on_screen_size.dart';
 import 'package:poll_power/core/extensions/extension_on_strings.dart';
+import 'package:poll_power/features/auth/user_entity.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen(
@@ -22,7 +23,7 @@ class HomeScreen extends StatelessWidget {
     return WillPopScope(
         child: Scaffold(
           backgroundColor: AppColors.background,
-          body: _buildHomeContainer(context),
+          body: _buildHomeContainer(context, user),
           // bottomNavigationBar: CustomBottomAppBar(
           //   title: "Vote Started",
           //   content: AppConstants.lorem,
@@ -33,16 +34,16 @@ class HomeScreen extends StatelessWidget {
         });
   }
 
-  Widget _buildHomeContainer(BuildContext context) {
+  Widget _buildHomeContainer(BuildContext context, User user) {
     return SingleChildScrollView(
         padding: EdgeInsets.only(
           left: context.getScreenWidth() * 3 / 100,
           right: context.getScreenWidth() * 3 / 100,
         ),
-        child: _buildColumn(context));
+        child: _buildColumn(context, user));
   }
 
-  Widget _buildColumn(BuildContext context) {
+  Widget _buildColumn(BuildContext context, User user) {
     return Column(children: [
       SizedBox(
         height: context.getScreenHeight() * 4 / 100,
@@ -56,6 +57,7 @@ class HomeScreen extends StatelessWidget {
             itemBuilder: (context, index) {
               return CandidateCard(
                 userCount: userCount,
+                isVoted: user.voted!,
                 firstName: candidateData[index]['firstName'],
                 lastName: candidateData[index]['lastName'],
                 speetch: candidateData[index]['speetch'],

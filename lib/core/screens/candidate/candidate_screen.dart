@@ -5,6 +5,7 @@ import 'package:poll_power/core/commons/app_bar/custom_buttom_app_bar.dart';
 import 'package:poll_power/core/commons/widget/profile_pic_widget.dart';
 import 'package:poll_power/core/extensions/extension_on_screen_size.dart';
 import 'package:poll_power/core/extensions/extension_on_strings.dart';
+import 'package:poll_power/services/user/isar_services.dart';
 
 class CandidateScreen extends StatelessWidget {
   const CandidateScreen(
@@ -12,12 +13,15 @@ class CandidateScreen extends StatelessWidget {
       required this.firstName,
       required this.lastName,
       required this.speetch,
+      required this.isVoted,
       required this.voteCount});
 
   final String? firstName;
+  final bool isVoted;
   final String? lastName;
   final String? speetch;
   final int? voteCount;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -33,6 +37,7 @@ class CandidateScreen extends StatelessWidget {
   Widget _buildColumn(BuildContext context) {
     final profilLetters = firstName![0] + lastName![0];
     final fullName = "$firstName $lastName";
+
     return Container(
         alignment: Alignment.center,
         padding: EdgeInsets.symmetric(
@@ -50,19 +55,24 @@ class CandidateScreen extends StatelessWidget {
               SizedBox(height: context.getScreenHeight() * 10 / 100),
               speetch!.getWidget(fontSize: 20),
               SizedBox(height: context.getScreenHeight() * 10 / 100),
-              ElevatedButton(
-                  style: ButtonStyle(
-                      backgroundColor:
-                          MaterialStatePropertyAll(AppColors.black)),
-                  onPressed: () {},
-                  child: Container(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 20, vertical: 10),
-                    child: "Vote".getWidget(
-                        fontSize: 50,
-                        fontWeight: FontWeight.w700,
-                        fontColor: AppColors.white),
-                  ))
+              isVoted
+                  ? ElevatedButton(
+                      style: ButtonStyle(
+                          backgroundColor:
+                              MaterialStatePropertyAll(AppColors.black)),
+                      onPressed: () async {
+                        IsarServices().updateUserVotedState();
+                        Navigator.pop(context);
+                      },
+                      child: Container(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 20, vertical: 10),
+                        child: "Vote".getWidget(
+                            fontSize: 50,
+                            fontWeight: FontWeight.w700,
+                            fontColor: AppColors.white),
+                      ))
+                  : Container()
             ],
           ),
         ));

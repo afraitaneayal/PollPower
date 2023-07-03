@@ -46,5 +46,9 @@ class FirebaseService {
         .set(candidate, SetOptions(merge: true));
   }
 
-  void updateCandidateVoteCount() {}
+  Future<void> updateCandidateVoteCount(dynamic candidate) async {
+    final data = db.collection("candidates");
+    final candidateID = candidate["candidateID"];
+    data.doc(candidateID).update(candidate);
+  }
 }

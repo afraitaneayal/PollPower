@@ -12,9 +12,17 @@ class CandidateCard extends StatelessWidget {
       required this.firstName,
       required this.lastName,
       required this.speetch,
+      required this.areaOfStudy,
+      required this.grade,
+      required this.candidateID,
+      required this.phoneNumber,
       required this.isVoted,
       required this.voteCount});
 
+  final String areaOfStudy;
+  final String grade;
+  final String candidateID;
+  final String phoneNumber;
   final int userCount;
   final bool isVoted;
   final String firstName;
@@ -32,12 +40,16 @@ class CandidateCard extends StatelessWidget {
                   builder: (context) => CandidateScreen(
                       firstName: firstName,
                       lastName: lastName,
+                      candidateID: candidateID,
                       speetch: speetch,
+                      grade: grade,
+                      areaOfStudy: areaOfStudy,
+                      phoneNumber: phoneNumber,
                       isVoted: isVoted,
                       voteCount: voteCount)));
         },
         child: Container(
-          margin: const EdgeInsets.only(bottom: 20),
+          margin: const EdgeInsets.only(bottom: 2),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(10),
             color: AppColors.sky,

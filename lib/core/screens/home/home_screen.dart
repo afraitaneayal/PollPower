@@ -5,7 +5,6 @@ import 'package:poll_power/core/commons/widget/candidate_card.dart';
 import 'package:poll_power/core/commons/widget/profile_pic_widget.dart';
 import 'package:poll_power/core/extensions/extension_on_screen_size.dart';
 import 'package:poll_power/core/extensions/extension_on_strings.dart';
-import 'package:poll_power/features/auth/user_entity.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen(
@@ -34,7 +33,7 @@ class HomeScreen extends StatelessWidget {
         });
   }
 
-  Widget _buildHomeContainer(BuildContext context, User user) {
+  Widget _buildHomeContainer(BuildContext context, dynamic user) {
     return SingleChildScrollView(
         padding: EdgeInsets.only(
           left: context.getScreenWidth() * 3 / 100,
@@ -43,7 +42,7 @@ class HomeScreen extends StatelessWidget {
         child: _buildColumn(context, user));
   }
 
-  Widget _buildColumn(BuildContext context, User user) {
+  Widget _buildColumn(BuildContext context, dynamic user) {
     return Column(children: [
       SizedBox(
         height: context.getScreenHeight() * 4 / 100,
@@ -58,8 +57,12 @@ class HomeScreen extends StatelessWidget {
               return CandidateCard(
                 userCount: userCount,
                 isVoted: user.voted!,
+                candidateID: candidateData[index]['candidateID'],
                 firstName: candidateData[index]['firstName'],
                 lastName: candidateData[index]['lastName'],
+                phoneNumber: candidateData[index]['phoneNumber'],
+                grade: candidateData[index]['grade'],
+                areaOfStudy: candidateData[index]['areaOfStudy'],
                 speetch: candidateData[index]['speetch'],
                 voteCount: candidateData[index]['voteCount'] ?? 0,
               );

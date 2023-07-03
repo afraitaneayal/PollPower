@@ -122,7 +122,8 @@ class _CustomFormState extends State<CustomCandidateForm> {
             "areaOfStudy": areaOfStudyValue,
             "speetch": speetchValue,
             "phoneNumber": phoneNumberValue,
-            "voteCount": 0
+            "voteCount": 0,
+            "candidateID": candidateID
           };
 
           FirebaseService().addUserCount();

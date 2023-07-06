@@ -23,6 +23,28 @@ class FirebaseService {
     }
   }
 
+  Future<QueryDocumentSnapshot<Map<String, dynamic>>> getWinner() async {
+    final snapData = await db.collection("candidate").get();
+    var winner = snapData.docs.first;
+    for (var element in snapData.docs) {
+      if (element.data()['voteCount'] > winner.data()['voteCount']) {
+        winner = element.data() as QueryDocumentSnapshot<Map<String, dynamic>>;
+      }
+    }
+    return winner;
+  }
+
+  Stream<bool> getPollState() async* {
+    final snapData = db.collection("start").snapshots();
+    await for (final eachSnapData in snapData) {
+      if (eachSnapData.docChanges.isNotEmpty) {
+        final firstData =
+            eachSnapData.docChanges.first.doc.data()!["pollStatus"] as bool;
+        yield firstData;
+      }
+    }
+  }
+
   Stream<List<QueryDocumentSnapshot<Map<String, dynamic>>>>
       getCandidates() async* {
     final snapData = db.collection("candidates").snapshots();

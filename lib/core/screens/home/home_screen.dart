@@ -6,6 +6,8 @@ import 'package:poll_power/core/commons/widget/candidate_card.dart';
 import 'package:poll_power/core/commons/widget/profile_pic_widget.dart';
 import 'package:poll_power/core/extensions/extension_on_screen_size.dart';
 import 'package:poll_power/core/extensions/extension_on_strings.dart';
+import 'package:poll_power/core/screens/winner/winner_screen.dart';
+import 'package:poll_power/services/firebase/firebase_service.dart';
 import '../../../features/auth/device_state.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -44,41 +46,22 @@ class HomeScreen extends StatelessWidget {
   }
 
   Widget _buildColumn(BuildContext context, dynamic user) {
-    return Column(children: [
-      SizedBox(
-        height: context.getScreenHeight() * 5 / 100,
-      ),
-      const CustomAppBar(),
-      _buildCurentUserCard(context, user),
-      SizedBox(
-          height: context.getScreenHeight() * 70 / 100,
-          child:
-              StreamBuilder<List<QueryDocumentSnapshot<Map<String, dynamic>>>>(
-            stream: candidateData,
-            initialData: const [],
-            builder: (context, snapshot) {
-              final data = snapshot.data!;
-              return ListView.builder(
-                  scrollDirection: Axis.horizontal,
-                  itemCount: data.length,
-                  itemBuilder: (context, index) {
-                    return CandidateCard(
-                      userCount: userCount,
-                      user: user,
-                      cardColor: data[index]['cardColor'],
-                      candidateID: data[index]['candidateID'],
-                      firstName: data[index]['firstName'],
-                      lastName: data[index]['lastName'],
-                      phoneNumber: data[index]['phoneNumber'],
-                      grade: data[index]['grade'],
-                      areaOfStudy: data[index]['areaOfStudy'],
-                      speetch: data[index]['speetch'],
-                      voteCount: data[index]['voteCount'],
-                    );
-                  });
-            },
-          ))
-    ]);
+    final service = FirebaseService();
+    return StreamBuilder(
+        stream: service.getPollState(),
+        initialData: false,
+        builder: (context, snapshot) {
+          final snapshotData = snapshot.data!;
+          return Column(children: [
+            SizedBox(
+              height: context.getScreenHeight() * 5 / 100,
+            ),
+            const CustomAppBar(),
+            _buildCurentUserCard(context, user),
+            _buildTimer(),
+            snapshotData ? _buildSizeBox(context) : _buildWinner(context),
+          ]);
+        });
   }
 
   Widget _buildCurentUserCard(BuildContext context, user) {
@@ -94,24 +77,89 @@ class HomeScreen extends StatelessWidget {
         spacing: 20,
         children: [
           ProfilPic(firstLetter: profilLetters),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              "Welcome back"
-                  .getWidget(fontSize: 20, fontColor: AppColors.white),
-              ("${user.fistName!} ${user.lastName!}").getWidget(
-                  fontSize: 40,
-                  fontWeight: FontWeight.w600,
-                  fontColor: AppColors.white),
-              deviceState!.voted!
-                  ? "vous avez deja vote"
-                      .getWidget(fontSize: 20, fontColor: AppColors.white)
-                  : "vous avez pas encore vote"
-                      .getWidget(fontSize: 20, fontColor: AppColors.white)
-            ],
-          )
+          _buildCurentUserCardColumn()
         ],
       ),
     );
+  }
+
+  Widget _buildSizeBox(BuildContext context) {
+    return SizedBox(
+        height: context.getScreenHeight() * 70 / 100,
+        child: StreamBuilder<List<QueryDocumentSnapshot<Map<String, dynamic>>>>(
+          stream: candidateData,
+          initialData: const [],
+          builder: (context, snapshot) {
+            final data = snapshot.data!;
+            return ListView.builder(
+                scrollDirection: Axis.horizontal,
+                itemCount: data.length,
+                itemBuilder: (context, index) {
+                  return CandidateCard(
+                    userCount: userCount,
+                    user: user,
+                    cardColor: data[index]['cardColor'],
+                    candidateID: data[index]['candidateID'],
+                    firstName: data[index]['firstName'],
+                    lastName: data[index]['lastName'],
+                    phoneNumber: data[index]['phoneNumber'],
+                    grade: data[index]['grade'],
+                    areaOfStudy: data[index]['areaOfStudy'],
+                    speetch: data[index]['speetch'],
+                    voteCount: data[index]['voteCount'],
+                  );
+                });
+          },
+        ));
+  }
+
+  Widget _buildCurentUserCardColumn() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        "Welcome back".getWidget(fontSize: 20, fontColor: AppColors.white),
+        ("${user.fistName!} ${user.lastName!}").getWidget(
+            fontSize: 40,
+            fontWeight: FontWeight.w600,
+            fontColor: AppColors.white),
+        deviceState!.voted!
+            ? "vous avez deja vote"
+                .getWidget(fontSize: 20, fontColor: AppColors.white)
+            : "vous avez pas encore vote"
+                .getWidget(fontSize: 20, fontColor: AppColors.white)
+      ],
+    );
+  }
+
+  Widget _buildTimer() {
+    final service = FirebaseService();
+    return StreamBuilder(
+        stream: service.getPollState(),
+        initialData: false,
+        builder: (context, snapshot) {
+          final snapshotData = snapshot.data!;
+          return snapshotData
+              ? Container(
+                  child: "Timer".getWidget(fontSize: 24),
+                )
+              : Container(
+                  child: "Fin de l'election".getWidget(fontSize: 24),
+                );
+        });
+  }
+
+  Widget _buildWinner(BuildContext context) {
+    return TextButton(
+        onPressed: () async {
+          final winner = await FirebaseService().getWinner();
+          // ignore: use_build_context_synchronously
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => WinnerScrenn(
+                        winner: winner,
+                      )));
+        },
+        child: "Voir le winner".getWidget(fontSize: 24));
   }
 }

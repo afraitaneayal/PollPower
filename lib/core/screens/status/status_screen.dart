@@ -20,8 +20,7 @@ class StatusScreen extends StatelessWidget {
 
   final int userCount;
   final DeviceState? deviceState;
-  final Stream<List<QueryDocumentSnapshot<Map<String, dynamic>>>>?
-      candidateData;
+  final Stream<List<QueryDocumentSnapshot<Map<String, dynamic>>>> candidateData;
 
   final bool status;
 

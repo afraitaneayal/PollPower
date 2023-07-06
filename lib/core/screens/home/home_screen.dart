@@ -16,8 +16,7 @@ class HomeScreen extends StatelessWidget {
       required this.deviceState,
       required this.user});
 
-  final Stream<List<QueryDocumentSnapshot<Map<String, dynamic>>>>?
-      candidateData;
+  final Stream<List<QueryDocumentSnapshot<Map<String, dynamic>>>> candidateData;
   final int userCount;
   final DeviceState? deviceState;
   final dynamic user;
@@ -56,6 +55,7 @@ class HomeScreen extends StatelessWidget {
           child:
               StreamBuilder<List<QueryDocumentSnapshot<Map<String, dynamic>>>>(
             stream: candidateData,
+            initialData: const [],
             builder: (context, snapshot) {
               final data = snapshot.data!;
               return ListView.builder(

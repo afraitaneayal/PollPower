@@ -14,8 +14,7 @@ class CustomVoterForm extends StatefulWidget {
       required this.candidateData,
       required this.userCount});
 
-  final Stream<List<QueryDocumentSnapshot<Map<String, dynamic>>>>?
-      candidateData;
+  final Stream<List<QueryDocumentSnapshot<Map<String, dynamic>>>> candidateData;
   final int userCount;
   final DeviceState? deviceState;
 

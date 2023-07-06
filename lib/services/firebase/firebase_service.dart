@@ -23,7 +23,7 @@ class FirebaseService {
     }
   }
 
-  Stream<List<QueryDocumentSnapshot<Map<String, dynamic>>>>?
+  Stream<List<QueryDocumentSnapshot<Map<String, dynamic>>>>
       getCandidates() async* {
     final snapData = db.collection("candidates").snapshots();
     await for (final candidateStreamItem in snapData) {

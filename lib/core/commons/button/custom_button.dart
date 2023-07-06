@@ -21,8 +21,7 @@ class CustomButton extends StatelessWidget {
   final String route;
   final String text;
   final int userCount;
-  final Stream<List<QueryDocumentSnapshot<Map<String, dynamic>>>>?
-      candidateData;
+  final Stream<List<QueryDocumentSnapshot<Map<String, dynamic>>>> candidateData;
 
   @override
   Widget build(BuildContext context) {

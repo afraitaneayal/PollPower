@@ -111,6 +111,7 @@ class CandidateScreen extends StatelessWidget {
           };
           await FirebaseService().updateCandidateVoteCount(candidate);
           await IsarServices().updateDeviceVotedState();
+          final newDeviceState = await IsarServices().getDeviceState();
 
           final candidateData = FirebaseService().getCandidates();
           final userCount = await FirebaseService().getUserCount();
@@ -120,7 +121,7 @@ class CandidateScreen extends StatelessWidget {
               context,
               MaterialPageRoute(
                   builder: (context) => HomeScreen(
-                        deviceState: device,
+                        deviceState: newDeviceState,
                         candidateData: candidateData,
                         user: user,
                         userCount: userCount,

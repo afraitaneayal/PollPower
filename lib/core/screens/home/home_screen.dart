@@ -47,7 +47,7 @@ class HomeScreen extends StatelessWidget {
 
   Widget _buildColumn(BuildContext context, dynamic user) {
     final service = FirebaseService();
-    return StreamBuilder(
+    return StreamBuilder<bool>(
         stream: service.getPollState(),
         initialData: false,
         builder: (context, snapshot) {
@@ -58,7 +58,7 @@ class HomeScreen extends StatelessWidget {
             ),
             const CustomAppBar(),
             _buildCurentUserCard(context, user),
-            _buildTimer(),
+            _buildTimer(snapshotData),
             snapshotData ? _buildSizeBox(context) : _buildWinner(context),
           ]);
         });
@@ -131,21 +131,12 @@ class HomeScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildTimer() {
-    final service = FirebaseService();
-    return StreamBuilder(
-        stream: service.getPollState(),
-        initialData: false,
-        builder: (context, snapshot) {
-          final snapshotData = snapshot.data!;
-          return snapshotData
-              ? Container(
-                  child: "Timer".getWidget(fontSize: 24),
-                )
-              : Container(
-                  child: "Fin de l'election".getWidget(fontSize: 24),
-                );
-        });
+  Widget _buildTimer(snapshotData) {
+    return snapshotData
+        ? Container()
+        : Container(
+            child: "Fin de l'election".getWidget(fontSize: 24),
+          );
   }
 
   Widget _buildWinner(BuildContext context) {

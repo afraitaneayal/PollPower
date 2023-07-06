@@ -13,6 +13,17 @@ class FirebaseService {
     return statusData.docs.first.data()['status'];
   }
 
+  Future<Map<String, dynamic>> getWinner() async {
+    final snapData = await db.collection("candidates").get();
+    var winner = snapData.docs.first.data();
+    for (var element in snapData.docs) {
+      if (element.data()['voteCount'] > winner['voteCount']) {
+        winner = element.data();
+      }
+    }
+    return winner;
+  }
+
   Stream<bool> getStartStatusWithStream() async* {
     final snapData = db.collection("start").snapshots();
     await for (final eachStatus in snapData) {
@@ -23,23 +34,12 @@ class FirebaseService {
     }
   }
 
-  Future<QueryDocumentSnapshot<Map<String, dynamic>>> getWinner() async {
-    final snapData = await db.collection("candidate").get();
-    var winner = snapData.docs.first;
-    for (var element in snapData.docs) {
-      if (element.data()['voteCount'] > winner.data()['voteCount']) {
-        winner = element.data() as QueryDocumentSnapshot<Map<String, dynamic>>;
-      }
-    }
-    return winner;
-  }
-
   Stream<bool> getPollState() async* {
-    final snapData = db.collection("start").snapshots();
+    final snapData = db.collection("start").snapshots().asBroadcastStream();
     await for (final eachSnapData in snapData) {
       if (eachSnapData.docChanges.isNotEmpty) {
         final firstData =
-            eachSnapData.docChanges.first.doc.data()!["pollStatus"] as bool;
+            eachSnapData.docChanges.first.doc.data()?['pollStatus'] as bool;
         yield firstData;
       }
     }

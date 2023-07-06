@@ -5,4 +5,5 @@ class AppAssets {
   static String eagle = 'assets/icons/eagle.png';
   static String sad = 'assets/icons/sad.png';
   static String happy = 'assets/icons/happy.png';
+  static String winner = "assets/icons/winner.png";
 }

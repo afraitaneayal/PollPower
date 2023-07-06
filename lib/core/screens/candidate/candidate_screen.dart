@@ -93,7 +93,7 @@ class CandidateScreen extends StatelessWidget {
         onPressed: () {},
         child: Container(
           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-          child: "Vote".getWidget(
+          child: "Deja vote".getWidget(
               fontSize: 50,
               fontWeight: FontWeight.w700,
               fontColor: const Color.fromARGB(31, 92, 86, 86)),
@@ -135,7 +135,7 @@ class CandidateScreen extends StatelessWidget {
         },
         child: Container(
           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-          child: "Vote".getWidget(
+          child: "Voter".getWidget(
               fontSize: 50,
               fontWeight: FontWeight.w700,
               fontColor: AppColors.white),

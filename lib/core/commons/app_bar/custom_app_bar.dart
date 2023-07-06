@@ -24,7 +24,7 @@ class CustomAppBar extends StatelessWidget {
               },
               child: "PollPower".getWidget(
                   fontColor: AppColors.black,
-                  fontSize: 37,
+                  fontSize: 30,
                   fontWeight: FontWeight.w600)),
         )
       ],

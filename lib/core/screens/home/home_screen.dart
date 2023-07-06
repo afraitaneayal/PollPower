@@ -161,32 +161,47 @@ class HomeScreen extends StatelessWidget {
     return snapshotData
         ? const TimerWidget()
         : Container(
-            child: "Fin de l'election".getWidget(fontSize: 24),
+            child: "".getWidget(fontSize: 24),
           );
   }
 
   Widget _buildWinner(BuildContext context) {
-    return TextButton(
-        style: ButtonStyle(
-            fixedSize: MaterialStateProperty.all(const Size(300, 120)),
-            backgroundColor: MaterialStateProperty.all(AppColors.black),
-            shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(25.0)))),
-        onPressed: () async {
-          final winner = await FirebaseService().getWinner();
-          // ignore: use_build_context_synchronously
-          Navigator.push(
-              context,
-              MaterialPageRoute(
-                  builder: (context) => WinnerScrenn(
-                        winner: winner,
-                      )));
-        },
-        child: "Voir le Winner".getWidget(
-            fontSize: 24,
-            fontColor: AppColors.white,
-            fontWeight: FontWeight.w600));
+    return Column(
+      children: [
+        TextButton(
+            style: ButtonStyle(
+                fixedSize: MaterialStateProperty.all(const Size(300, 120)),
+                backgroundColor: MaterialStateProperty.all(AppColors.black),
+                shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                    RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(15.0)))),
+            onPressed: () async {
+              final winner = await FirebaseService().getWinner();
+              // ignore: use_build_context_synchronously
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => WinnerScrenn(
+                            winner: winner,
+                          )));
+            },
+            child: "Voir le vainqueur".getWidget(
+                fontSize: 24,
+                fontColor: AppColors.white,
+                fontWeight: FontWeight.w600)),
+        SizedBox(height: context.getScreenHeight() * 5 / 100),
+        Container(
+          width: context.getScreenWidth() * 90 / 100,
+          height: context.getScreenHeight() * 30 / 100,
+          decoration: BoxDecoration(
+              color: AppColors.gray,
+              borderRadius: const BorderRadius.all(Radius.circular(10))),
+          alignment: Alignment.center,
+          child: "Fin de l'election"
+              .getWidget(fontColor: AppColors.black, fontSize: 24),
+        )
+      ],
+    );
   }
 
   Widget _buildAppBar(BuildContext context) {

@@ -56,7 +56,7 @@ class HomeScreen extends StatelessWidget {
             itemBuilder: (context, index) {
               return CandidateCard(
                 userCount: userCount,
-                isVoted: user.voted!,
+                user: user,
                 candidateID: candidateData[index]['candidateID'],
                 firstName: candidateData[index]['firstName'],
                 lastName: candidateData[index]['lastName'],

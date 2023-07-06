@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:poll_power/core/extensions/extension_on_strings.dart';
+import 'package:poll_power/features/auth/device_state.dart';
 import 'package:poll_power/services/firebase/firebase_service.dart';
 import '../../../features/auth/user_entity.dart';
 import '../../../services/user/isar_services.dart';
@@ -76,6 +77,7 @@ class _CustomFormState extends State<CustomVoterForm> {
     return ElevatedButton(
         onPressed: () async {
           final isarService = IsarServices();
+          await isarService.createDevice(DeviceState()..voted = false);
           await isarService.createUser(User()
             ..fistName = firstNameValue
             ..lastName = lastNameValue

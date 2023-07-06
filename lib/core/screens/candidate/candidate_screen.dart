@@ -5,12 +5,14 @@ import 'package:poll_power/core/commons/app_bar/custom_buttom_app_bar.dart';
 import 'package:poll_power/core/commons/widget/profile_pic_widget.dart';
 import 'package:poll_power/core/extensions/extension_on_strings.dart';
 import 'package:poll_power/core/screens/home/home_screen.dart';
+import 'package:poll_power/features/auth/device_state.dart';
 import 'package:poll_power/services/firebase/firebase_service.dart';
 import 'package:poll_power/services/user/isar_services.dart';
 
 class CandidateScreen extends StatelessWidget {
   const CandidateScreen(
       {super.key,
+      required this.device,
       required this.firstName,
       required this.lastName,
       required this.speetch,
@@ -18,15 +20,16 @@ class CandidateScreen extends StatelessWidget {
       required this.candidateID,
       required this.grade,
       required this.phoneNumber,
-      required this.isVoted,
+      required this.user,
       required this.voteCount});
 
   final String areaOfStudy;
+  final DeviceState? device;
   final String grade;
   final String phoneNumber;
   final String candidateID;
   final String? firstName;
-  final bool isVoted;
+  final dynamic user;
   final String? lastName;
   final String? speetch;
   final int? voteCount;
@@ -68,52 +71,66 @@ class CandidateScreen extends StatelessWidget {
               SizedBox(height: MediaQuery.of(context).size.height * 5 / 100),
               speetch!.getWidget(fontSize: 20),
               SizedBox(height: MediaQuery.of(context).size.height * 10 / 100),
-              isVoted
-                  ? Container()
-                  : ElevatedButton(
-                      style: ButtonStyle(
-                          backgroundColor:
-                              MaterialStatePropertyAll(AppColors.black)),
-                      onPressed: () async {
-                        final candidate = {
-                          "firstName": firstName,
-                          "lastName": lastName,
-                          "grade": grade,
-                          "candidateID": candidateID,
-                          "areaOfStudy": areaOfStudy,
-                          "speetch": speetch,
-                          "phoneNumber": phoneNumber,
-                          "voteCount": voteCount! + 1
-                        };
-                        await FirebaseService()
-                            .updateCandidateVoteCount(candidate);
-                        // IsarServices().updateUserVotedState();
-
-                        final isarUser = await IsarServices().getUser();
-                        final candidateData =
-                            await FirebaseService().getCandidates();
-                        final userCount =
-                            await FirebaseService().getUserCount();
-
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => HomeScreen(
-                                      candidateData: candidateData,
-                                      user: isarUser,
-                                      userCount: userCount,
-                                    )));
-                      },
-                      child: Container(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 20, vertical: 10),
-                        child: "Vote".getWidget(
-                            fontSize: 50,
-                            fontWeight: FontWeight.w700,
-                            fontColor: AppColors.white),
-                      ))
+              device!.voted!
+                  ? _buildAlreadyVotedButton()
+                  : _buildNotVotedButton(context)
             ],
           ),
+        ));
+  }
+
+  ElevatedButton _buildAlreadyVotedButton() {
+    return ElevatedButton(
+        style: ButtonStyle(
+          backgroundColor: MaterialStateProperty.all(Colors.black12),
+        ),
+        onPressed: () {},
+        child: Container(
+          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+          child: "Vote".getWidget(
+              fontSize: 50,
+              fontWeight: FontWeight.w700,
+              fontColor: const Color.fromARGB(31, 92, 86, 86)),
+        ));
+  }
+
+  ElevatedButton _buildNotVotedButton(BuildContext context) {
+    return ElevatedButton(
+        style: ButtonStyle(
+            backgroundColor: MaterialStatePropertyAll(AppColors.black)),
+        onPressed: () async {
+          final candidate = {
+            "firstName": firstName,
+            "lastName": lastName,
+            "grade": grade,
+            "candidateID": candidateID,
+            "areaOfStudy": areaOfStudy,
+            "speetch": speetch,
+            "phoneNumber": phoneNumber,
+            "voteCount": voteCount! + 1,
+          };
+          await FirebaseService().updateCandidateVoteCount(candidate);
+          await IsarServices().updateDeviceVotedState();
+
+          final candidateData = await FirebaseService().getCandidates();
+          final userCount = await FirebaseService().getUserCount();
+
+          // ignore: use_build_context_synchronously
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => HomeScreen(
+                        candidateData: candidateData,
+                        user: user,
+                        userCount: userCount,
+                      )));
+        },
+        child: Container(
+          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+          child: "Vote".getWidget(
+              fontSize: 50,
+              fontWeight: FontWeight.w700,
+              fontColor: AppColors.white),
         ));
   }
 }

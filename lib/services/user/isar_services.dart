@@ -3,6 +3,8 @@ import 'package:path_provider/path_provider.dart';
 import 'package:poll_power/features/auth/candidate_entity.dart';
 import 'package:poll_power/features/auth/user_entity.dart';
 
+import '../../features/auth/device_state.dart';
+
 class IsarServices {
   late Future<Isar> db;
 
@@ -13,7 +15,8 @@ class IsarServices {
   Future<Isar> openDB() async {
     final dir = (await getApplicationDocumentsDirectory()).path;
     if (Isar.instanceNames.isEmpty) {
-      return await Isar.open([UserSchema, CandidateSchema], directory: dir);
+      return await Isar.open([UserSchema, CandidateSchema, DeviceStateSchema],
+          directory: dir);
     }
     return await Future.value(Isar.getInstance());
   }
@@ -44,5 +47,21 @@ class IsarServices {
     return data?.voted;
   }
 
-  void updateUserVotedState() {}
+  Future<void> updateDeviceVotedState() async {
+    final isar = await db;
+    final device = await getDeviceState();
+    device?.voted = true;
+    await isar.writeTxn(() => isar.deviceStates.put(device!));
+  }
+
+  Future<DeviceState?> getDeviceState() async {
+    final isar = await db;
+    final device = isar.deviceStates.where().findFirst();
+    return device;
+  }
+
+  Future createDevice(DeviceState device) async {
+    final isar = await db;
+    return await isar.writeTxn(() => isar.deviceStates.put(device));
+  }
 }

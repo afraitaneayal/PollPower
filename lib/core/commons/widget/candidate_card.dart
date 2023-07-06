@@ -4,6 +4,7 @@ import 'package:poll_power/core/commons/widget/profile_pic_widget.dart';
 import 'package:poll_power/core/extensions/extension_on_screen_size.dart';
 import 'package:poll_power/core/extensions/extension_on_strings.dart';
 import 'package:poll_power/core/screens/candidate/candidate_screen.dart';
+import 'package:poll_power/services/user/isar_services.dart';
 
 class CandidateCard extends StatelessWidget {
   const CandidateCard(
@@ -16,7 +17,7 @@ class CandidateCard extends StatelessWidget {
       required this.grade,
       required this.candidateID,
       required this.phoneNumber,
-      required this.isVoted,
+      required this.user,
       required this.voteCount});
 
   final String areaOfStudy;
@@ -24,7 +25,7 @@ class CandidateCard extends StatelessWidget {
   final String candidateID;
   final String phoneNumber;
   final int userCount;
-  final bool isVoted;
+  final dynamic user;
   final String firstName;
   final String lastName;
   final String speetch;
@@ -33,11 +34,14 @@ class CandidateCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextButton(
-        onPressed: () {
+        onPressed: () async {
+          final deviceState = await IsarServices().getDeviceState();
+          // ignore: use_build_context_synchronously
           Navigator.push(
               context,
               MaterialPageRoute(
                   builder: (context) => CandidateScreen(
+                      device: deviceState,
                       firstName: firstName,
                       lastName: lastName,
                       candidateID: candidateID,
@@ -45,7 +49,7 @@ class CandidateCard extends StatelessWidget {
                       grade: grade,
                       areaOfStudy: areaOfStudy,
                       phoneNumber: phoneNumber,
-                      isVoted: isVoted,
+                      user: user,
                       voteCount: voteCount)));
         },
         child: Container(

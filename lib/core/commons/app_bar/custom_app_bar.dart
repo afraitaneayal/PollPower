@@ -13,16 +13,20 @@ class CustomAppBar extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        Image.asset(AppAssets.logoSmale, width: 40, height: 40),
-        GestureDetector(
-            onLongPress: () {
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => AdminScreen()));
-            },
-            child: "PollPower".getWidget(
-                fontColor: AppColors.black,
-                fontSize: 34,
-                fontWeight: FontWeight.w600)),
+        Flexible(
+          child: Image.asset(AppAssets.logoSmale, width: 34, height: 34),
+        ),
+        Flexible(
+          child: GestureDetector(
+              onLongPress: () {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => AdminScreen()));
+              },
+              child: "PollPower".getWidget(
+                  fontColor: AppColors.black,
+                  fontSize: 37,
+                  fontWeight: FontWeight.w600)),
+        )
       ],
     );
   }

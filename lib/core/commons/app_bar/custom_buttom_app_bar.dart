@@ -24,8 +24,7 @@ class CustomBottomAppBar extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        "$title registration is open."
-            .getWidget(fontSize: 24, fontWeight: FontWeight.w600),
+        "Registration.".getWidget(fontSize: 24, fontWeight: FontWeight.w600),
         const SizedBox(
           height: 20,
         ),

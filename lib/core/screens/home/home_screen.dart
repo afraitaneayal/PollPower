@@ -85,14 +85,14 @@ class HomeScreen extends StatelessWidget {
 
   Widget _buildSizeBox(BuildContext context) {
     return SizedBox(
-        height: context.getScreenHeight() * 70 / 100,
+        height: context.getScreenHeight() * 60 / 100,
         child: StreamBuilder<List<QueryDocumentSnapshot<Map<String, dynamic>>>>(
           stream: candidateData,
           initialData: const [],
           builder: (context, snapshot) {
             final data = snapshot.data!;
             return ListView.builder(
-                scrollDirection: Axis.horizontal,
+                scrollDirection: Axis.vertical,
                 itemCount: data.length,
                 itemBuilder: (context, index) {
                   return CandidateCard(

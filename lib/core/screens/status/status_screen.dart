@@ -4,6 +4,7 @@ import 'package:poll_power/core/app_assets/app_constants.dart';
 import 'package:poll_power/core/app_colors/app_colors.dart';
 import 'package:poll_power/core/commons/app_bar/custom_buttom_app_bar.dart';
 import 'package:poll_power/core/commons/app_bar/custom_app_bar.dart';
+import 'package:poll_power/core/extensions/extension_on_screen_size.dart';
 import 'package:poll_power/core/extensions/extension_on_strings.dart';
 import 'package:poll_power/services/firebase/firebase_service.dart';
 import '../../../features/auth/device_state.dart';
@@ -81,7 +82,7 @@ class StatusScreen extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const SizedBox(height: 50),
+          SizedBox(height: context.getScreenHeight() * 8 / 100),
           const CustomAppBar(),
           const SizedBox(height: 100),
           _buildtext(),
@@ -98,8 +99,7 @@ class StatusScreen extends StatelessWidget {
   String getUserOrCandidate() {
     if (status) {
       return "Voter";
-    } else {
-      return "Candidats";
     }
+    return "Candidats";
   }
 }

@@ -1,5 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:poll_power/core/app_colors/app_colors.dart';
+import 'package:poll_power/core/extensions/extension_on_screen_size.dart';
 import 'package:poll_power/core/extensions/extension_on_strings.dart';
 import 'package:poll_power/features/auth/device_state.dart';
 import 'package:poll_power/services/firebase/firebase_service.dart';
@@ -33,15 +35,27 @@ class _CustomFormState extends State<CustomVoterForm> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: AppColors.background,
       body: Form(
-        key: _formKey,
-        child: Column(children: _buidFormField()),
-      ),
+          key: _formKey,
+          child: Container(
+            margin: EdgeInsets.symmetric(
+                horizontal: context.getScreenWidth() * 10 / 100),
+            width: context.getScreenWidth() * 90 / 100,
+            child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: _buidFormField()),
+          )),
     );
   }
 
   List<Widget> _buidFormField() {
     return [
+      "Register".getWidget(
+          fontColor: AppColors.black,
+          fontSize: 34,
+          fontWeight: FontWeight.w600),
       TextFormField(
         decoration: const InputDecoration(labelText: "First Name"),
         onChanged: (String value) {
@@ -92,11 +106,12 @@ class _CustomFormState extends State<CustomVoterForm> {
             ..status = true);
 
           final user = await isarService.getUser();
+          final deviceState = await IsarServices().getDeviceState();
 
           FirebaseService().addUserCount();
           Navigator.push(context, MaterialPageRoute(builder: (context) {
             return HomeScreen(
-                deviceState: widget.deviceState,
+                deviceState: deviceState,
                 candidateData: widget.candidateData,
                 userCount: widget.userCount,
                 user: user);

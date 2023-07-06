@@ -63,7 +63,7 @@ class CandidateCard extends StatelessWidget {
           padding: EdgeInsets.symmetric(
             horizontal: context.getScreenWidth() / 14,
           ),
-          height: context.getScreenHeight() * 40 / 100,
+          height: context.getScreenHeight() * 45 / 100,
           width: context.getScreenWidth() * 90 / 100,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -98,9 +98,9 @@ class CandidateCard extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                areaOfStudy.getWidget(fontSize: 20),
-                ", ".getWidget(fontSize: 20),
-                grade.getWidget(fontSize: 20)
+                areaOfStudy.getWidget(fontSize: 24),
+                ", ".getWidget(fontSize: 24),
+                grade.getWidget(fontSize: 24)
               ],
             )
           ],
@@ -113,7 +113,7 @@ class CandidateCard extends StatelessWidget {
     return Container(
       child: "${speetch.substring(0, 100)} ...".getWidget(
         fontColor: AppColors.white,
-        fontSize: 20,
+        fontSize: 24,
       ),
     );
   }

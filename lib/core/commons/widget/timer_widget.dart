@@ -1,6 +1,8 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:poll_power/core/app_colors/app_colors.dart';
+import 'package:poll_power/core/extensions/extension_on_screen_size.dart';
 
 class TimerWidget extends StatefulWidget {
   const TimerWidget({super.key});
@@ -46,13 +48,21 @@ class _TimerWidgetState extends State<TimerWidget> {
     final hours = strDigits(myDuration.inHours.remainder(24));
     final minutes = strDigits(myDuration.inMinutes.remainder(60));
     final seconds = strDigits(myDuration.inSeconds.remainder(60));
-    return Center(
+    return Container(
+      decoration: BoxDecoration(
+          color: AppColors.black,
+          borderRadius: const BorderRadius.all(Radius.circular(10))),
+      padding:
+          EdgeInsets.symmetric(vertical: context.getScreenHeight() * 2 / 100),
+      margin:
+          EdgeInsets.symmetric(horizontal: context.getScreenWidth() * 2 / 100),
+      alignment: Alignment.center,
       child: Column(
         children: [
           Text(
             '$hours:$minutes:$seconds',
             style: const TextStyle(
-                fontWeight: FontWeight.bold, color: Colors.black, fontSize: 50),
+                fontWeight: FontWeight.bold, color: Colors.white, fontSize: 40),
           ),
         ],
       ),

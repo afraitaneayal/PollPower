@@ -61,7 +61,13 @@ class CandidateScreen extends StatelessWidget {
             children: [
               SizedBox(height: MediaQuery.of(context).size.height * 2 / 100),
               SizedBox(height: MediaQuery.of(context).size.height * 5 / 100),
-              ProfilPic(firstLetter: profilLetters),
+              ProfilPic(
+                firstLetter: profilLetters,
+              ).getCandidateProfilePic(
+                  context: context,
+                  fonteSize: 80,
+                  name: profilLetters,
+                  radius: 100),
               SizedBox(height: MediaQuery.of(context).size.height * 5 / 100),
               fullName.getWidget(fontSize: 42, fontWeight: FontWeight.w700),
               SizedBox(height: MediaQuery.of(context).size.height * 3 / 100),

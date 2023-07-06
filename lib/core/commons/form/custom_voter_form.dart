@@ -52,41 +52,57 @@ class _CustomFormState extends State<CustomVoterForm> {
 
   List<Widget> _buidFormField() {
     return [
-      "Register".getWidget(
-          fontColor: AppColors.black,
-          fontSize: 34,
-          fontWeight: FontWeight.w600),
+      _buildTitle(),
+      SizedBox(height: context.getScreenHeight() * 5 / 100),
       TextFormField(
-        decoration: const InputDecoration(labelText: "First Name"),
+        decoration: const InputDecoration(
+            labelText: "First Name",
+            border: OutlineInputBorder(
+                borderRadius: BorderRadius.all(Radius.circular(10)))),
         onChanged: (String value) {
           setState(() {
             firstNameValue = value;
           });
         },
       ),
+      SizedBox(height: context.getScreenHeight() * 2 / 100),
       TextFormField(
-        decoration: const InputDecoration(labelText: "Last Name"),
+        decoration: const InputDecoration(
+            labelText: "Last Name",
+            border: OutlineInputBorder(
+                borderRadius: BorderRadius.all(Radius.circular(10)))),
         onChanged: (String value) {
           setState(() {
             lastNameValue = value;
           });
         },
       ),
+      SizedBox(height: context.getScreenHeight() * 2 / 100),
       TextFormField(
-        decoration: const InputDecoration(labelText: "Grade"),
+        decoration: const InputDecoration(
+            labelText: "Grade",
+            border: OutlineInputBorder(
+                borderRadius: BorderRadius.all(Radius.circular(10)))),
         onChanged: (String value) {
           setState(() {
             gradeValue = value;
           });
         },
       ),
+      SizedBox(height: context.getScreenHeight() * 2 / 100),
       TextFormField(
-        decoration: const InputDecoration(labelText: "Area of Study"),
+        decoration: const InputDecoration(
+            labelText: "Area of Study",
+            border: OutlineInputBorder(
+                borderRadius: BorderRadius.all(Radius.circular(10)))),
         onChanged: (String value) {
           setState(() {
             areaOfStudyValue = value;
           });
         },
+      ),
+      SizedBox(
+        height: context.getScreenHeight() * 5 / 100,
       ),
       _buildElevateButton(context)
     ];
@@ -94,29 +110,49 @@ class _CustomFormState extends State<CustomVoterForm> {
 
   Widget _buildElevateButton(context) {
     return ElevatedButton(
-        onPressed: () async {
-          final isarService = IsarServices();
-          await isarService.createDevice(DeviceState()..voted = false);
-          await isarService.createUser(User()
-            ..fistName = firstNameValue
-            ..lastName = lastNameValue
-            ..grade = gradeValue
-            ..arreaOfStudy = areaOfStudyValue
-            ..voted = false
-            ..status = true);
+      style: ButtonStyle(
+          fixedSize: MaterialStateProperty.all(const Size(310, 70)),
+          backgroundColor: MaterialStateProperty.all(AppColors.black),
+          shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+              RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(100.0)))),
+      onPressed: () async {
+        final isarService = IsarServices();
+        await isarService.createDevice(DeviceState()..voted = false);
+        await isarService.createUser(User()
+          ..fistName = firstNameValue
+          ..lastName = lastNameValue
+          ..grade = gradeValue
+          ..arreaOfStudy = areaOfStudyValue
+          ..voted = false
+          ..status = true);
 
-          final user = await isarService.getUser();
-          final deviceState = await IsarServices().getDeviceState();
+        final user = await isarService.getUser();
+        final deviceState = await IsarServices().getDeviceState();
 
-          FirebaseService().addUserCount();
-          Navigator.push(context, MaterialPageRoute(builder: (context) {
-            return HomeScreen(
-                deviceState: deviceState,
-                candidateData: widget.candidateData,
-                userCount: widget.userCount,
-                user: user);
-          }));
-        },
-        child: "Register".getWidget());
+        FirebaseService().addUserCount();
+        Navigator.push(context, MaterialPageRoute(builder: (context) {
+          return HomeScreen(
+              deviceState: deviceState,
+              candidateData: widget.candidateData,
+              userCount: widget.userCount,
+              user: user);
+        }));
+      },
+      child: "Register".getWidget(
+          fontColor: AppColors.white,
+          fontSize: 30,
+          fontWeight: FontWeight.w600),
+    );
+  }
+
+  Widget _buildTitle() {
+    return Container(
+      alignment: Alignment.topLeft,
+      child: "Voter".getWidget(
+          fontColor: AppColors.black,
+          fontSize: 44,
+          fontWeight: FontWeight.w600),
+    );
   }
 }

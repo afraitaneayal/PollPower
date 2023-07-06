@@ -63,19 +63,19 @@ class CandidateCard extends StatelessWidget {
           padding: EdgeInsets.symmetric(
             horizontal: context.getScreenWidth() / 14,
           ),
-          height: context.getScreenHeight() * 45 / 100,
-          width: context.getScreenWidth() * 90 / 100,
+          height: context.getScreenHeight() * 55 / 100,
+          width: context.getScreenWidth() * 85 / 100,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               _buildRow(context, firstName, lastName, areaOfStudy, grade),
               const SizedBox(
-                height: 20,
+                height: 30,
               ),
               _buildSpeetch(),
               const SizedBox(
-                height: 20,
+                height: 30,
               ),
               _buildVoteCount(context: context, voteCount: voteCount),
             ],

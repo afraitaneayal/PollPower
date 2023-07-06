@@ -19,4 +19,19 @@ class ProfilPic extends StatelessWidget {
           fontColor: AppColors.white),
     );
   }
+
+  Widget getCandidateProfilePic(
+      {BuildContext? context,
+      double? radius,
+      double? fonteSize,
+      String? name}) {
+    return CircleAvatar(
+      radius: radius,
+      backgroundColor: const Color.fromARGB(200, 255, 23, 7),
+      child: name?.getWidget(
+          fontSize: fonteSize,
+          fontWeight: FontWeight.w600,
+          fontColor: AppColors.white),
+    );
+  }
 }

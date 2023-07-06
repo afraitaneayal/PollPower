@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:poll_power/core/extensions/extension_on_strings.dart';
 import 'package:poll_power/features/auth/device_state.dart';
@@ -8,10 +9,15 @@ import '../../screens/home/home_screen.dart';
 
 class CustomVoterForm extends StatefulWidget {
   const CustomVoterForm(
-      {super.key, required this.candidateData, required this.userCount});
+      {super.key,
+      required this.deviceState,
+      required this.candidateData,
+      required this.userCount});
 
-  final List<dynamic> candidateData;
+  final Stream<List<QueryDocumentSnapshot<Map<String, dynamic>>>>?
+      candidateData;
   final int userCount;
+  final DeviceState? deviceState;
 
   @override
   State<CustomVoterForm> createState() => _CustomFormState();
@@ -91,6 +97,7 @@ class _CustomFormState extends State<CustomVoterForm> {
           FirebaseService().addUserCount();
           Navigator.push(context, MaterialPageRoute(builder: (context) {
             return HomeScreen(
+                deviceState: widget.deviceState,
                 candidateData: widget.candidateData,
                 userCount: widget.userCount,
                 user: user);

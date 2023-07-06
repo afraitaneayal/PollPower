@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:poll_power/core/app_assets/app_constants.dart';
 import 'package:poll_power/core/app_colors/app_colors.dart';
@@ -5,6 +6,7 @@ import 'package:poll_power/core/commons/app_bar/custom_buttom_app_bar.dart';
 import 'package:poll_power/core/commons/app_bar/custom_app_bar.dart';
 import 'package:poll_power/core/extensions/extension_on_strings.dart';
 import 'package:poll_power/services/firebase/firebase_service.dart';
+import '../../../features/auth/device_state.dart';
 import '../../commons/button/custom_button.dart';
 
 class StatusScreen extends StatelessWidget {
@@ -12,11 +14,14 @@ class StatusScreen extends StatelessWidget {
     super.key,
     required this.status,
     required this.userCount,
+    required this.deviceState,
     required this.candidateData,
   });
 
   final int userCount;
-  final List<dynamic> candidateData;
+  final DeviceState? deviceState;
+  final Stream<List<QueryDocumentSnapshot<Map<String, dynamic>>>>?
+      candidateData;
 
   final bool status;
 
@@ -51,6 +56,7 @@ class StatusScreen extends StatelessWidget {
           return Column(
             children: [
               CustomButton(
+                  deviceState: deviceState,
                   route: "registerCandidate",
                   text: "Candidate",
                   candidateData: candidateData,
@@ -58,6 +64,7 @@ class StatusScreen extends StatelessWidget {
                   isActive: !data),
               const SizedBox(height: 43),
               CustomButton(
+                  deviceState: deviceState,
                   route: "registerVoter",
                   text: "Voter",
                   candidateData: candidateData,

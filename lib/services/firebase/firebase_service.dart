@@ -23,9 +23,14 @@ class FirebaseService {
     }
   }
 
-  Future<List> getCandidates() async {
-    final snapData = await db.collection("candidates").get();
-    return snapData.docs;
+  Stream<List<QueryDocumentSnapshot<Map<String, dynamic>>>>?
+      getCandidates() async* {
+    final snapData = db.collection("candidates").snapshots();
+    await for (final candidateStreamItem in snapData) {
+      if (candidateStreamItem.docChanges.isNotEmpty) {
+        yield candidateStreamItem.docs;
+      }
+    }
   }
 
   void changeStartStatus(bool status) async {

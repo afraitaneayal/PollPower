@@ -18,9 +18,11 @@ class CandidateCard extends StatelessWidget {
       required this.candidateID,
       required this.phoneNumber,
       required this.user,
+      required this.cardColor,
       required this.voteCount});
 
   final String areaOfStudy;
+  final int cardColor;
   final String grade;
   final String candidateID;
   final String phoneNumber;
@@ -56,21 +58,22 @@ class CandidateCard extends StatelessWidget {
           margin: const EdgeInsets.only(bottom: 2),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(10),
-            color: AppColors.sky,
+            color: Color(cardColor),
           ),
           padding: EdgeInsets.symmetric(
             horizontal: context.getScreenWidth() / 14,
           ),
-          height: context.getScreenHeight() * 30 / 100,
+          height: context.getScreenHeight() * 40 / 100,
+          width: context.getScreenWidth() * 90 / 100,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              _buildRow(context, firstName, lastName),
+              _buildRow(context, firstName, lastName, areaOfStudy, grade),
               const SizedBox(
                 height: 20,
               ),
-              // _buildSpeetch(),
+              _buildSpeetch(),
               const SizedBox(
                 height: 20,
               ),
@@ -80,33 +83,49 @@ class CandidateCard extends StatelessWidget {
         ));
   }
 
-  Widget _buildRow(BuildContext context, String firstName, String lastName) {
+  Widget _buildRow(BuildContext context, String firstName, String lastName,
+      String areaOfStudy, String garde) {
     final profilLetters = firstName[0] + lastName[0];
     final fullName = "$firstName $lastName";
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         ProfilPic(firstLetter: profilLetters),
-        fullName.getWidget(fontSize: 30)
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            fullName.getWidget(fontSize: 30),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                areaOfStudy.getWidget(fontSize: 20),
+                ", ".getWidget(fontSize: 20),
+                grade.getWidget(fontSize: 20)
+              ],
+            )
+          ],
+        )
       ],
     );
   }
 
-  // Widget _buildSpeetch() {
-  //   return Container(
-  //     child: speetch!.getWidget(
-  //       fontColor: AppColors.white,
-  //       fontSize: 24,
-  //     ),
-  //   );
-  // }
+  Widget _buildSpeetch() {
+    return Container(
+      child: "${speetch.substring(0, 100)} ...".getWidget(
+        fontColor: AppColors.white,
+        fontSize: 20,
+      ),
+    );
+  }
 
   Widget _buildVoteCount({BuildContext? context, int? voteCount}) {
     final votePercent = voteCount! * 100 / userCount;
     final percent = votePercent.toInt();
     return Container(
+      alignment: Alignment.center,
+      width: context!.getScreenWidth() * 80 / 100,
       padding: EdgeInsets.symmetric(
-          horizontal: context!.getScreenWidth() / 3.5,
+          horizontal: context.getScreenWidth() / 3.5,
           vertical: context.getScreenHeight() / 24),
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10), color: AppColors.black),

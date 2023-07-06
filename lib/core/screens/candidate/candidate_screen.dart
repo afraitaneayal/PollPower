@@ -32,7 +32,7 @@ class CandidateScreen extends StatelessWidget {
   final dynamic user;
   final String? lastName;
   final String? speetch;
-  final int? voteCount;
+  final int voteCount;
 
   @override
   Widget build(BuildContext context) {
@@ -107,12 +107,12 @@ class CandidateScreen extends StatelessWidget {
             "areaOfStudy": areaOfStudy,
             "speetch": speetch,
             "phoneNumber": phoneNumber,
-            "voteCount": voteCount! + 1,
+            "voteCount": voteCount + 1,
           };
           await FirebaseService().updateCandidateVoteCount(candidate);
           await IsarServices().updateDeviceVotedState();
 
-          final candidateData = await FirebaseService().getCandidates();
+          final candidateData = FirebaseService().getCandidates();
           final userCount = await FirebaseService().getUserCount();
 
           // ignore: use_build_context_synchronously
@@ -120,6 +120,7 @@ class CandidateScreen extends StatelessWidget {
               context,
               MaterialPageRoute(
                   builder: (context) => HomeScreen(
+                        deviceState: device,
                         candidateData: candidateData,
                         user: user,
                         userCount: userCount,

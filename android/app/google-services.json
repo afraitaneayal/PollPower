@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "602598626671",
+    "project_id": "pollpower",
+    "storage_bucket": "pollpower.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:602598626671:android:9aeb68b37e5e4ccc0ac49a",
+        "android_client_info": {
+          "package_name": "com.example.poll_power"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "602598626671-ksv88q9dsrk2jpg2a45ls0v5t6f4vi1s.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBNEIGP6uxCUogF9eKiJNEJEgJ9HDpDD6g"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "602598626671-ksv88q9dsrk2jpg2a45ls0v5t6f4vi1s.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

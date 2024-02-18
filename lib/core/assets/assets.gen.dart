@@ -8,63 +8,84 @@
 // ignore_for_file: directives_ordering,unnecessary_import,implicit_dynamic_list_literal,deprecated_member_use
 
 import 'package:flutter/widgets.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:flutter/services.dart';
 
 class Assets {
   Assets._();
 
-  static const SvgGenImage logo = SvgGenImage('assets/logo.svg');
+  static const AssetGenImage back = AssetGenImage('assets/Back.png');
+  static const AssetGenImage logo = AssetGenImage('assets/logo.png');
+  static const AssetGenImage logoSmall = AssetGenImage('assets/logoSmall.png');
 
   /// List of all assets
-  static List<SvgGenImage> get values => [logo];
+  static List<AssetGenImage> get values => [back, logo, logoSmall];
 }
 
-class SvgGenImage {
-  const SvgGenImage(this._assetName);
+class AssetGenImage {
+  const AssetGenImage(this._assetName);
 
   final String _assetName;
 
-  SvgPicture svg({
+  Image image({
     Key? key,
-    bool matchTextDirection = false,
     AssetBundle? bundle,
-    String? package,
+    ImageFrameBuilder? frameBuilder,
+    ImageErrorWidgetBuilder? errorBuilder,
+    String? semanticLabel,
+    bool excludeFromSemantics = false,
+    double? scale,
     double? width,
     double? height,
-    BoxFit fit = BoxFit.contain,
+    Color? color,
+    Animation<double>? opacity,
+    BlendMode? colorBlendMode,
+    BoxFit? fit,
     AlignmentGeometry alignment = Alignment.center,
-    bool allowDrawingOutsideViewBox = false,
-    WidgetBuilder? placeholderBuilder,
-    String? semanticsLabel,
-    bool excludeFromSemantics = false,
-    SvgTheme theme = const SvgTheme(),
-    ColorFilter? colorFilter,
-    Clip clipBehavior = Clip.hardEdge,
-    @deprecated Color? color,
-    @deprecated BlendMode colorBlendMode = BlendMode.srcIn,
-    @deprecated bool cacheColorFilter = false,
+    ImageRepeat repeat = ImageRepeat.noRepeat,
+    Rect? centerSlice,
+    bool matchTextDirection = false,
+    bool gaplessPlayback = false,
+    bool isAntiAlias = false,
+    String? package,
+    FilterQuality filterQuality = FilterQuality.low,
+    int? cacheWidth,
+    int? cacheHeight,
   }) {
-    return SvgPicture.asset(
+    return Image.asset(
       _assetName,
       key: key,
-      matchTextDirection: matchTextDirection,
       bundle: bundle,
-      package: package,
+      frameBuilder: frameBuilder,
+      errorBuilder: errorBuilder,
+      semanticLabel: semanticLabel,
+      excludeFromSemantics: excludeFromSemantics,
+      scale: scale,
       width: width,
       height: height,
+      color: color,
+      opacity: opacity,
+      colorBlendMode: colorBlendMode,
       fit: fit,
       alignment: alignment,
-      allowDrawingOutsideViewBox: allowDrawingOutsideViewBox,
-      placeholderBuilder: placeholderBuilder,
-      semanticsLabel: semanticsLabel,
-      excludeFromSemantics: excludeFromSemantics,
-      theme: theme,
-      colorFilter: colorFilter,
-      color: color,
-      colorBlendMode: colorBlendMode,
-      clipBehavior: clipBehavior,
-      cacheColorFilter: cacheColorFilter,
+      repeat: repeat,
+      centerSlice: centerSlice,
+      matchTextDirection: matchTextDirection,
+      gaplessPlayback: gaplessPlayback,
+      isAntiAlias: isAntiAlias,
+      package: package,
+      filterQuality: filterQuality,
+      cacheWidth: cacheWidth,
+      cacheHeight: cacheHeight,
+    );
+  }
+
+  ImageProvider provider({
+    AssetBundle? bundle,
+    String? package,
+  }) {
+    return AssetImage(
+      _assetName,
+      bundle: bundle,
+      package: package,
     );
   }
 

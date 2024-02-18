@@ -6,24 +6,21 @@ import 'i_app_typography.dart';
 
 @Singleton(as: IAppTypography)
 class DefaultAppTypography extends IAppTypography {
-  @override
-  TextStyle get defaultStyle => GoogleFonts.poppins();
-
   TextStyle copyTextStyle({double? fontSize, FontWeight? fontWeight}) {
-    return defaultStyle.copyWith(
+    return GoogleFonts.poppins(
         fontSize: fontSize ?? 14.sp,
         fontWeight: fontWeight ?? FontWeight.normal);
   }
 
   @override
-  TextStyle bold({double? fontSize, FontWeight? fontWeight}) =>
-      copyTextStyle(fontSize: fontSize, fontWeight: fontWeight);
+  TextStyle bold({double? fontSize}) =>
+      copyTextStyle(fontSize: fontSize, fontWeight: FontWeight.bold);
 
   @override
-  TextStyle light({double? fontSize, FontWeight? fontWeight}) =>
-      copyTextStyle(fontSize: fontSize, fontWeight: fontWeight);
+  TextStyle light({double? fontSize}) =>
+      copyTextStyle(fontSize: fontSize, fontWeight: FontWeight.normal);
 
   @override
   TextStyle semiBold({double? fontSize, FontWeight? fontWeight}) =>
-      copyTextStyle(fontSize: fontSize, fontWeight: fontWeight);
+      copyTextStyle(fontSize: fontSize, fontWeight: FontWeight.w600);
 }

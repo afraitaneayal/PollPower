@@ -1,4 +1,7 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:poll_power/core/ui/theme/buttons/default_buttons.dart';
 import 'package:poll_power/core/ui/theme/colors/i_app_colors.dart';
 import 'package:poll_power/core/ui/theme/typography/i_app_typography.dart';
 import 'package:poll_power/di.dart';
@@ -9,7 +12,7 @@ extension StringAsWidgetExtension on String {
         textAlign: textAlign ?? TextAlign.left,
         style: locator
             .get<IAppTypography>()
-            .light(fontSize: fontSize, fontWeight: FontWeight.normal)
+            .light(fontSize: fontSize)
             .copyWith(color: color ?? locator.get<IAppColors>().black),
       );
 
@@ -18,7 +21,7 @@ extension StringAsWidgetExtension on String {
         textAlign: textAlign ?? TextAlign.left,
         style: locator
             .get<IAppTypography>()
-            .bold(fontSize: fontSize, fontWeight: FontWeight.bold)
+            .bold(fontSize: fontSize)
             .copyWith(color: color ?? locator.get<IAppColors>().black),
       );
 
@@ -27,7 +30,35 @@ extension StringAsWidgetExtension on String {
         textAlign: textAlign ?? TextAlign.left,
         style: locator
             .get<IAppTypography>()
-            .semiBold(fontSize: fontSize, fontWeight: FontWeight.w500)
+            .semiBold(fontSize: fontSize)
             .copyWith(color: color ?? locator.get<IAppColors>().black),
       );
+
+  InkWell asPrimaryButton(
+      {required AsyncCallback callback,
+      double? fontSize,
+      EdgeInsets? padding}) {
+    return getPrimaryButton(
+        callback: () async => callback,
+        child: Padding(
+          padding: padding ?? EdgeInsets.zero,
+          child: semiBold(
+              fontSize: fontSize ?? 20.sp,
+              color: locator.get<IAppColors>().white),
+        ));
+  }
+
+  InkWell asSecondaryButton(
+      {required AsyncCallback callback,
+      EdgeInsets? padding,
+      double? fontSize}) {
+    return getSecondaryButton(
+        callback: callback,
+        child: Padding(
+          padding: padding ?? EdgeInsets.zero,
+          child: semiBold(
+              fontSize: fontSize ?? 20.sp,
+              color: locator.get<IAppColors>().black),
+        ));
+  }
 }

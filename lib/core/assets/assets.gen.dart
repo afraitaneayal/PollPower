@@ -13,11 +13,14 @@ class Assets {
   Assets._();
 
   static const AssetGenImage back = AssetGenImage('assets/Back.png');
+  static const AssetGenImage avatar = AssetGenImage('assets/avatar.png');
   static const AssetGenImage logo = AssetGenImage('assets/logo.png');
   static const AssetGenImage logoSmall = AssetGenImage('assets/logoSmall.png');
+  static const AssetGenImage next = AssetGenImage('assets/next.png');
 
   /// List of all assets
-  static List<AssetGenImage> get values => [back, logo, logoSmall];
+  static List<AssetGenImage> get values =>
+      [back, avatar, logo, logoSmall, next];
 }
 
 class AssetGenImage {

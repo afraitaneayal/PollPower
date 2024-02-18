@@ -29,13 +29,14 @@ InkWell getSecondaryButton(
   );
 }
 
-InkWell getArrowButton({required AsyncCallback callback}) {
+InkWell getArrowButton(
+    {required AsyncCallback callback, required bool isLeft}) {
   return InkWell(
     onTap: () => callback,
     enableFeedback: true,
     child: Padding(
       padding: EdgeInsets.all(10.sp),
-      child: Assets.back.image(),
+      child: isLeft ? Assets.back.image() : Assets.next.image(),
     ),
   );
 }

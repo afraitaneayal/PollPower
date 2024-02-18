@@ -4,28 +4,30 @@ import 'package:poll_power/core/ui/theme/typography/i_app_typography.dart';
 import 'package:poll_power/di.dart';
 
 extension StringAsWidgetExtension on String {
-  Text light({double? fontSize, FontWeight? fontWeight, Color? color}) => Text(
+  Text light({double? fontSize, Color? color, TextAlign? textAlign}) => Text(
         this,
+        textAlign: textAlign ?? TextAlign.left,
         style: locator
             .get<IAppTypography>()
-            .light(fontSize: fontSize, fontWeight: fontWeight)
+            .light(fontSize: fontSize, fontWeight: FontWeight.normal)
             .copyWith(color: color ?? locator.get<IAppColors>().black),
       );
 
-  Text bold({double? fontSize, FontWeight? fontWeight, Color? color}) => Text(
+  Text bold({double? fontSize, Color? color, TextAlign? textAlign}) => Text(
         this,
+        textAlign: textAlign ?? TextAlign.left,
         style: locator
             .get<IAppTypography>()
-            .bold(fontSize: fontSize, fontWeight: fontWeight)
+            .bold(fontSize: fontSize, fontWeight: FontWeight.bold)
             .copyWith(color: color ?? locator.get<IAppColors>().black),
       );
 
-  Text semiBold({double? fontSize, FontWeight? fontWeight, Color? color}) =>
-      Text(
+  Text semiBold({double? fontSize, Color? color, TextAlign? textAlign}) => Text(
         this,
+        textAlign: textAlign ?? TextAlign.left,
         style: locator
             .get<IAppTypography>()
-            .semiBold(fontSize: fontSize, fontWeight: fontWeight)
+            .semiBold(fontSize: fontSize, fontWeight: FontWeight.w500)
             .copyWith(color: color ?? locator.get<IAppColors>().black),
       );
 }

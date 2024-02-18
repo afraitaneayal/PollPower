@@ -11,17 +11,27 @@
 import 'package:get_it/get_it.dart' as _i1;
 import 'package:injectable/injectable.dart' as _i2;
 
+import 'core/ui/theme/colors/default_app_colors.dart' as _i4;
+import 'core/ui/theme/colors/i_app_colors.dart' as _i3;
+import 'core/ui/theme/gaps/default_app_gaps.dart' as _i6;
+import 'core/ui/theme/gaps/i_app_gaps.dart' as _i5;
+import 'core/ui/theme/typography/default_app_typography.dart' as _i8;
+import 'core/ui/theme/typography/i_app_typography.dart' as _i7;
+
 extension GetItInjectableX on _i1.GetIt {
 // initializes the registration of main-scope dependencies inside of GetIt
   _i1.GetIt init({
     String? environment,
     _i2.EnvironmentFilter? environmentFilter,
   }) {
-    _i2.GetItHelper(
+    final gh = _i2.GetItHelper(
       this,
       environment,
       environmentFilter,
     );
+    gh.singleton<_i3.IAppColors>(_i4.DefaultAppColors());
+    gh.singleton<_i5.IAppGaps>(_i6.DefaultAppGaps());
+    gh.singleton<_i7.IAppTypography>(_i8.DefaultAppTypography());
     return this;
   }
 }

@@ -1,8 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:poll_power/core/common/app_texts.dart';
-import 'package:poll_power/core/extensions/context_extension.dart';
 
 class DefaultTextInput extends StatelessWidget {
   final String? hintText;

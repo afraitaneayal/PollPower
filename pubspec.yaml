@@ -44,6 +44,13 @@ dependencies:
   injectable_generator: ^2.4.1
   device_preview: ^1.1.0
   flutter_svg: ^2.0.9
+  bloc: ^8.1.4
+  flutter_bloc: ^8.1.5
+  dartz: ^0.10.1
+  poll_power_openapi:
+    git:
+      url:
+        https://github.com/afraitaneayal/poll_power_api_definition
 
 dev_dependencies:
   flutter_test:

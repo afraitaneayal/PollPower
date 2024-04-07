@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:poll_power/features/vote/screens/account_type_screen.dart';
-import 'package:poll_power/features/vote/screens/candidate_screen.dart';
-import 'package:poll_power/features/vote/screens/home_screen.dart';
-import 'package:poll_power/features/vote/screens/login_screen.dart';
-import 'package:poll_power/features/vote/screens/register_screen.dart';
-import 'package:poll_power/features/vote/screens/splash_screen.dart';
+import 'package:poll_power/presentation/ui/screens/account_type_screen.dart';
+import 'package:poll_power/presentation/ui/screens/candidate_screen.dart';
+import 'package:poll_power/presentation/ui/screens/home_screen.dart';
+import 'package:poll_power/presentation/ui/screens/login_screen.dart';
+import 'package:poll_power/presentation/ui/screens/register_screen.dart';
+import 'package:poll_power/presentation/ui/screens/splash_screen.dart';
 import 'core/common/app_route.dart';
 
 final GlobalKey<NavigatorState> navKey = GlobalKey<NavigatorState>();

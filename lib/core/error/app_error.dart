@@ -2,9 +2,9 @@ abstract class IAppError {
   String getError(String errorMessage);
 }
 
-class DefaultAppError extends IAppError {
+class GenericAppError extends IAppError {
   final String _message;
-  DefaultAppError(this._message);
+  GenericAppError(this._message);
 
   @override
   String getError(String errorMessage) => _message;

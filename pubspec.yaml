@@ -51,6 +51,7 @@ dependencies:
     git:
       url:
         https://github.com/afraitaneayal/poll_power_api_definition
+  freezed_annotation: ^2.4.1
 
 dev_dependencies:
   flutter_test:

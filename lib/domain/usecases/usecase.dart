@@ -1,7 +1,7 @@
 import 'package:dartz/dartz.dart';
 
-import '../../core/common/error/errors.dart';
+import '../../core/error/app_error.dart';
 
 abstract class Usecase<Param, T> {
-  Future<Either<AppError, T?>> trigger(Param param);
+  Future<Either<IAppError, T?>> trigger(Param param);
 }

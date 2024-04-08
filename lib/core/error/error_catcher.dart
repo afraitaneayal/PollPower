@@ -1,10 +1,10 @@
 import 'dart:developer';
 
 import 'package:dartz/dartz.dart';
-import 'errors.dart';
+import 'app_error.dart';
 
 class ErrorCatcher {
-  static Future<Either<AppError, T>> tryCatch<T>(Future<T> fn) async {
+  static Future<Either<IAppError, T>> tryCatch<T>(Future<T> fn) async {
     try {
       final result = await fn;
       return right(result);

@@ -558,7 +558,7 @@ packages:
     source: hosted
     version: "3.0.0+6"
   openapi_base:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: openapi_base
       sha256: "6c4e72e3f8fda7eb6647e515f8623c60eb0bf498dfc034a09d84e122a121a03e"

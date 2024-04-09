@@ -8,6 +8,6 @@ import '../models/transform.dart';
 
 abstract class IUserDatasource with TransformTo {
   Future<UserEntity> createUser(CreateUserParam param);
-  Future<UserEntity> getUser(GetUserParam param);
+  Future<UserEntity?> getUser(GetUserParam param);
   Future<JwtObject> logUser(LogUserParam param);
 }

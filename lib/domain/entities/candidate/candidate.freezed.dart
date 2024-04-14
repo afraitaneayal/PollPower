@@ -168,7 +168,7 @@ class _$CandidateEntityImpl implements _CandidateEntity {
       {required this.slogan,
       required this.speech,
       required this.vote_count,
-      required this.uuid,
+      this.uuid,
       required this.user});
 
   factory _$CandidateEntityImpl.fromJson(Map<String, dynamic> json) =>
@@ -228,7 +228,7 @@ abstract class _CandidateEntity implements CandidateEntity {
       {required final String slogan,
       required final String speech,
       required final int vote_count,
-      required final String uuid,
+      required final String? uuid,
       required final UserEntity user}) = _$CandidateEntityImpl;
 
   factory _CandidateEntity.fromJson(Map<String, dynamic> json) =

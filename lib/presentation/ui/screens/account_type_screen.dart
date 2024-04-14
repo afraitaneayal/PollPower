@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
+import 'package:poll_power/core/common/app_route.dart';
 import 'package:poll_power/core/common/app_styles.dart';
 import 'package:poll_power/core/common/app_texts.dart';
 import 'package:poll_power/core/extensions/context_extension.dart';
@@ -44,12 +46,16 @@ class AccountTypeScreen extends StatelessWidget {
       children: [
         AppTexts.candidate.asPrimaryButton(
           padding: EdgeInsets.symmetric(vertical: 52.sp, horizontal: 100.sp),
-          callback: () async {},
+          callback: () async {
+            context.push(AppRoutes.registerCandidate);
+          },
         ),
         context.gaps.small,
         AppTexts.voter.asPrimaryButton(
           padding: EdgeInsets.symmetric(vertical: 52.sp, horizontal: 120.sp),
-          callback: () async {},
+          callback: () async {
+            context.push(AppRoutes.registerVoter);
+          },
         ),
       ],
     );

@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:poll_power/presentation/ui/screens/account_type_screen.dart';
@@ -12,7 +13,7 @@ final GlobalKey<NavigatorState> navKey = GlobalKey<NavigatorState>();
 
 class AppRouter {
   final GoRouter _router = GoRouter(
-      initialLocation: AppRoutes.home,
+      redirect: _guardian,
       routes: <RouteBase>[
         GoRoute(
           path: AppRoutes.splash,
@@ -32,8 +33,16 @@ class AppRouter {
           builder: (context, state) => const AccountTypeScreen(),
         ),
         GoRoute(
-          path: AppRoutes.register,
-          builder: (context, state) => const RegisterScreen(),
+          path: AppRoutes.registerVoter,
+          builder: (context, state) => const RegisterScreen(
+            isVoter: true,
+          ),
+        ),
+        GoRoute(
+          path: AppRoutes.registerCandidate,
+          builder: (context, state) => const RegisterScreen(
+            isVoter: false,
+          ),
         ),
         GoRoute(
           path: AppRoutes.home,
@@ -47,4 +56,9 @@ class AppRouter {
       debugLogDiagnostics: true);
 
   GoRouter get router => _router;
+
+  static FutureOr<String?> _guardian(
+      BuildContext context, GoRouterState state) async {
+    return AppRoutes.splash;
+  }
 }

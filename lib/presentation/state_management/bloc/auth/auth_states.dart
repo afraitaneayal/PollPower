@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import 'package:poll_power/domain/entities/candidate/candidate.dart';
 import 'package:poll_power/domain/entities/user/user.dart';
 import 'package:poll_power/domain/objects/jwt_object.dart';
 
@@ -27,12 +28,20 @@ class LoginDone extends AuthState {
   List<Object?> get props => [jwt];
 }
 
-class SignUpDone extends AuthState {
+class SignUpUserDone extends AuthState {
   final UserEntity user;
-  SignUpDone(this.user);
+  SignUpUserDone(this.user);
 
   @override
   List<Object?> get props => [user];
+}
+
+class SignUpCandidateDone extends AuthState {
+  final CandidateEntity candidate;
+  SignUpCandidateDone(this.candidate);
+
+  @override
+  List<Object?> get props => [candidate];
 }
 
 class AuthFailed extends AuthState {

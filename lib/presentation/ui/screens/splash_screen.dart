@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
+import 'package:poll_power/core/common/app_route.dart';
 import 'package:poll_power/core/extensions/context_extension.dart';
 import 'package:poll_power/core/extensions/string_extension.dart';
+import 'package:poll_power/di.dart';
+import 'package:poll_power/presentation/state_management/bloc/auth/auth_bloc.dart';
 import '../../../core/assets/assets.gen.dart';
 
 class SplashScreen extends StatelessWidget {
@@ -9,6 +13,15 @@ class SplashScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    WidgetsBinding.instance.addPostFrameCallback(
+      (timeStamp) async {
+        final bool isReady =
+            await locator.get<AuthBloc>().isUserAuthenticated();
+        // ignore: use_build_context_synchronously
+        isReady ? context.push(AppRoutes.home) : context.push(AppRoutes.login);
+      },
+    );
+
     return Scaffold(
       body: Center(
         child: Stack(alignment: Alignment.center, children: [

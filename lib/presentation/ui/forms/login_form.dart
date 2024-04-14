@@ -4,6 +4,10 @@ import 'package:poll_power/core/common/app_texts.dart';
 import 'package:poll_power/core/extensions/context_extension.dart';
 import 'package:poll_power/core/extensions/string_extension.dart';
 import 'package:poll_power/core/ui/widgets/default_text_input.dart';
+import 'package:poll_power/di.dart';
+import 'package:poll_power/domain/entities/user/user.dart';
+import 'package:poll_power/presentation/state_management/bloc/auth/auth_bloc.dart';
+import 'package:poll_power/presentation/state_management/bloc/auth/auth_events.dart';
 
 class LoginForm extends StatefulWidget {
   const LoginForm({super.key});
@@ -47,7 +51,9 @@ class _LoginFormState extends State<LoginForm> {
   Center _buildLoginButton() {
     return Center(
       child: AppTexts.login.asPrimaryButton(
-          callback: () async {},
+          callback: () async {
+            _onLoginButtonPressed();
+          },
           padding: EdgeInsets.symmetric(vertical: 16.sp, horizontal: 71.sp)),
     );
   }
@@ -72,4 +78,19 @@ class _LoginFormState extends State<LoginForm> {
           context.gaps.large,
         ],
       ));
+
+  void _onLoginButtonPressed() {
+    if (_validateForm()) {
+      locator.get<AuthBloc>().add(LoginUserEvent(
+          email: _emailController.text, password: _passwordController.text));
+    } else {
+      context
+          .showSnackBar(SnackBar(content: "Verify your credentials".light()));
+    }
+  }
+
+  bool _validateForm() {
+    return _emailController.text.isNotEmpty &&
+        _passwordController.text.isNotEmpty;
+  }
 }

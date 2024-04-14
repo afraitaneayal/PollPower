@@ -13,7 +13,7 @@ class CandidateEntity with _$CandidateEntity {
     required String slogan,
     required String speech,
     required int vote_count,
-    required String uuid,
+    required String? uuid,
     required UserEntity user,
   }) = _CandidateEntity;
 

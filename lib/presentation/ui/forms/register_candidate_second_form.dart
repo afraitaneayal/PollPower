@@ -20,6 +20,7 @@ class _RegisterCandidateSecondFormState
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final TextEditingController _sloganController = TextEditingController();
   final TextEditingController _speechController = TextEditingController();
+  final TextEditingController _imageController = TextEditingController();
 
   @override
   void initState() {
@@ -28,7 +29,11 @@ class _RegisterCandidateSecondFormState
 
   @override
   void dispose() {
-    for (var controller in [_sloganController, _speechController]) {
+    for (var controller in [
+      _sloganController,
+      _speechController,
+      _imageController
+    ]) {
       controller.dispose();
     }
     super.dispose();

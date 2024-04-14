@@ -9,3 +9,9 @@ extension GetItFromContextExtension on BuildContext {
   IAppGaps get gaps => locator.get<IAppGaps>();
   IAppTypography get typography => locator.get<IAppTypography>();
 }
+
+extension ShowElementUsingContextExtension on BuildContext {
+  void showSnackBar(SnackBar snack) {
+    ScaffoldMessenger.of(this).showSnackBar(snack);
+  }
+}

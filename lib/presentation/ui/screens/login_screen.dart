@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+import 'package:poll_power/core/common/app_route.dart';
 import 'package:poll_power/core/common/app_styles.dart';
 import 'package:poll_power/core/common/app_texts.dart';
 import 'package:poll_power/core/extensions/context_extension.dart';
@@ -27,7 +29,9 @@ class LoginScreen extends StatelessWidget {
             context.gaps.large,
             AppTexts.dontHaveAccount.light(),
             context.gaps.medium,
-            AppTexts.caalToRegister.asSecondaryButton(callback: () async {})
+            AppTexts.caalToRegister.asSecondaryButton(callback: () async {
+              context.push(AppRoutes.accountType);
+            })
           ],
         ),
       ),

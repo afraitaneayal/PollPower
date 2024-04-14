@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:poll_power/core/extensions/context_extension.dart';
 import 'package:poll_power/core/extensions/string_extension.dart';
-
 import '../../../core/assets/assets.gen.dart';
 
 class SplashScreen extends StatelessWidget {

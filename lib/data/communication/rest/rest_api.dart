@@ -14,31 +14,31 @@ class RestApiImpl implements IRestAPI {
   }
 
   @override
-  Future<GetCandidatesResponse> getCandidates() {
-    // TODO: implement getCandidates
-    throw UnimplementedError();
+  Future<GetCandidatesResponse> getCandidates() async {
+    final GetCandidatesResponse response = await _client.getCandidates();
+    return response;
   }
 
   @override
-  Future<LoginUserResponse> loginUser(UserLoginRequest body) {
-    // TODO: implement loginUser
-    throw UnimplementedError();
+  Future<LoginUserResponse> loginUser(UserLoginRequest body) async {
+    final LoginUserResponse response = await _client.loginUser(body);
+    return response;
   }
 
   @override
-  Future<SignUpCandidateResponse> signUpCandidate(Candidate body) {
-    // TODO: implement signUpCandidate
-    throw UnimplementedError();
+  Future<SignUpCandidateResponse> signUpCandidate(Candidate body) async {
+    final SignUpCandidateResponse response =
+        await _client.signUpCandidate(body);
+    return response;
   }
 
   @override
-  Future<SignUpUserResponse> signUpUser(User body) {
-    return _client.signUpUser(body);
+  Future<SignUpUserResponse> signUpUser(User body) async {
+    return await _client.signUpUser(body);
   }
 
   @override
-  Future<VoteCandidateResponse> voteCandidate(VotingRequest body) {
-    // TODO: implement voteCandidate
-    throw UnimplementedError();
+  Future<VoteCandidateResponse> voteCandidate(VotingRequest body) async {
+    return await _client.voteCandidate(body);
   }
 }

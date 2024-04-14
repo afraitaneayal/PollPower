@@ -1,6 +1,4 @@
-import 'dart:convert';
 import 'dart:io';
-
 import 'package:injectable/injectable.dart';
 import 'package:poll_power/core/error/app_error.dart';
 import 'package:poll_power/data/communication/rest/i_rest_api.dart';

@@ -5,7 +5,6 @@ import 'package:poll_power/core/extensions/context_extension.dart';
 import 'package:poll_power/core/extensions/string_extension.dart';
 import 'package:poll_power/core/ui/widgets/default_text_input.dart';
 import 'package:poll_power/di.dart';
-import 'package:poll_power/domain/entities/user/user.dart';
 import 'package:poll_power/presentation/state_management/bloc/auth/auth_bloc.dart';
 import 'package:poll_power/presentation/state_management/bloc/auth/auth_events.dart';
 
@@ -51,9 +50,7 @@ class _LoginFormState extends State<LoginForm> {
   Center _buildLoginButton() {
     return Center(
       child: AppTexts.login.asPrimaryButton(
-          callback: () async {
-            _onLoginButtonPressed();
-          },
+          callback: () async => _onLoginButtonPressed(),
           padding: EdgeInsets.symmetric(vertical: 16.sp, horizontal: 71.sp)),
     );
   }
@@ -84,8 +81,9 @@ class _LoginFormState extends State<LoginForm> {
       locator.get<AuthBloc>().add(LoginUserEvent(
           email: _emailController.text, password: _passwordController.text));
     } else {
-      context
-          .showSnackBar(SnackBar(content: "Verify your credentials".light()));
+      context.showSnackBar(SnackBar(
+          content:
+              "Verify your credentials".light(color: context.colors.white)));
     }
   }
 

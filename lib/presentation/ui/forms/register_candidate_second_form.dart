@@ -4,11 +4,14 @@ import 'package:poll_power/core/common/app_texts.dart';
 import 'package:poll_power/core/extensions/context_extension.dart';
 import 'package:poll_power/core/extensions/string_extension.dart';
 import 'package:poll_power/core/ui/widgets/default_text_input.dart';
+import 'package:poll_power/presentation/ui/forms/candidate_form_data.dart';
 
 import '../../../core/assets/assets.gen.dart';
 
 class RegisterCandidateSecondForm extends StatefulWidget {
-  const RegisterCandidateSecondForm({super.key});
+  final ValueNotifier<CandidateFormDatas?> candidateFormData;
+  const RegisterCandidateSecondForm(
+      {super.key, required this.candidateFormData});
 
   @override
   State<RegisterCandidateSecondForm> createState() =>
@@ -20,7 +23,8 @@ class _RegisterCandidateSecondFormState
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final TextEditingController _sloganController = TextEditingController();
   final TextEditingController _speechController = TextEditingController();
-  final TextEditingController _imageController = TextEditingController();
+  final TextEditingController _imageController =
+      TextEditingController(text: "");
 
   @override
   void initState() {
@@ -29,6 +33,11 @@ class _RegisterCandidateSecondFormState
 
   @override
   void dispose() {
+    widget.candidateFormData.value = CandidateFormDatas(
+        firstFormData: widget.candidateFormData.value!.firstFormData,
+        secondFormData: CandidateSecondFormData(_sloganController.text,
+            _speechController.text, _imageController.text));
+
     for (var controller in [
       _sloganController,
       _speechController,

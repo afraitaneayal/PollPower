@@ -4,11 +4,11 @@ import 'package:poll_power_openapi/poll_power_openapi.dart';
 
 @singleton
 class RestApiClient {
-  final HttpRequestSender sender;
   final String baseUrl;
-  RestApiClient(this.sender, @Named("baseUrl") this.baseUrl);
+  RestApiClient(@Named("baseUrl") this.baseUrl);
 
   PollPowerAPIClient getClient() {
+    final HttpRequestSender sender = HttpRequestSender();
     return PollPowerAPIClient(Uri.parse(baseUrl), sender);
   }
 }

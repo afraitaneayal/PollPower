@@ -13,8 +13,8 @@ class VoterSecondFormData {
 }
 
 class VoteFormDatas {
-  final VoterFirstFormData voterFirstFormData;
-  final VoterSecondFormData voterSecondFormData;
+  final VoterFirstFormData? voterFirstFormData;
+  final VoterSecondFormData? voterSecondFormData;
 
-  VoteFormDatas(this.voterFirstFormData, this.voterSecondFormData);
+  VoteFormDatas({this.voterFirstFormData, this.voterSecondFormData});
 }

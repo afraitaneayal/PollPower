@@ -14,8 +14,8 @@ import 'package:poll_power/presentation/ui/forms/voter_form_data.dart';
 
 class RegisterCommonLastForm extends StatefulWidget {
   final bool isVoter;
-  final ValueNotifier<CandidateFormDatas> candidateFormDatas;
-  final ValueNotifier<VoteFormDatas> voterFormDatas;
+  final ValueNotifier<CandidateFormDatas?> candidateFormDatas;
+  final ValueNotifier<VoteFormDatas?> voterFormDatas;
   const RegisterCommonLastForm({
     super.key,
     required this.isVoter,
@@ -110,31 +110,32 @@ class _RegisterLastFCommonormState extends State<RegisterCommonLastForm> {
         uuid: null,
         email: _emailController.text,
         password: _passwordController.text,
-        first_name: widget.voterFormDatas.value.voterFirstFormData.firstName,
-        last_name: widget.voterFormDatas.value.voterFirstFormData.lastName,
-        grade: widget.voterFormDatas.value.voterFirstFormData.grade,
+        first_name: widget.voterFormDatas.value!.voterFirstFormData!.firstName,
+        last_name: widget.voterFormDatas.value!.voterFirstFormData!.lastName,
+        grade: widget.voterFormDatas.value!.voterFirstFormData!.grade,
         area_of_study:
-            widget.voterFormDatas.value.voterFirstFormData.areaOfStudy,
-        image: widget.voterFormDatas.value.voterSecondFormData.image);
+            widget.voterFormDatas.value!.voterFirstFormData!.areaOfStudy,
+        image: widget.voterFormDatas.value!.voterSecondFormData!.image);
     locator.get<AuthBloc>().add(SignUpUserEvent(user));
   }
 
   _registerCandidate() {
     final CandidateEntity candidate = CandidateEntity(
-        slogan: widget.candidateFormDatas.value.secondFormData.slogan,
-        speech: widget.candidateFormDatas.value.secondFormData.speetch ?? "",
+        slogan: widget.candidateFormDatas.value!.secondFormData!.slogan,
+        speech: widget.candidateFormDatas.value!.secondFormData!.speetch ?? "",
         vote_count: 0,
         uuid: null,
         user: UserEntity(
             uuid: null,
             email: _emailController.text,
             password: _passwordController.text,
-            first_name: widget.candidateFormDatas.value.firstFormData.firstName,
-            last_name: widget.candidateFormDatas.value.firstFormData.lastName,
-            grade: widget.candidateFormDatas.value.firstFormData.grade,
+            first_name:
+                widget.candidateFormDatas.value!.firstFormData!.firstName,
+            last_name: widget.candidateFormDatas.value!.firstFormData!.lastName,
+            grade: widget.candidateFormDatas.value!.firstFormData!.grade,
             area_of_study:
-                widget.candidateFormDatas.value.firstFormData.areaOfStudy,
-            image: widget.candidateFormDatas.value.secondFormData.image));
+                widget.candidateFormDatas.value!.firstFormData!.areaOfStudy,
+            image: widget.candidateFormDatas.value!.secondFormData!.image));
     locator
         .get<AuthBloc>()
         .add(SignUpCandidateEvent(candidate, candidate.user));

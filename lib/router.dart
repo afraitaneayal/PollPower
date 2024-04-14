@@ -1,4 +1,3 @@
-import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:poll_power/presentation/ui/screens/account_type_screen.dart';
@@ -13,7 +12,8 @@ final GlobalKey<NavigatorState> navKey = GlobalKey<NavigatorState>();
 
 class AppRouter {
   final GoRouter _router = GoRouter(
-      redirect: _guardian,
+      navigatorKey: navKey,
+      initialLocation: AppRoutes.splash,
       routes: <RouteBase>[
         GoRoute(
           path: AppRoutes.splash,
@@ -56,9 +56,4 @@ class AppRouter {
       debugLogDiagnostics: true);
 
   GoRouter get router => _router;
-
-  static FutureOr<String?> _guardian(
-      BuildContext context, GoRouterState state) async {
-    return AppRoutes.splash;
-  }
 }

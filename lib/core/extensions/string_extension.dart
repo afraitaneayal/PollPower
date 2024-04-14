@@ -39,7 +39,7 @@ extension StringAsWidgetExtension on String {
       double? fontSize,
       EdgeInsets? padding}) {
     return getPrimaryButton(
-        callback: () async => callback,
+        callback: callback,
         child: Padding(
           padding: padding ?? EdgeInsets.zero,
           child: semiBold(

@@ -1,9 +1,18 @@
+import 'dart:developer';
+
 import 'package:bloc/bloc.dart';
+import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:injectable/injectable.dart';
+import 'package:poll_power/core/common/app_route.dart';
+import 'package:poll_power/core/extensions/context_extension.dart';
+import 'package:poll_power/core/extensions/string_extension.dart';
 import 'package:poll_power/core/helpers/token_helper.dart';
+import 'package:poll_power/core/ui/theme/colors/i_app_colors.dart';
 import 'package:poll_power/di.dart';
 import 'package:poll_power/domain/entities/candidate/candidate.dart';
 import 'package:poll_power/domain/entities/user/user.dart';
+import 'package:poll_power/domain/objects/jwt_object.dart';
 import 'package:poll_power/domain/params/candidate/create_candidate_param.dart';
 import 'package:poll_power/domain/params/user/create_user_param.dart';
 import 'package:poll_power/domain/params/user/log_user_param.dart';
@@ -12,6 +21,7 @@ import 'package:poll_power/domain/usecases/user/create_user_usecase.dart';
 import 'package:poll_power/domain/usecases/user/log_user_uscase.dart';
 import 'package:poll_power/presentation/state_management/bloc/auth/auth_events.dart';
 import 'package:poll_power/presentation/state_management/bloc/auth/auth_states.dart';
+import 'package:poll_power/router.dart';
 
 @singleton
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
@@ -38,9 +48,13 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
           user.first_name,
           user.password);
       final result = await _createUserUsecase.trigger(param);
-      result.fold(
-          (l) => emit(AuthFailed("Signup user failed verify your credentials")),
-          (r) => emit(SignUpUserDone(r)));
+      result.fold((l) {
+        emit(AuthFailed("Signup user failed verify your credentials"));
+        _showError("Signup user failed verify your credentials");
+      }, (r) {
+        emit(SignUpUserDone(r));
+        navKey.currentContext!.push(AppRoutes.home);
+      });
     });
 
     // On Signup candidate event
@@ -50,22 +64,48 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       final CreateCandidateParam param = CreateCandidateParam(
           candidate.slogan, candidate.speech, user, candidate.vote_count);
       final result = await _createCandidateUsecase.trigger(param);
-      result.fold(
-          (l) => emit(AuthFailed("Signup user failed verify your credentials")),
-          (r) => emit(SignUpCandidateDone(r)));
+      result.fold((l) {
+        emit(AuthFailed("Signup user failed verify your credentials"));
+        _showError("Signup user failed verify your credentials");
+      }, (r) {
+        emit(SignUpCandidateDone(r));
+        navKey.currentContext!.push(AppRoutes.home);
+      });
     });
 
     // On login user event
     on<LoginUserEvent>((event, emit) async {
+      emit(LoginProcessing());
       final LogUserParam param = LogUserParam(event.email, event.password);
       final result = await _logUserUsecase.trigger(param);
-      result.fold(
-          (l) => emit(AuthFailed("Login user failed verify your credentials")),
-          (r) => emit(LoginDone(r)));
+      result.fold((l) {
+        emit(AuthFailed("Login user failed verify your credentials"));
+        _showError("Login failed verify your credentials");
+      }, (r) {
+        emit(LoginDone(r));
+        _saveCredentials(r);
+        navKey.currentContext!.push(AppRoutes.home);
+      });
     });
+  }
+
+  void _showError(String message) {
+    navKey.currentContext!.showSnackBar(SnackBar(
+        content: message.light(color: locator.get<IAppColors>().white)));
   }
 
   Future<bool> isUserAuthenticated() async {
     return locator.get<TokenHelper>().isAuthenticated();
+  }
+
+  void _saveCredentials(JwtObject tokens) {
+    log("Saving credentials");
+    log(tokens.token);
+    locator.get<TokenHelper>().saveTokens(tokens);
+  }
+
+  Future<void> logout() async {
+    locator.get<TokenHelper>().removeCredentials();
+    navKey.currentContext!.push(AppRoutes.login);
   }
 }

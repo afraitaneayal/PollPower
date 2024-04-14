@@ -32,7 +32,7 @@ InkWell getSecondaryButton(
 InkWell getArrowButton(
     {required AsyncCallback callback, required bool isLeft}) {
   return InkWell(
-    onTap: () => callback,
+    onTap: callback,
     enableFeedback: true,
     child: Padding(
       padding: EdgeInsets.all(10.sp),

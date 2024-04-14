@@ -1,7 +1,8 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:poll_power/core/common/app_styles.dart';
-import 'package:poll_power/core/common/app_texts.dart';
 import 'package:poll_power/core/extensions/context_extension.dart';
 import 'package:poll_power/core/ui/theme/buttons/default_buttons.dart';
 import 'package:poll_power/core/ui/widgets/default_app_bar.dart';
@@ -23,15 +24,19 @@ class RegisterScreen extends StatefulWidget {
 }
 
 class _RegisterScreenState extends State<RegisterScreen> {
-  final ValueNotifier<Widget> _currentForm =
-      ValueNotifier(const RegisterVoterFirstForm());
-  late ValueNotifier<CandidateFormDatas> _candidateFormDatas;
-  late ValueNotifier<VoteFormDatas> _voterFormDatas;
+  final ValueNotifier<CandidateFormDatas?> _candidateFormDatas =
+      ValueNotifier(null);
+  final ValueNotifier<VoteFormDatas?> _voterFormDatas = ValueNotifier(null);
+  late ValueNotifier<Widget> _currentForm;
 
   @override
   void initState() {
+    _currentForm =
+        ValueNotifier(RegisterVoterFirstForm(voteFormData: _voterFormDatas));
     if (!widget.isVoter) {
-      _currentForm.value = const RegisterCandidateFirstForm();
+      _currentForm.value = RegisterCandidateFirstForm(
+        candidateFormData: _candidateFormDatas,
+      );
     }
     super.initState();
   }
@@ -55,7 +60,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             const DefaultAppBar(),
-            const RegisterVoterFirstForm(),
+            ListenableBuilder(
+              listenable: _currentForm,
+              builder: (context, child) => _currentForm.value,
+            ),
             context.gaps.small,
             _buildArrowButtons(context),
           ],
@@ -84,10 +92,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
   }
 
   void _right() {
+    log(_currentForm.value.toString());
     if (widget.isVoter) {
       switch (_currentForm.value) {
         case RegisterVoterFirstForm():
-          _currentForm.value = const RegisterVoterSecondForm();
+          _currentForm.value = RegisterVoterSecondForm(
+            voteFormData: _voterFormDatas,
+          );
           break;
         case RegisterVoterSecondForm():
           _currentForm.value = RegisterCommonLastForm(
@@ -101,7 +112,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
     } else {
       switch (_currentForm.value) {
         case RegisterCandidateFirstForm():
-          _currentForm.value = const RegisterCandidateSecondForm();
+          _currentForm.value = RegisterCandidateSecondForm(
+            candidateFormData: _candidateFormDatas,
+          );
           break;
         case RegisterCandidateSecondForm():
           _currentForm.value = RegisterCommonLastForm(
@@ -116,13 +129,21 @@ class _RegisterScreenState extends State<RegisterScreen> {
   }
 
   void _left() {
+    log(_currentForm.value.toString());
     if (widget.isVoter) {
       switch (_currentForm.value) {
         case RegisterVoterFirstForm():
           context.pop();
           break;
         case RegisterVoterSecondForm():
-          _currentForm.value = const RegisterVoterFirstForm();
+          _currentForm.value = RegisterVoterFirstForm(
+            voteFormData: _voterFormDatas,
+          );
+          break;
+        case RegisterCommonLastForm():
+          _currentForm.value = RegisterVoterSecondForm(
+            voteFormData: _voterFormDatas,
+          );
           break;
         default:
       }
@@ -132,8 +153,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
           context.pop();
           break;
         case RegisterCandidateSecondForm():
-          _currentForm.value = const RegisterCandidateFirstForm();
-
+          _currentForm.value = RegisterCandidateFirstForm(
+              candidateFormData: _candidateFormDatas);
+          break;
+        case RegisterCommonLastForm():
+          _currentForm.value = RegisterCandidateSecondForm(
+            candidateFormData: _candidateFormDatas,
+          );
         default:
       }
     }

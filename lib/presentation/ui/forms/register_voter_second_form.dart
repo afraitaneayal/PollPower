@@ -5,8 +5,12 @@ import 'package:poll_power/core/common/app_texts.dart';
 import 'package:poll_power/core/extensions/context_extension.dart';
 import 'package:poll_power/core/extensions/string_extension.dart';
 
+import 'voter_form_data.dart';
+
 class RegisterVoterSecondForm extends StatefulWidget {
-  const RegisterVoterSecondForm({super.key});
+  final ValueNotifier<VoteFormDatas?> voteFormData;
+
+  const RegisterVoterSecondForm({super.key, required this.voteFormData});
 
   @override
   State<RegisterVoterSecondForm> createState() =>
@@ -16,6 +20,7 @@ class RegisterVoterSecondForm extends StatefulWidget {
 class _RegisterVoterSecondFormState extends State<RegisterVoterSecondForm> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final ValueNotifier<bool> _isImageReady = ValueNotifier(false);
+  final ValueNotifier<String> _image = ValueNotifier("");
 
   @override
   void initState() {
@@ -24,6 +29,9 @@ class _RegisterVoterSecondFormState extends State<RegisterVoterSecondForm> {
 
   @override
   void dispose() {
+    widget.voteFormData.value = VoteFormDatas(
+        voterFirstFormData: widget.voteFormData.value!.voterFirstFormData,
+        voterSecondFormData: VoterSecondFormData(_image.value));
     _isImageReady.dispose();
     super.dispose();
   }

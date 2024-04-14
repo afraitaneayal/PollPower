@@ -23,7 +23,7 @@ mixin _$CandidateEntity {
   String get slogan => throw _privateConstructorUsedError;
   String get speech => throw _privateConstructorUsedError;
   int get vote_count => throw _privateConstructorUsedError;
-  String get uuid => throw _privateConstructorUsedError;
+  String? get uuid => throw _privateConstructorUsedError;
   UserEntity get user => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -42,7 +42,7 @@ abstract class $CandidateEntityCopyWith<$Res> {
       {String slogan,
       String speech,
       int vote_count,
-      String uuid,
+      String? uuid,
       UserEntity user});
 
   $UserEntityCopyWith<$Res> get user;
@@ -64,7 +64,7 @@ class _$CandidateEntityCopyWithImpl<$Res, $Val extends CandidateEntity>
     Object? slogan = null,
     Object? speech = null,
     Object? vote_count = null,
-    Object? uuid = null,
+    Object? uuid = freezed,
     Object? user = null,
   }) {
     return _then(_value.copyWith(
@@ -80,10 +80,10 @@ class _$CandidateEntityCopyWithImpl<$Res, $Val extends CandidateEntity>
           ? _value.vote_count
           : vote_count // ignore: cast_nullable_to_non_nullable
               as int,
-      uuid: null == uuid
+      uuid: freezed == uuid
           ? _value.uuid
           : uuid // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       user: null == user
           ? _value.user
           : user // ignore: cast_nullable_to_non_nullable
@@ -112,7 +112,7 @@ abstract class _$$CandidateEntityImplCopyWith<$Res>
       {String slogan,
       String speech,
       int vote_count,
-      String uuid,
+      String? uuid,
       UserEntity user});
 
   @override
@@ -133,7 +133,7 @@ class __$$CandidateEntityImplCopyWithImpl<$Res>
     Object? slogan = null,
     Object? speech = null,
     Object? vote_count = null,
-    Object? uuid = null,
+    Object? uuid = freezed,
     Object? user = null,
   }) {
     return _then(_$CandidateEntityImpl(
@@ -149,10 +149,10 @@ class __$$CandidateEntityImplCopyWithImpl<$Res>
           ? _value.vote_count
           : vote_count // ignore: cast_nullable_to_non_nullable
               as int,
-      uuid: null == uuid
+      uuid: freezed == uuid
           ? _value.uuid
           : uuid // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       user: null == user
           ? _value.user
           : user // ignore: cast_nullable_to_non_nullable
@@ -168,7 +168,7 @@ class _$CandidateEntityImpl implements _CandidateEntity {
       {required this.slogan,
       required this.speech,
       required this.vote_count,
-      this.uuid,
+      required this.uuid,
       required this.user});
 
   factory _$CandidateEntityImpl.fromJson(Map<String, dynamic> json) =>
@@ -181,7 +181,7 @@ class _$CandidateEntityImpl implements _CandidateEntity {
   @override
   final int vote_count;
   @override
-  final String uuid;
+  final String? uuid;
   @override
   final UserEntity user;
 
@@ -241,7 +241,7 @@ abstract class _CandidateEntity implements CandidateEntity {
   @override
   int get vote_count;
   @override
-  String get uuid;
+  String? get uuid;
   @override
   UserEntity get user;
   @override

@@ -3,6 +3,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:poll_power/core/common/app_texts.dart';
 import 'package:poll_power/core/extensions/context_extension.dart';
 import 'package:poll_power/core/extensions/string_extension.dart';
+import 'package:poll_power/di.dart';
+import 'package:poll_power/presentation/state_management/bloc/auth/auth_bloc.dart';
 
 import '../../assets/assets.gen.dart';
 
@@ -12,19 +14,38 @@ class UserCardWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.symmetric(vertical: 20.sp, horizontal: 30.sp),
-      decoration: BoxDecoration(
-          color: context.colors.red,
-          borderRadius: BorderRadius.circular(10.sp)),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          _buildLeft(context),
-          _buildRight(context),
-        ],
+    return InkWell(
+      onTap: () {
+        _showLogoutButtonSheet(context);
+      },
+      child: Container(
+        padding: EdgeInsets.symmetric(vertical: 20.sp, horizontal: 30.sp),
+        decoration: BoxDecoration(
+            color: context.colors.red,
+            borderRadius: BorderRadius.circular(10.sp)),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            _buildLeft(context),
+            _buildRight(context),
+          ],
+        ),
       ),
+    );
+  }
+
+  _showLogoutButtonSheet(BuildContext context) {
+    return showModalBottomSheet(
+      context: context,
+      builder: (context) {
+        return Container(
+          alignment: Alignment.center,
+          child: "Logout".asPrimaryButton(
+              padding: EdgeInsets.symmetric(vertical: 20.sp, horizontal: 40.sp),
+              callback: () async => locator.get<AuthBloc>().logout()),
+        );
+      },
     );
   }
 

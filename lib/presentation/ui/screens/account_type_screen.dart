@@ -30,10 +30,7 @@ class AccountTypeScreen extends StatelessWidget {
             _buildButtons(context),
             context.gaps.large,
             context.gaps.large,
-            getArrowButton(
-              isLeft: true,
-              callback: () async {},
-            )
+            getArrowButton(isLeft: true, callback: () async => context.pop())
           ],
         ),
       ),

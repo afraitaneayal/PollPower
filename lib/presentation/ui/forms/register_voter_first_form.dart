@@ -5,8 +5,11 @@ import 'package:poll_power/core/extensions/context_extension.dart';
 import 'package:poll_power/core/extensions/string_extension.dart';
 import 'package:poll_power/core/ui/widgets/default_text_input.dart';
 
+import 'voter_form_data.dart';
+
 class RegisterVoterFirstForm extends StatefulWidget {
-  const RegisterVoterFirstForm({super.key});
+  final ValueNotifier<VoteFormDatas?> voteFormData;
+  const RegisterVoterFirstForm({super.key, required this.voteFormData});
 
   @override
   State<RegisterVoterFirstForm> createState() => _RegisterVoterFirstFormState();
@@ -26,6 +29,13 @@ class _RegisterVoterFirstFormState extends State<RegisterVoterFirstForm> {
 
   @override
   void dispose() {
+    widget.voteFormData.value = VoteFormDatas(
+        voterFirstFormData: VoterFirstFormData(
+            _firstNameController.text,
+            _lastNameController.text,
+            _areaOfStudyController.text,
+            _gradeController.text));
+
     for (var controller in [
       _firstNameController,
       _lastNameController,

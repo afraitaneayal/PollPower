@@ -29,6 +29,13 @@ class _RegisterVoterFirstFormState extends State<RegisterVoterFirstForm> {
 
   @override
   void dispose() {
+    final List<TextEditingController> controllers = [
+      _firstNameController,
+      _lastNameController,
+      _gradeController,
+      _areaOfStudyController
+    ];
+
     widget.voteFormData.value = VoteFormDatas(
         voterFirstFormData: VoterFirstFormData(
             _firstNameController.text,
@@ -36,13 +43,8 @@ class _RegisterVoterFirstFormState extends State<RegisterVoterFirstForm> {
             _areaOfStudyController.text,
             _gradeController.text));
 
-    for (var controller in [
-      _firstNameController,
-      _lastNameController,
-      _gradeController,
-      _areaOfStudyController
-    ]) {
-      controller.dispose();
+    for (var c in controllers) {
+      c.dispose();
     }
     super.dispose();
   }

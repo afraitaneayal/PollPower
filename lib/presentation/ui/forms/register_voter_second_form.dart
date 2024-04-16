@@ -33,6 +33,7 @@ class _RegisterVoterSecondFormState extends State<RegisterVoterSecondForm> {
         voterFirstFormData: widget.voteFormData.value!.voterFirstFormData,
         voterSecondFormData: VoterSecondFormData(_image.value));
     _isImageReady.dispose();
+    _image.dispose();
     super.dispose();
   }
 

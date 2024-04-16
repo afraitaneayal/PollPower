@@ -31,9 +31,6 @@ class RestApiImpl implements IRestAPI {
   Future<LoginUserResponse> loginUser(UserLoginRequest body) async {
     final response = await ErrorCatcher.networkCatch<LoginUserResponse>(
         client().loginUser(body));
-    if (response is LoginUserResponse500) {
-      // throw GenericAppError("internal server error");
-    }
     return response;
   }
 

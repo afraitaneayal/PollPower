@@ -34,12 +34,12 @@ class _RegisterCandidateFirstFormState
   @override
   void dispose() {
     widget.candidateFormData.value = CandidateFormDatas(
-        firstFormData: CandidateFirstFormData(
-            _firstNameController.text,
-            _lastNameController.text,
-            _areaOfStudyController.text,
-            _gradeController.text),
-        secondFormData: widget.candidateFormData.value!.secondFormData);
+      firstFormData: CandidateFirstFormData(
+          _firstNameController.text,
+          _lastNameController.text,
+          _areaOfStudyController.text,
+          _gradeController.text),
+    );
 
     for (var controller in [
       _firstNameController,

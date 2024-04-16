@@ -18,6 +18,5 @@ class CandidateFormDatas {
   final CandidateFirstFormData? firstFormData;
   final CandidateSecondFormData? secondFormData;
 
-  CandidateFormDatas(
-      {required this.firstFormData, required this.secondFormData});
+  CandidateFormDatas({this.firstFormData, this.secondFormData});
 }

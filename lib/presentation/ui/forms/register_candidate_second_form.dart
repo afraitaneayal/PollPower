@@ -33,17 +33,29 @@ class _RegisterCandidateSecondFormState
 
   @override
   void dispose() {
-    widget.candidateFormData.value = CandidateFormDatas(
-        firstFormData: widget.candidateFormData.value!.firstFormData,
-        secondFormData: CandidateSecondFormData(_sloganController.text,
-            _speechController.text, _imageController.text));
-
-    for (var controller in [
+    final List<TextEditingController> controllers = [
       _sloganController,
       _speechController,
       _imageController
-    ]) {
-      controller.dispose();
+    ];
+
+    var isValide = false;
+
+    for (var c in controllers) {
+      if (c.text.isEmpty) {
+        isValide = true;
+      }
+    }
+
+    isValide
+        ? widget.candidateFormData.value = CandidateFormDatas(
+            firstFormData: widget.candidateFormData.value!.firstFormData,
+            secondFormData: CandidateSecondFormData(_sloganController.text,
+                _speechController.text, _imageController.text))
+        : null;
+
+    for (var c in controllers) {
+      c.dispose();
     }
     super.dispose();
   }

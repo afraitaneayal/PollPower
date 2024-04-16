@@ -79,13 +79,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
         getArrowButton(
           isLeft: true,
           callback: () async {
-            _validateForm() ? _left() : null;
+            _left();
           },
         ),
         getArrowButton(
             isLeft: false,
             callback: () async {
-              _validateForm() ? _right() : null;
+              _right();
             })
       ],
     );
@@ -94,37 +94,45 @@ class _RegisterScreenState extends State<RegisterScreen> {
   void _right() {
     log(_currentForm.value.toString());
     if (widget.isVoter) {
-      switch (_currentForm.value) {
-        case RegisterVoterFirstForm():
-          _currentForm.value = RegisterVoterSecondForm(
-            voteFormData: _voterFormDatas,
-          );
-          break;
-        case RegisterVoterSecondForm():
-          _currentForm.value = RegisterCommonLastForm(
-            isVoter: widget.isVoter,
-            voterFormDatas: _voterFormDatas,
-            candidateFormDatas: _candidateFormDatas,
-          );
-          break;
-        default:
-      }
+      _switchVoterForms();
     } else {
-      switch (_currentForm.value) {
-        case RegisterCandidateFirstForm():
-          _currentForm.value = RegisterCandidateSecondForm(
-            candidateFormData: _candidateFormDatas,
-          );
-          break;
-        case RegisterCandidateSecondForm():
-          _currentForm.value = RegisterCommonLastForm(
-            isVoter: widget.isVoter,
-            voterFormDatas: _voterFormDatas,
-            candidateFormDatas: _candidateFormDatas,
-          );
-          break;
-        default:
-      }
+      _switchCandidateForms();
+    }
+  }
+
+  void _switchCandidateForms() {
+    switch (_currentForm.value) {
+      case RegisterCandidateFirstForm():
+        _currentForm.value = RegisterCandidateSecondForm(
+          candidateFormData: _candidateFormDatas,
+        );
+        break;
+      case RegisterCandidateSecondForm():
+        _currentForm.value = RegisterCommonLastForm(
+          isVoter: widget.isVoter,
+          voterFormDatas: _voterFormDatas,
+          candidateFormDatas: _candidateFormDatas,
+        );
+        break;
+      default:
+    }
+  }
+
+  void _switchVoterForms() {
+    switch (_currentForm.value) {
+      case RegisterVoterFirstForm():
+        _currentForm.value = RegisterVoterSecondForm(
+          voteFormData: _voterFormDatas,
+        );
+        break;
+      case RegisterVoterSecondForm():
+        _currentForm.value = RegisterCommonLastForm(
+          isVoter: widget.isVoter,
+          voterFormDatas: _voterFormDatas,
+          candidateFormDatas: _candidateFormDatas,
+        );
+        break;
+      default:
     }
   }
 
@@ -163,9 +171,5 @@ class _RegisterScreenState extends State<RegisterScreen> {
         default:
       }
     }
-  }
-
-  bool _validateForm() {
-    return true;
   }
 }

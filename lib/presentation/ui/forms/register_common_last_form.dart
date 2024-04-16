@@ -102,10 +102,33 @@ class _RegisterLastFCommonormState extends State<RegisterCommonLastForm> {
       ));
 
   void _onRegisterButtonPressed() {
-    widget.isVoter ? _registerVoter() : _registerCandidate();
+    widget.isVoter
+        ? _isVoterFormValide()
+            ? _registerVoter()
+            : _showEmptyDataError()
+        : _isCandidateFormValide()
+            ? _registerCandidate()
+            : _showEmptyDataError();
   }
 
-  _registerVoter() {
+  void _showEmptyDataError() => context.showSnackBar(const SnackBar(
+      content: Text("Make sure to give all neccesary informations")));
+
+  bool _isVoterFormValide() {
+    return (_emailController.text.isNotEmpty &&
+        _passwordController.text.isNotEmpty &&
+        _confirmPasswordController.text.isNotEmpty &&
+        widget.voterFormDatas.value != null);
+  }
+
+  bool _isCandidateFormValide() {
+    return _emailController.text.isNotEmpty &&
+        _passwordController.text.isNotEmpty &&
+        _confirmPasswordController.text.isNotEmpty &&
+        widget.candidateFormDatas.value != null;
+  }
+
+  void _registerVoter() {
     final UserEntity user = UserEntity(
         uuid: null,
         email: _emailController.text,
@@ -119,7 +142,7 @@ class _RegisterLastFCommonormState extends State<RegisterCommonLastForm> {
     locator.get<AuthBloc>().add(SignUpUserEvent(user));
   }
 
-  _registerCandidate() {
+  void _registerCandidate() {
     final CandidateEntity candidate = CandidateEntity(
         slogan: widget.candidateFormDatas.value!.secondFormData!.slogan,
         speech: widget.candidateFormDatas.value!.secondFormData!.speetch ?? "",

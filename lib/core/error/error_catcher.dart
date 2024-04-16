@@ -1,10 +1,6 @@
 import 'dart:developer';
 
 import 'package:dartz/dartz.dart';
-import 'package:poll_power/core/extensions/context_extension.dart';
-import 'package:poll_power/di.dart';
-import 'package:poll_power/presentation/state_management/bloc/auth/auth_bloc.dart';
-import 'package:poll_power/router.dart';
 import 'app_error.dart';
 
 class ErrorCatcher {

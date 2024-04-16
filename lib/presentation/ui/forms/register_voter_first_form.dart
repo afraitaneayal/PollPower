@@ -24,6 +24,18 @@ class _RegisterVoterFirstFormState extends State<RegisterVoterFirstForm> {
 
   @override
   void initState() {
+    _firstNameController.text = (widget.voteFormData.value != null)
+        ? widget.voteFormData.value!.voterFirstFormData!.firstName
+        : "";
+    _lastNameController.text = (widget.voteFormData.value != null)
+        ? widget.voteFormData.value!.voterFirstFormData!.lastName
+        : "";
+    _areaOfStudyController.text = (widget.voteFormData.value != null)
+        ? widget.voteFormData.value!.voterFirstFormData!.areaOfStudy
+        : "";
+    _gradeController.text = (widget.voteFormData.value != null)
+        ? widget.voteFormData.value!.voterFirstFormData!.grade
+        : "";
     super.initState();
   }
 
@@ -75,21 +87,18 @@ class _RegisterVoterFirstFormState extends State<RegisterVoterFirstForm> {
           context.gaps.large,
           DefaultTextInput(
             textEditingController: _lastNameController,
-            isObscure: true,
             hintText: AppTexts.lastNameRequirement,
             onTap: null,
           ),
           context.gaps.large,
           DefaultTextInput(
             textEditingController: _gradeController,
-            isObscure: true,
             hintText: AppTexts.gradeRequirement,
             onTap: null,
           ),
           context.gaps.large,
           DefaultTextInput(
             textEditingController: _areaOfStudyController,
-            isObscure: true,
             hintText: AppTexts.areaOfStudyRequirement,
             onTap: null,
           ),

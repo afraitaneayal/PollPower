@@ -28,6 +28,18 @@ class _RegisterCandidateFirstFormState
 
   @override
   void initState() {
+    _firstNameController.text = (widget.candidateFormData.value != null)
+        ? widget.candidateFormData.value!.firstFormData!.firstName
+        : "";
+    _lastNameController.text = (widget.candidateFormData.value != null)
+        ? widget.candidateFormData.value!.firstFormData!.lastName
+        : "";
+    _areaOfStudyController.text = (widget.candidateFormData.value != null)
+        ? widget.candidateFormData.value!.firstFormData!.areaOfStudy
+        : "";
+    _gradeController.text = (widget.candidateFormData.value != null)
+        ? widget.candidateFormData.value!.firstFormData!.grade
+        : "";
     super.initState();
   }
 
@@ -80,21 +92,18 @@ class _RegisterCandidateFirstFormState
           context.gaps.large,
           DefaultTextInput(
             textEditingController: _lastNameController,
-            isObscure: true,
             hintText: AppTexts.lastNameRequirement,
             onTap: null,
           ),
           context.gaps.large,
           DefaultTextInput(
             textEditingController: _gradeController,
-            isObscure: true,
             hintText: AppTexts.gradeRequirement,
             onTap: null,
           ),
           context.gaps.large,
           DefaultTextInput(
             textEditingController: _areaOfStudyController,
-            isObscure: true,
             hintText: AppTexts.areaOfStudyRequirement,
             onTap: null,
           ),

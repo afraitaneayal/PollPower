@@ -28,6 +28,12 @@ class _RegisterCandidateSecondFormState
 
   @override
   void initState() {
+    _sloganController.text = (widget.candidateFormData.value != null)
+        ? widget.candidateFormData.value!.secondFormData!.slogan
+        : "";
+    _speechController.text = (widget.candidateFormData.value != null)
+        ? widget.candidateFormData.value!.secondFormData!.speetch!
+        : "";
     super.initState();
   }
 
@@ -82,7 +88,6 @@ class _RegisterCandidateSecondFormState
           context.gaps.large,
           DefaultTextInput(
             textEditingController: _speechController,
-            isObscure: true,
             hintText: AppTexts.speechRequirement,
             onTap: null,
           ),

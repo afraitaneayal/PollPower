@@ -4,13 +4,11 @@ import 'package:injectable/injectable.dart';
 import 'package:poll_power/core/error/app_error.dart';
 import 'package:poll_power/data/datasources/i_candidate_datasource_repository.dart';
 import 'package:poll_power/data/datasources/i_user_datasource_repository.dart';
-import 'package:poll_power/data/datasources/remote_datasource/rest/user/remote_user_datasource_impl.dart';
 import 'package:poll_power/di.dart';
 import 'package:poll_power/domain/entities/candidate/candidate.dart';
 import 'package:poll_power/domain/entities/user/user.dart';
 import 'package:poll_power/domain/params/candidate/create_candidate_param.dart';
 import 'package:poll_power/domain/params/candidate/get_candidate_param.dart';
-import 'package:poll_power/presentation/state_management/bloc/auth/auth_states.dart';
 import 'package:poll_power_openapi/poll_power_openapi.dart';
 
 import '../../../../communication/rest/i_rest_api.dart';

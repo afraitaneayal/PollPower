@@ -8,13 +8,14 @@ class DefaultTextInput extends StatelessWidget {
   final bool? isObscure;
   final AsyncCallback? onChange;
   final TextEditingController textEditingController;
-  const DefaultTextInput(
-      {super.key,
-      this.hintText,
-      required this.onTap,
-      this.isObscure,
-      required this.textEditingController,
-      this.onChange});
+  const DefaultTextInput({
+    super.key,
+    this.hintText,
+    required this.onTap,
+    this.isObscure,
+    required this.textEditingController,
+    this.onChange,
+  });
 
   @override
   Widget build(BuildContext context) {

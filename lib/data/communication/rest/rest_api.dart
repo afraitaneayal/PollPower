@@ -1,5 +1,7 @@
 import 'package:injectable/injectable.dart';
 import 'package:openapi_base/openapi_base.dart';
+import 'package:poll_power/core/error/app_error.dart';
+import 'package:poll_power/core/error/error_catcher.dart';
 import 'package:poll_power/data/communication/rest/i_rest_api.dart';
 import 'package:poll_power_openapi/openapi/pollpower.openapi.dart';
 
@@ -27,7 +29,11 @@ class RestApiImpl implements IRestAPI {
 
   @override
   Future<LoginUserResponse> loginUser(UserLoginRequest body) async {
-    final LoginUserResponse response = await client().loginUser(body);
+    final response = await ErrorCatcher.networkCatch<LoginUserResponse>(
+        client().loginUser(body));
+    if (response is LoginUserResponse500) {
+      // throw GenericAppError("internal server error");
+    }
     return response;
   }
 

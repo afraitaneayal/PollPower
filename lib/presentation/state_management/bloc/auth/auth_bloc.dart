@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:injectable/injectable.dart';
 import 'package:poll_power/core/common/app_route.dart';
+import 'package:poll_power/core/error/app_error.dart';
 import 'package:poll_power/core/extensions/context_extension.dart';
 import 'package:poll_power/core/extensions/string_extension.dart';
 import 'package:poll_power/core/helpers/token_helper.dart';
@@ -50,7 +51,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       final result = await _createUserUsecase.trigger(param);
       result.fold((l) {
         emit(AuthFailed("Signup user failed verify your credentials"));
-        _showError("Signup user failed verify your credentials");
+        _showError(l.getError());
       }, (r) {
         emit(SignUpUserDone(r));
         navKey.currentContext!.push(AppRoutes.home);
@@ -65,8 +66,8 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
           candidate.slogan, candidate.speech, user, candidate.vote_count);
       final result = await _createCandidateUsecase.trigger(param);
       result.fold((l) {
-        emit(AuthFailed("Signup user failed verify your credentials"));
-        _showError("Signup user failed verify your credentials");
+        emit(AuthFailed("Signup candidate failed verify your credentials"));
+        _showError(l.getError());
       }, (r) {
         emit(SignUpCandidateDone(r));
         navKey.currentContext!.push(AppRoutes.home);
@@ -74,13 +75,13 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     });
 
     // On login user event
-    on<LoginUserEvent>((event, emit) async {
+    on<LoginUserEvent>((LoginUserEvent event, Emitter emit) async {
       emit(LoginProcessing());
       final LogUserParam param = LogUserParam(event.email, event.password);
       final result = await _logUserUsecase.trigger(param);
       result.fold((l) {
         emit(AuthFailed("Login user failed verify your credentials"));
-        _showError("Login failed verify your credentials");
+        _showError(l.getError());
       }, (r) {
         emit(LoginDone(r));
         _saveCredentials(r);

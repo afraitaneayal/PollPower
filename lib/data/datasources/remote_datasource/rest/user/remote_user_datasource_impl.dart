@@ -28,8 +28,11 @@ class RemoteUserDatasourceWithRestImpl implements IUserDatasource {
     if (response.status == HttpStatus.created) {
       final SignUpUserResponse201 e = response as SignUpUserResponse201;
       return transform(User.fromJson(e.body.toJson()));
+    } else if (response.status == HttpStatus.badRequest) {
+      final SignUpUserResponse400 e = response as SignUpUserResponse400;
+      throw GenericAppError(e.body.error!.userFriendlyMessage.toString());
     }
-    throw FailedToSignupUser;
+    throw InternlaServerError();
   }
 
   @override
@@ -45,8 +48,11 @@ class RemoteUserDatasourceWithRestImpl implements IUserDatasource {
     if (response.status == HttpStatus.ok) {
       final LoginUserResponse200 e = response as LoginUserResponse200;
       return JwtObject.fromJson(e.body.toJson());
+    } else if (response.status == HttpStatus.badRequest) {
+      final LoginUserResponse400 e = response as LoginUserResponse400;
+      throw GenericAppError(e.body.error!.userFriendlyMessage.toString());
     }
-    throw FailedToLogUser;
+    throw InternlaServerError();
   }
 
   @override

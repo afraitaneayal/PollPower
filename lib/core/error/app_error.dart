@@ -1,5 +1,5 @@
 abstract class IAppError {
-  String getError(String errorMessage);
+  String getError();
 }
 
 class GenericAppError extends IAppError {
@@ -7,13 +7,14 @@ class GenericAppError extends IAppError {
   GenericAppError(this._message);
 
   @override
-  String getError(String errorMessage) => _message;
+  String getError() => _message;
 }
 
-class FailedToSignupUser extends GenericAppError {
-  FailedToSignupUser(super.message);
+class NoInternetError extends GenericAppError {
+  NoInternetError() : super("Check your internet");
 }
 
-class FailedToLogUser extends GenericAppError {
-  FailedToLogUser(super.message);
+class InternlaServerError extends GenericAppError {
+  InternlaServerError()
+      : super("Something went wrong on the server please try again");
 }

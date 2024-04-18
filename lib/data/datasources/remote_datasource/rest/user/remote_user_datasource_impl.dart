@@ -1,8 +1,10 @@
 import 'dart:io';
 import 'package:injectable/injectable.dart';
 import 'package:poll_power/core/error/app_error.dart';
+import 'package:poll_power/core/helpers/app_key_helper.dart';
 import 'package:poll_power/data/communication/rest/i_rest_api.dart';
 import 'package:poll_power/data/datasources/i_user_datasource_repository.dart';
+import 'package:poll_power/di.dart';
 import 'package:poll_power/domain/entities/user/user.dart';
 import 'package:poll_power/domain/objects/jwt_object.dart';
 import 'package:poll_power/domain/params/user/create_user_param.dart';
@@ -42,8 +44,10 @@ class RemoteUserDatasourceWithRestImpl implements IUserDatasource {
 
   @override
   Future<JwtObject> logUser(LogUserParam param) async {
-    final UserLoginRequest request =
-        UserLoginRequest(email: param.email, password: param.password);
+    final UserLoginRequest request = UserLoginRequest(
+        email: param.email,
+        password: param.password,
+        appKey: locator.get<AppKeyHelper>().getAppKey());
     final LoginUserResponse response = await _api.loginUser(request);
     if (response.status == HttpStatus.ok) {
       final LoginUserResponse200 e = response as LoginUserResponse200;

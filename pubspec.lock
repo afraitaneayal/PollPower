@@ -186,7 +186,7 @@ packages:
     source: hosted
     version: "3.1.1"
   crypto:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: crypto
       sha256: ff625774173754681d66daaf4a448684fb04b78f902da9cb3d308c19cc5e8bab
@@ -690,10 +690,10 @@ packages:
     description:
       path: "."
       ref: HEAD
-      resolved-ref: "29f949b60322291bdb5ffda01a97dc73edaf627b"
+      resolved-ref: "1c802cf2f73ad50861e4d85ba23eb49b489f7cbc"
       url: "https://github.com/afraitaneayal/poll_power_api_definition"
     source: git
-    version: "1.4.1"
+    version: "1.4.6"
   pool:
     dependency: transitive
     description:

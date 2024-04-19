@@ -10,6 +10,14 @@ class GenericAppError extends IAppError {
   String getError() => _message;
 }
 
+class BadRequestError extends IAppError {
+  final String _error;
+  BadRequestError(this._error);
+
+  @override
+  String getError() => _error;
+}
+
 class NoInternetError extends GenericAppError {
   NoInternetError() : super("Check your internet");
 }

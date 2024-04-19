@@ -32,7 +32,7 @@ class RemoteUserDatasourceWithRestImpl implements IUserDatasource {
       return transform(User.fromJson(e.body.toJson()));
     } else if (response.status == HttpStatus.badRequest) {
       final SignUpUserResponse400 e = response as SignUpUserResponse400;
-      throw GenericAppError(e.body.error!.userFriendlyMessage.toString());
+      throw BadRequestError(e.body.error!.userFriendlyMessage.toString());
     }
     throw InternlaServerError();
   }
@@ -54,7 +54,7 @@ class RemoteUserDatasourceWithRestImpl implements IUserDatasource {
       return JwtObject.fromJson(e.body.toJson());
     } else if (response.status == HttpStatus.badRequest) {
       final LoginUserResponse400 e = response as LoginUserResponse400;
-      throw GenericAppError(e.body.error!.userFriendlyMessage.toString());
+      throw BadRequestError(e.body.error!.userFriendlyMessage.toString());
     }
     throw InternlaServerError();
   }

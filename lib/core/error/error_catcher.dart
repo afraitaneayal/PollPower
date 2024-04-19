@@ -22,7 +22,7 @@ class ErrorCatcher {
       final r = await fn;
       return r;
     } catch (e) {
-      throw GenericAppError(e.toString());
+      throw NoInternetError();
     }
   }
 }

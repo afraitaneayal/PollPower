@@ -1,6 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:poll_power/core/error/app_error.dart';
-import 'package:poll_power/data/communication/rest/i_rest_api.dart';
 import 'package:poll_power/di.dart';
 import 'package:poll_power/domain/entities/user/user.dart';
 import 'package:poll_power/domain/objects/jwt_object.dart';
@@ -8,7 +7,6 @@ import 'package:poll_power/domain/params/user/create_user_param.dart';
 import 'package:poll_power/domain/params/user/log_user_param.dart';
 import 'package:poll_power/domain/usecases/user/create_user_usecase.dart';
 import 'package:poll_power/domain/usecases/user/log_user_uscase.dart';
-import 'package:poll_power_openapi/poll_power_openapi.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 Future<void> initTest() async {

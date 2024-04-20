@@ -20,7 +20,7 @@ class HomeScreen extends StatelessWidget {
             children: [
               const DefaultAppBar(),
               context.gaps.large,
-              const UserCardWidget(),
+              const UserCardWidget(isCandidate: false),
               context.gaps.medium,
               const TimerWidget(),
               context.gaps.medium,

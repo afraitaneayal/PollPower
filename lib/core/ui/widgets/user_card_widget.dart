@@ -1,10 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:poll_power/core/common/app_texts.dart';
 import 'package:poll_power/core/extensions/context_extension.dart';
 import 'package:poll_power/core/extensions/string_extension.dart';
 import 'package:poll_power/di.dart';
+import 'package:poll_power/domain/entities/user/user.dart';
 import 'package:poll_power/presentation/state_management/bloc/auth/auth_bloc.dart';
+import 'package:poll_power/presentation/state_management/bloc/user/user_bloc.dart';
+import 'package:poll_power/presentation/state_management/bloc/user/user_event.dart';
+import 'package:poll_power/presentation/state_management/bloc/user/user_state.dart';
 
 import '../../assets/assets.gen.dart';
 
@@ -14,24 +19,39 @@ class UserCardWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    WidgetsBinding.instance.addPostFrameCallback(
+      (timeStamp) => locator.get<UserBloc>().add(GetUserInfoEvent()),
+    );
+
     return InkWell(
       onTap: () {
         _showLogoutButtonSheet(context);
       },
-      child: Container(
-        padding: EdgeInsets.symmetric(vertical: 20.sp, horizontal: 30.sp),
-        decoration: BoxDecoration(
-            color: context.colors.red,
-            borderRadius: BorderRadius.circular(10.sp)),
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            _buildLeft(context),
-            _buildRight(context),
-          ],
-        ),
-      ),
+      child: BlocBuilder<UserBloc, UserState>(builder: (context, state) {
+        if (state is GetUserInfoIsProcessing || state is UserInitialState) {
+          return const Center(
+            child: CircularProgressIndicator(),
+          );
+        } else if (state is UserInfoDone) {
+          return Container(
+            padding: EdgeInsets.symmetric(vertical: 20.sp, horizontal: 30.sp),
+            decoration: BoxDecoration(
+                color: context.colors.red,
+                borderRadius: BorderRadius.circular(10.sp)),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                _buildLeft(context),
+                _buildRight(context, state.user),
+              ],
+            ),
+          );
+        }
+        return Container(
+          child: "Hello".light(),
+        );
+      }),
     );
   }
 
@@ -49,15 +69,16 @@ class UserCardWidget extends StatelessWidget {
     );
   }
 
-  Column _buildRight(BuildContext context) {
+  Column _buildRight(BuildContext context, UserEntity user) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
       mainAxisAlignment: MainAxisAlignment.end,
       children: [
         context.gaps.medium,
-        "Afraitane Ayal".semiBold(color: context.colors.white, fontSize: 20.sp),
+        "${user.first_name} ${user.last_name}"
+            .semiBold(color: context.colors.white, fontSize: 20.sp),
         context.gaps.large,
-        _buildStatus(context, AppTexts.voter, false),
+        if (isCandidate == null) _buildStatus(context, AppTexts.voter, false),
       ],
     );
   }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:poll_power/core/common/app_texts.dart';
 import 'package:poll_power/core/extensions/context_extension.dart';
@@ -7,6 +8,7 @@ import 'package:poll_power/core/ui/widgets/default_text_input.dart';
 import 'package:poll_power/di.dart';
 import 'package:poll_power/presentation/state_management/bloc/auth/auth_bloc.dart';
 import 'package:poll_power/presentation/state_management/bloc/auth/auth_events.dart';
+import 'package:poll_power/presentation/state_management/bloc/auth/auth_states.dart';
 
 class LoginForm extends StatefulWidget {
   const LoginForm({super.key});
@@ -42,7 +44,14 @@ class _LoginFormState extends State<LoginForm> {
         context.gaps.large,
         _buildForm(context),
         context.gaps.small,
-        _buildLoginButton()
+        BlocBuilder<AuthBloc, AuthState>(
+          builder: (context, state) {
+            if (state is LoginProcessing) {
+              return const Center(child: CircularProgressIndicator());
+            }
+            return _buildLoginButton();
+          },
+        ),
       ],
     );
   }

@@ -14,7 +14,7 @@ class GetUserUsecase implements Usecase<GetUserParam, UserEntity> {
   GetUserUsecase(this._userRepository);
 
   @override
-  Future<Either<IAppError, UserEntity?>> trigger(GetUserParam param) async {
+  Future<Either<IAppError, UserEntity>> trigger(GetUserParam param) async {
     return await ErrorCatcher.tryCatch(_userRepository.getUser(param));
   }
 }

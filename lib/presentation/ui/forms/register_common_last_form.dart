@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:poll_power/core/common/app_texts.dart';
 import 'package:poll_power/core/extensions/context_extension.dart';
@@ -9,6 +10,7 @@ import 'package:poll_power/domain/entities/candidate/candidate.dart';
 import 'package:poll_power/domain/entities/user/user.dart';
 import 'package:poll_power/presentation/state_management/bloc/auth/auth_bloc.dart';
 import 'package:poll_power/presentation/state_management/bloc/auth/auth_events.dart';
+import 'package:poll_power/presentation/state_management/bloc/auth/auth_states.dart';
 import 'package:poll_power/presentation/ui/forms/candidate_form_data.dart';
 import 'package:poll_power/presentation/ui/forms/voter_form_data.dart';
 
@@ -93,11 +95,21 @@ class _RegisterLastFCommonormState extends State<RegisterCommonLastForm> {
             onTap: null,
           ),
           context.gaps.large,
-          AppTexts.register.asPrimaryButton(
-              padding: EdgeInsets.symmetric(vertical: 16.sp, horizontal: 71.sp),
-              callback: () async {
-                _onRegisterButtonPressed();
-              })
+          BlocBuilder<AuthBloc, AuthState>(
+            builder: (context, state) {
+              if (state is SignUpProcessing) {
+                return const Center(
+                  child: CircularProgressIndicator(),
+                );
+              }
+              return AppTexts.register.asPrimaryButton(
+                  padding:
+                      EdgeInsets.symmetric(vertical: 16.sp, horizontal: 71.sp),
+                  callback: () async {
+                    _onRegisterButtonPressed();
+                  });
+            },
+          ),
         ],
       ));
 

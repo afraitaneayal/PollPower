@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:injectable/injectable.dart';
 import 'package:poll_power/core/error/app_error.dart';
 import 'package:poll_power/core/helpers/app_key_helper.dart';
+import 'package:poll_power/core/helpers/token_helper.dart';
 import 'package:poll_power/data/communication/rest/i_rest_api.dart';
 import 'package:poll_power/data/datasources/i_user_datasource_repository.dart';
 import 'package:poll_power/di.dart';
@@ -34,12 +35,18 @@ class RemoteUserDatasourceWithRestImpl implements IUserDatasource {
       final SignUpUserResponse400 e = response as SignUpUserResponse400;
       throw BadRequestError(e.body.error!.userFriendlyMessage.toString());
     }
-    throw InternlaServerError();
+    throw InternlaError();
   }
 
   @override
-  Future<UserEntity> getUser(GetUserParam param) {
-    throw UnimplementedError();
+  Future<UserEntity> getUser(GetUserParam param) async {
+    final String? token = locator.get<TokenHelper>().getAccesToken();
+    if (token == null) {
+      throw InternlaError();
+    } else {
+      final response = await _api.getUser(token) as GetUserResponse200;
+      return transform(User.fromJson(response.body.toJson()));
+    }
   }
 
   @override
@@ -55,8 +62,9 @@ class RemoteUserDatasourceWithRestImpl implements IUserDatasource {
     } else if (response.status == HttpStatus.badRequest) {
       final LoginUserResponse400 e = response as LoginUserResponse400;
       throw BadRequestError(e.body.error!.userFriendlyMessage.toString());
+    } else {
+      throw InternlaError();
     }
-    throw InternlaServerError();
   }
 
   @override

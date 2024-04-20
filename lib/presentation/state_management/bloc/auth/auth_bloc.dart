@@ -38,6 +38,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   Future<void> _mapEvents() async {
     // On Signup user event
     on<SignUpUserEvent>((event, emit) async {
+      emit(SignUpProcessing());
       final UserEntity user = event.user;
       final CreateUserParam param = CreateUserParam(
           user.email,
@@ -53,12 +54,13 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         _showError(l.getError());
       }, (r) {
         emit(SignUpUserDone(r));
-        navKey.currentContext!.push(AppRoutes.home);
+        navKey.currentContext!.push(AppRoutes.login);
       });
     });
 
     // On Signup candidate event
     on<SignUpCandidateEvent>((event, emit) async {
+      emit(SignUpProcessing());
       final CandidateEntity candidate = event.candidate;
       final UserEntity user = event.user;
       final CreateCandidateParam param = CreateCandidateParam(
@@ -69,7 +71,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         _showError(l.getError());
       }, (r) {
         emit(SignUpCandidateDone(r));
-        navKey.currentContext!.push(AppRoutes.home);
+        navKey.currentContext!.push(AppRoutes.login);
       });
     });
 

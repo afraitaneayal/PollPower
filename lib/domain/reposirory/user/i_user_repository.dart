@@ -1,4 +1,3 @@
-
 import '../../entities/user/user.dart';
 import '../../objects/jwt_object.dart';
 import '../../params/user/create_user_param.dart';
@@ -10,5 +9,5 @@ abstract class IUserRepository {
 
   Future<JwtObject> logUser(LogUserParam param);
 
-  Future<UserEntity?> getUser(GetUserParam param);
+  Future<UserEntity> getUser(GetUserParam param);
 }

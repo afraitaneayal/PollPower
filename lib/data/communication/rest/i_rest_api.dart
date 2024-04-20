@@ -7,4 +7,5 @@ abstract class IRestAPI {
   Future<VoteCandidateResponse> voteCandidate(VotingRequest body);
   Future<SignUpCandidateResponse> signUpCandidate(Candidate body);
   Future<SignUpUserResponse> signUpUser(User body);
+  Future<GetUserResponse> getUser(String token);
 }

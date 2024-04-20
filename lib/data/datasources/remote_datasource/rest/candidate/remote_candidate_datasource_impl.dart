@@ -42,7 +42,7 @@ class RemoteCandidateDatasourceWithRestImpl
           response as SignUpCandidateResponse400;
       throw GenericAppError(e.body.error!.userFriendlyMessage.toString());
     }
-    throw InternlaServerError();
+    throw InternlaError();
   }
 
   @override

@@ -19,7 +19,7 @@ class UserRepositoryImpl implements IUserRepository {
   }
 
   @override
-  Future<UserEntity?> getUser(GetUserParam param) async {
+  Future<UserEntity> getUser(GetUserParam param) async {
     return await _userDatasource.getUser(param);
   }
 

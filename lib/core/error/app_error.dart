@@ -22,7 +22,10 @@ class NoInternetError extends GenericAppError {
   NoInternetError() : super("Check your internet");
 }
 
-class InternlaServerError extends GenericAppError {
-  InternlaServerError()
-      : super("Something went wrong on the server please try again");
+class UserNotFoundError extends GenericAppError {
+  UserNotFoundError() : super("User not found");
+}
+
+class InternlaError extends GenericAppError {
+  InternlaError() : super("Something went wrong please try again");
 }

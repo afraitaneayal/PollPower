@@ -29,8 +29,10 @@ class UserCardWidget extends StatelessWidget {
       },
       child: BlocBuilder<UserBloc, UserState>(builder: (context, state) {
         if (state is GetUserInfoIsProcessing || state is UserInitialState) {
-          return const Center(
-            child: CircularProgressIndicator(),
+          return Center(
+            child: CircularProgressIndicator(
+              color: context.colors.black,
+            ),
           );
         } else if (state is UserInfoDone) {
           return Container(

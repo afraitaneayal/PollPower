@@ -6,5 +6,5 @@ class AppRoutes {
   static String registerCandidate = "$register/candidate";
   static String accountType = "/accountType";
   static String home = "/";
-  static String candidate = "/condidate";
+  static String candidate = "/candidate";
 }

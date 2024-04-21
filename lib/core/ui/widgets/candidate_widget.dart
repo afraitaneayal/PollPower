@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
+import 'package:poll_power/core/common/app_route.dart';
 import 'package:poll_power/core/extensions/context_extension.dart';
 import 'package:poll_power/core/extensions/string_extension.dart';
 import 'package:poll_power/domain/entities/candidate/candidate.dart';
@@ -17,11 +19,7 @@ class CandidateWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () => Navigator.of(context).push(MaterialPageRoute(
-        builder: (context) => CandidateScreen(
-          candidate: candidate,
-        ),
-      )),
+      onTap: () => context.push(AppRoutes.candidate, extra: candidate),
       child: Container(
         padding: EdgeInsets.symmetric(vertical: 20.sp, horizontal: 40.sp),
         decoration: BoxDecoration(

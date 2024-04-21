@@ -16,17 +16,11 @@ class SplashScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     WidgetsBinding.instance.addPostFrameCallback(
-      (timeStamp) async {
-        final bool isReady =
-            await locator.get<AuthBloc>().isUserAuthenticated();
-        if (isReady) {
-          locator.get<CandidateBloc>().add(GetCandidatesEvent());
-          // ignore: use_build_context_synchronously
-          context.push(AppRoutes.home);
-        } else {
-          // ignore: use_build_context_synchronously
-          context.push(AppRoutes.login);
-        }
+      (timeStamp) {
+        Future.delayed(
+          const Duration(seconds: 2),
+          () => context.go(AppRoutes.home),
+        );
       },
     );
 
@@ -45,6 +39,11 @@ class SplashScreen extends StatelessWidget {
               context.gaps.large,
               Assets.logo.image(),
               context.gaps.large,
+              context.gaps.large,
+              context.gaps.large,
+              CircularProgressIndicator(
+                color: context.colors.black,
+              )
             ],
           ),
           Positioned(

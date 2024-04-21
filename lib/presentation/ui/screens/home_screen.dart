@@ -33,8 +33,10 @@ class HomeScreen extends StatelessWidget {
                 builder: (context, state) {
                   if (state is GetCandidateIsProcessing ||
                       state is CandidateInitialState) {
-                    return const Center(
-                      child: CircularProgressIndicator(),
+                    return Center(
+                      child: CircularProgressIndicator(
+                        color: context.colors.black,
+                      ),
                     );
                   } else if (state is GetCandidatesDone) {
                     return _buildCandidates(state);

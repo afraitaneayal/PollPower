@@ -6,6 +6,8 @@ import 'package:poll_power/core/extensions/context_extension.dart';
 import 'package:poll_power/core/extensions/string_extension.dart';
 import 'package:poll_power/di.dart';
 import 'package:poll_power/presentation/state_management/bloc/auth/auth_bloc.dart';
+import 'package:poll_power/presentation/state_management/bloc/candidate/candidate_bloc.dart';
+import 'package:poll_power/presentation/state_management/bloc/candidate/candidate_event.dart';
 import '../../../core/assets/assets.gen.dart';
 
 class SplashScreen extends StatelessWidget {
@@ -17,8 +19,14 @@ class SplashScreen extends StatelessWidget {
       (timeStamp) async {
         final bool isReady =
             await locator.get<AuthBloc>().isUserAuthenticated();
-        // ignore: use_build_context_synchronously
-        isReady ? context.push(AppRoutes.home) : context.push(AppRoutes.login);
+        if (isReady) {
+          locator.get<CandidateBloc>().add(GetCandidatesEvent());
+          // ignore: use_build_context_synchronously
+          context.push(AppRoutes.home);
+        } else {
+          // ignore: use_build_context_synchronously
+          context.push(AppRoutes.login);
+        }
       },
     );
 

@@ -21,6 +21,8 @@ import 'package:poll_power/domain/usecases/user/create_user_usecase.dart';
 import 'package:poll_power/domain/usecases/user/log_user_uscase.dart';
 import 'package:poll_power/presentation/state_management/bloc/auth/auth_events.dart';
 import 'package:poll_power/presentation/state_management/bloc/auth/auth_states.dart';
+import 'package:poll_power/presentation/state_management/bloc/candidate/candidate_bloc.dart';
+import 'package:poll_power/presentation/state_management/bloc/candidate/candidate_event.dart';
 import 'package:poll_power/router.dart';
 
 @singleton
@@ -85,6 +87,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         _showError(l.getError());
       }, (r) {
         emit(LoginDone(r));
+        locator.get<CandidateBloc>().add(GetCandidatesEvent());
         _saveCredentials(r);
         navKey.currentContext!.push(AppRoutes.home);
       });

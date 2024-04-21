@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:poll_power/presentation/ui/screens/account_type_screen.dart';
-import 'package:poll_power/presentation/ui/screens/candidate_screen.dart';
 import 'package:poll_power/presentation/ui/screens/home_screen.dart';
 import 'package:poll_power/presentation/ui/screens/login_screen.dart';
 import 'package:poll_power/presentation/ui/screens/register_screen.dart';
@@ -48,10 +47,10 @@ class AppRouter {
           path: AppRoutes.home,
           builder: (context, state) => const HomeScreen(),
         ),
-        GoRoute(
-          path: AppRoutes.candidate,
-          builder: (context, state) => const CandidateScreen(),
-        ),
+        // GoRoute(
+        // path: AppRoutes.candidate,
+        // builder: (context, state) => const CandidateScreen(),
+        // ),
       ],
       debugLogDiagnostics: true);
 

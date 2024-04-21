@@ -24,6 +24,7 @@ class RemoteCandidateDatasourceWithRestImpl
   Future<CandidateEntity> createCandidate(CreateCandidateParam param) async {
     final Candidate body = Candidate(
         slogan: param.slogan,
+        speech: param.speech,
         voteCount: param.voteCount,
         user: User(
             email: param.user.email,
@@ -36,7 +37,7 @@ class RemoteCandidateDatasourceWithRestImpl
     if (response.status == HttpStatus.created) {
       final SignUpCandidateResponse201 e =
           response as SignUpCandidateResponse201;
-      return transform(Candidate.fromJson(e.body.toJson()));
+      return transform((e.body));
     } else if (response.status == HttpStatus.badRequest) {
       final SignUpCandidateResponse400 e =
           response as SignUpCandidateResponse400;
@@ -47,14 +48,28 @@ class RemoteCandidateDatasourceWithRestImpl
 
   @override
   Future<CandidateEntity?> getCandidate(GetCandidateParam param) {
-    // TODO: implement getCandidate
     throw UnimplementedError();
   }
 
   @override
-  Future<List<CandidateEntity>> getCandidates() {
-    // TODO: implement getCandidates
-    throw UnimplementedError();
+  Future<List<CandidateEntity>> getCandidates() async {
+    final response = await _api.getCandidates();
+    switch (response.runtimeType) {
+      case GetCandidatesResponse200:
+        final GetCandidatesResponse200 candidatesR =
+            response as GetCandidatesResponse200;
+        final candidates =
+            candidatesR.body.candidates!.map((e) => transform(e)).toList();
+        return candidates;
+      case GetCandidatesResponse400:
+        final candidatesR = response as GetCandidatesResponse400;
+        throw GenericAppError(candidatesR.body.error!.userFriendlyMessage!);
+      case GetCandidatesResponse500:
+        final candidatesR = response as GetCandidatesResponse500;
+        throw GenericAppError(candidatesR.body.error!.userFriendlyMessage!);
+      default:
+        throw InternlaError();
+    }
   }
 
   @override

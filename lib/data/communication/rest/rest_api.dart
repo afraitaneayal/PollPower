@@ -16,9 +16,9 @@ class RestApiImpl implements IRestAPI {
   final httpClient = http.Client();
   RestApiImpl(@Named('baseUrl') this.baseUrl);
 
-  PollPowerAPIClient client() {
+  PollpowerClient client() {
     final HttpRequestSender sender = HttpRequestSender();
-    return PollPowerAPIClient(Uri.parse(baseUrl), sender);
+    return PollpowerClient(Uri.parse(baseUrl), sender);
   }
 
   @override

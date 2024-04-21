@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:poll_power/di.dart';
 import 'package:poll_power/presentation/state_management/bloc/auth/auth_bloc.dart';
+import 'package:poll_power/presentation/state_management/bloc/candidate/candidate_bloc.dart';
 import 'package:poll_power/presentation/state_management/bloc/user/user_bloc.dart';
 import 'package:poll_power/router.dart';
 
@@ -33,6 +34,9 @@ class Root extends StatelessWidget {
       ),
       BlocProvider<UserBloc>(
         create: (context) => locator.get<UserBloc>(),
+      ),
+      BlocProvider<CandidateBloc>(
+        create: (context) => locator.get<CandidateBloc>(),
       )
     ];
   }

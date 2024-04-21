@@ -14,7 +14,8 @@ class GetAllCandidateUsecase implements Usecase<void, List<CandidateEntity>> {
   GetAllCandidateUsecase(this._candidateRepository);
 
   @override
-  Future<Either<IAppError, List<CandidateEntity>?>> trigger(void param) async {
+  Future<Either<IAppError, List<CandidateEntity>>> trigger(
+      dynamic param) async {
     return await ErrorCatcher.tryCatch(_candidateRepository.getAllCandidate());
   }
 }

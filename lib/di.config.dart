@@ -14,8 +14,8 @@ import 'package:shared_preferences/shared_preferences.dart' as _i14;
 
 import 'core/helpers/app_key_helper.dart' as _i3;
 import 'core/helpers/token_helper.dart' as _i15;
-import 'core/modules/rest_api_module.dart' as _i38;
-import 'core/modules/storage_module.dart' as _i37;
+import 'core/modules/rest_api_module.dart' as _i39;
+import 'core/modules/storage_module.dart' as _i38;
 import 'core/ui/theme/colors/default_app_colors.dart' as _i5;
 import 'core/ui/theme/colors/i_app_colors.dart' as _i4;
 import 'core/ui/theme/gaps/default_app_gaps.dart' as _i7;
@@ -49,6 +49,8 @@ import 'domain/usecases/user/log_user_uscase.dart' as _i24;
 import 'domain/usecases/vote/create_vote_usecase.dart' as _i16;
 import 'domain/usecases/vote/get_votes_usecase.dart' as _i17;
 import 'presentation/state_management/bloc/auth/auth_bloc.dart' as _i36;
+import 'presentation/state_management/bloc/candidate/candidate_bloc.dart'
+    as _i37;
 import 'presentation/state_management/bloc/user/user_bloc.dart' as _i32;
 
 extension GetItInjectableX on _i1.GetIt {
@@ -117,10 +119,12 @@ extension GetItInjectableX on _i1.GetIt {
           gh<_i24.LogUserUsecase>(),
           gh<_i33.CreateCandidateUsecase>(),
         ));
+    gh.singleton<_i37.CandidateBloc>(
+        () => _i37.CandidateBloc(gh<_i34.GetAllCandidateUsecase>()));
     return this;
   }
 }
 
-class _$StorageModule extends _i37.StorageModule {}
+class _$StorageModule extends _i38.StorageModule {}
 
-class _$RestApiModule extends _i38.RestApiModule {}
+class _$RestApiModule extends _i39.RestApiModule {}

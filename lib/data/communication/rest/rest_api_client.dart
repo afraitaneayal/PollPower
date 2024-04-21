@@ -7,8 +7,8 @@ class RestApiClient {
   final String baseUrl;
   RestApiClient(@Named("baseUrl") this.baseUrl);
 
-  PollPowerAPIClient getClient() {
+  PollpowerClient getClient() {
     final HttpRequestSender sender = HttpRequestSender();
-    return PollPowerAPIClient(Uri.parse(baseUrl), sender);
+    return PollpowerClient(Uri.parse(baseUrl), sender);
   }
 }

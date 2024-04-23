@@ -130,6 +130,7 @@ class _RegisterLastFCommonormState extends State<RegisterCommonLastForm> {
     return (_emailController.text.isNotEmpty &&
         _passwordController.text.isNotEmpty &&
         _confirmPasswordController.text.isNotEmpty &&
+        _confirmPasswordController.text == _passwordController.text &&
         widget.voterFormDatas.value != null);
   }
 
@@ -137,6 +138,7 @@ class _RegisterLastFCommonormState extends State<RegisterCommonLastForm> {
     return _emailController.text.isNotEmpty &&
         _passwordController.text.isNotEmpty &&
         _confirmPasswordController.text.isNotEmpty &&
+        _confirmPasswordController.text == _passwordController.text &&
         widget.candidateFormDatas.value != null;
   }
 

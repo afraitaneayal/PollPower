@@ -28,3 +28,21 @@ class GetCandidatesDone extends CandidateState {
   @override
   List<Object?> get props => [candidates];
 }
+
+class VoteCandidateProcessing extends CandidateState {
+  @override
+  List<Object?> get props => [];
+}
+
+class VoteCandidateFailed extends CandidateState {
+  final String error;
+  VoteCandidateFailed(this.error);
+
+  @override
+  List<Object?> get props => [error];
+}
+
+class VoteCandidateDone extends CandidateState {
+  @override
+  List<Object?> get props => [];
+}

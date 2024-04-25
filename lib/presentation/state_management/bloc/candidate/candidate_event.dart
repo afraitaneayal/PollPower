@@ -8,3 +8,11 @@ class GetCandidatesEvent extends CandidateEvent {
   @override
   List<Object?> get props => [];
 }
+
+class VoteCandidateEvent extends CandidateEvent {
+  final String candidateUuid;
+  VoteCandidateEvent(this.candidateUuid);
+
+  @override
+  List<Object?> get props => [candidateUuid];
+}

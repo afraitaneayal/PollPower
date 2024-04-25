@@ -9,6 +9,7 @@ import 'package:poll_power/domain/entities/candidate/candidate.dart';
 import 'package:poll_power/domain/entities/user/user.dart';
 import 'package:poll_power/domain/params/candidate/create_candidate_param.dart';
 import 'package:poll_power/domain/params/candidate/get_candidate_param.dart';
+import 'package:poll_power/domain/params/candidate/vote_candidate_param.dart';
 import 'package:poll_power_openapi/poll_power_openapi.dart';
 
 import '../../../../communication/rest/i_rest_api.dart';
@@ -79,7 +80,17 @@ class RemoteCandidateDatasourceWithRestImpl
         slogan: p.slogan,
         speech: p.speech ?? "",
         vote_count: p.voteCount,
-        uuid: null,
+        uuid: p.uuid,
         user: locator.get<IUserDatasource>().transform(p.user) as UserEntity);
+  }
+
+  @override
+  Future<void> voteCandidate(VoteCandidateParam param) async {
+    final VotingRequest request = VotingRequest(
+        candidateId: param.candidateUuid, userId: "", uuid: "", votedAt: "");
+    final response = await _api.voteCandidate(request);
+    if (response.status != HttpStatus.ok) {
+      throw InternlaError();
+    }
   }
 }

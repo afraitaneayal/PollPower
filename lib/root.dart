@@ -37,7 +37,7 @@ class Root extends StatelessWidget {
       ),
       BlocProvider<CandidateBloc>(
         create: (context) => locator.get<CandidateBloc>(),
-      )
+      ),
     ];
   }
 }

@@ -5,6 +5,7 @@ import 'package:injectable/injectable.dart';
 import 'package:openapi_base/openapi_base.dart';
 import 'package:poll_power/core/error/app_error.dart';
 import 'package:poll_power/core/error/error_catcher.dart';
+import 'package:poll_power/core/helpers/token_helper.dart';
 import 'package:poll_power/data/communication/rest/i_rest_api.dart';
 import 'package:poll_power/di.dart';
 import 'package:poll_power_openapi/openapi/pollpower.openapi.dart';
@@ -54,7 +55,19 @@ class RestApiImpl implements IRestAPI {
 
   @override
   Future<VoteCandidateResponse> voteCandidate(VotingRequest body) async {
-    return await client().voteCandidate(body);
+    final Uri httpClientUrl =
+        Uri.parse("${locator.get<String>(instanceName: 'baseUrl')}/v1/votes");
+    final String? token = locator.get<TokenHelper>().getAccesToken();
+    final Map<String, String> bearer = {
+      HttpHeaders.authorizationHeader: 'Bearer $token'
+    };
+    // TODO @yayahc
+    final response = await httpClient.post(httpClientUrl,
+        headers: bearer, body: VotingRequest.fromJson(body.toJson()));
+    if (response.statusCode == HttpStatus.ok) {
+      return VoteCandidateResponse.response200();
+    }
+    throw InternlaError();
   }
 
   @override

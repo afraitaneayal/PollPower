@@ -7,7 +7,10 @@ import 'package:poll_power/core/extensions/context_extension.dart';
 import 'package:poll_power/core/extensions/string_extension.dart';
 import 'package:poll_power/core/ui/theme/buttons/default_buttons.dart';
 import 'package:poll_power/core/ui/widgets/default_app_bar.dart';
+import 'package:poll_power/di.dart';
 import 'package:poll_power/domain/entities/candidate/candidate.dart';
+import 'package:poll_power/presentation/state_management/bloc/candidate/candidate_bloc.dart';
+import 'package:poll_power/presentation/state_management/bloc/candidate/candidate_event.dart';
 
 import '../../../core/assets/assets.gen.dart';
 
@@ -31,7 +34,7 @@ class CandidateScreen extends StatelessWidget {
                   context.gaps.large,
                   context.gaps.large,
                   _buildCandidateInfos(context),
-                  _buildVoteButton(context)
+                  _buildVoteButton(context, candidate.uuid)
                 ],
               ),
             ),
@@ -66,9 +69,15 @@ class CandidateScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildVoteButton(BuildContext context) {
+  Widget _buildVoteButton(BuildContext contex, String? candidateUuid) {
     return AppTexts.vote.asPrimaryButton(
-        callback: () async {},
+        callback: () async {
+          candidateUuid != null
+              ? locator
+                  .get<CandidateBloc>()
+                  .add(VoteCandidateEvent(candidateUuid))
+              : null;
+        },
         padding: EdgeInsets.symmetric(vertical: 16.sp, horizontal: 71.sp));
   }
 }

@@ -1,3 +1,5 @@
+// ignore_for_file: depend_on_referenced_packages
+
 import 'dart:convert';
 import 'dart:io';
 
@@ -61,13 +63,13 @@ class RestApiImpl implements IRestAPI {
     final Map<String, String> bearer = {
       HttpHeaders.authorizationHeader: 'Bearer $token'
     };
-    // TODO @yayahc
     final response = await httpClient.post(httpClientUrl,
-        headers: bearer, body: VotingRequest.fromJson(body.toJson()));
+        headers: bearer, body: json.encode(body));
     if (response.statusCode == HttpStatus.ok) {
       return VoteCandidateResponse.response200();
     }
-    throw InternlaError();
+    final APIError error = APIError.fromJson(json.decode(response.body));
+    throw GenericAppError(error.error!.userFriendlyMessage!);
   }
 
   @override

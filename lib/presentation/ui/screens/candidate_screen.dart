@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
+import 'package:poll_power/core/common/app_route.dart';
 import 'package:poll_power/core/common/app_styles.dart';
 import 'package:poll_power/core/common/app_texts.dart';
 import 'package:poll_power/core/extensions/context_extension.dart';
@@ -42,7 +43,8 @@ class CandidateScreen extends StatelessWidget {
               top: 70.sp,
               left: 0,
               child: getArrowButton(
-                  callback: () async => context.pop(), isLeft: true),
+                  callback: () async => context.go(AppRoutes.home),
+                  isLeft: true),
             )
           ])),
     );

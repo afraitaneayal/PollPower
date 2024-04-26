@@ -4,10 +4,6 @@ import 'package:go_router/go_router.dart';
 import 'package:poll_power/core/common/app_route.dart';
 import 'package:poll_power/core/extensions/context_extension.dart';
 import 'package:poll_power/core/extensions/string_extension.dart';
-import 'package:poll_power/di.dart';
-import 'package:poll_power/presentation/state_management/bloc/auth/auth_bloc.dart';
-import 'package:poll_power/presentation/state_management/bloc/candidate/candidate_bloc.dart';
-import 'package:poll_power/presentation/state_management/bloc/candidate/candidate_event.dart';
 import '../../../core/assets/assets.gen.dart';
 
 class SplashScreen extends StatelessWidget {

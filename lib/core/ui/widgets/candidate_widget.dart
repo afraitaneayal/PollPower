@@ -5,7 +5,6 @@ import 'package:poll_power/core/common/app_route.dart';
 import 'package:poll_power/core/extensions/context_extension.dart';
 import 'package:poll_power/core/extensions/string_extension.dart';
 import 'package:poll_power/domain/entities/candidate/candidate.dart';
-import 'package:poll_power/presentation/ui/screens/candidate_screen.dart';
 
 import '../../assets/assets.gen.dart';
 
@@ -21,16 +20,18 @@ class CandidateWidget extends StatelessWidget {
     return InkWell(
       onTap: () => context.push(AppRoutes.candidate, extra: candidate),
       child: Container(
-        padding: EdgeInsets.symmetric(vertical: 20.sp, horizontal: 40.sp),
+        padding: EdgeInsets.symmetric(vertical: 20.sp, horizontal: 20.sp),
         decoration: BoxDecoration(
             color: context.colors.blue,
             borderRadius: BorderRadius.circular(10.sp)),
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             _buildRow(context),
             context.gaps.medium,
             candidate.slogan.semiBold(
-                fontSize: 24.sp,
+                fontSize: 20.sp,
                 color: context.colors.white,
                 textAlign: TextAlign.center),
             context.gaps.medium,
@@ -44,11 +45,13 @@ class CandidateWidget extends StatelessWidget {
   Row _buildRow(BuildContext context) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         CircleAvatar(
           radius: 30.sp,
           backgroundImage: AssetImage(Assets.avatar.path),
         ),
+        context.gaps.small,
         "${candidate.user.first_name} ${candidate.user.last_name}"
             .semiBold(color: context.colors.white, fontSize: 20.sp),
       ],
@@ -57,7 +60,7 @@ class CandidateWidget extends StatelessWidget {
 
   Container _buildVotingState(BuildContext context) {
     return Container(
-      padding: EdgeInsets.symmetric(vertical: 20.sp, horizontal: 60.sp),
+      padding: EdgeInsets.symmetric(vertical: 20.sp, horizontal: 100.sp),
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10.sp),
           color: context.colors.black),

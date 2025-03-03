@@ -1,1 +1,1 @@
-### This is a little voting app for school project
+little voting app for school project.
